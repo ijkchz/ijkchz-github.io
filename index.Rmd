@@ -15,7 +15,11 @@ background-image: url(www/bg.jpeg)
 
 ```{r setup, include=FALSE}
 options(htmltools.dir.version = FALSE)
-knitr::opts_chunk$set(echo = T,message = F,warning = F)
+knitr::opts_chunk$set(
+	echo = F,
+	message = FALSE,
+	warning = FALSE
+)
 library(plotly)
 library(gganimate)
 library(tidyverse)
@@ -63,7 +67,7 @@ library(DiagrammeR)
 
 # R 图形
 
-```{r plot, fig.height=3.5,message=F,warning=F}
+```{r plot, fig.height=3.5, message=FALSE, warning=FALSE}
 p<-ggplot(mtcars,aes(x=cyl,fill=factor(vs)))+
   geom_bar()
 ggplotly(p)
@@ -89,12 +93,48 @@ ggtitle('Timepoints is {closest_state} \n VL(M) is ture?')+
 
 ---
 
+[地图学习](https://rstudio.github.io/leaflet/popups.html)
+
 # 地图模式
+```{r}
+df <- sp::SpatialPointsDataFrame(
+  cbind(
+    (runif(4,-0.5,0.5))/2 + 112.99,  # lng
+    (runif(4,-0.5,0.5))/2 + 28.11  # lat
+  ),
+  data.frame(type = factor(
+    rep(c("pirate", "ship"),2),
+    c("ship", "pirate")
+  ))
+)
+
+oceanIcons <- iconList(
+  ship = makeIcon(iconUrl = "www/lp_lh1.png",
+  iconWidth =50, iconHeight = 50),
+  pirate = makeIcon(iconUrl = "www/lp_lh2.png",
+  iconWidth =50, iconHeight = 50)
+)
+```
+
 
 ```{r out.width='100%', fig.height=6}
-leaflet() %>% 
-  addTiles() %>% 
-  setView(112.99, 28.11, zoom = 10)
+m<-leaflet() %>% 
+  addTiles(group = "OSM (default)") %>% 
+  setView(112.99, 28.11, zoom = 10) %>% 
+  addMarkers(112.99, 28.11, popup="The birthplace of R",
+             group = "1") %>%
+  addCircleMarkers(112.99, 28.11,radius = 10, color = c('red'),
+                   group = "2") %>% 
+  addCircles(112.99, 28.11,weight = 3,radius = 10000, color =    c('red'),group = "3") %>% 
+  addRectangles(
+    lng1=113.2, lat1=28.3,lng2=112.8, lat2=27.9,fillColor = "yellow",group = "4") %>% 
+  addMarkers(data=df,icon = ~oceanIcons[type],clusterOptions = markerClusterOptions(),group = "5") %>% 
+    addLayersControl(
+    baseGroups = c("OSM (default)"),
+    overlayGroups = c("1", "2","3", "4","5"),
+    options = layersControlOptions(collapsed = FALSE),
+  )
+m
 ```
 
 ---
@@ -179,13 +219,29 @@ blank1[label = '', width = 0.01, height = 0.01]
 
 # 3D plot
 ```{r 3D}
-plot_ly(mpg, x = ~cty, y = ~hwy, z = ~cyl,size=0.1) %>%
-  add_markers(color = ~cyl)
+x<- seq(0, 24) /24
+t <- seq(0, 575, by = 0.5) / 575*20 *pi + 4 *pi
+grid <- expand.grid(x = x, t = t)
+x <- matrix(grid$x, ncol = 25, byrow = TRUE)
+t <- matrix(grid$t, ncol = 25, byrow = TRUE)
+p<- (pi/2)*exp(-t/(8*pi))
+change <- sin(15 * t) /150
+u<-1-(1-(3.6*t)%%(2*pi) /pi)^4/2+change
+y <- 2*(x^2- x)^2* sin(p)
+r<- u*(x*sin(p) +y *cos(p))
+xx=r*cos(t)
+yy=r*sin(t)
+zz=u*(x*cos(p)-y*sin(p))
+dat<-data_frame(x=c(as.vector(t(xx)),as.vector(xx)), y =c(as.vector(t(yy)),as.vector(yy)), z=c(as.vector(t(zz)),as.vector(zz)))
+plot_ly(dat,x = ~x, y = ~y, z = ~z,type = 'scatter3d', mode = 'lines',line = list(color = ~z,alpha=0.5, reverscale = FALSE))->
+  plot 
+add_trace(plot,x=rep(0,4),y=rep(0,4),z=seq(-0.5,0,length=4), mode='lines', line = list(color = 'green', width = 8))
 ```
 
-
 ---
-```{r echo=FALSE}
+
+# stock
+```{r echo=FALSE,include=FALSE}
 stock<-md_stock("002468.sz",from='2019-01-01',
                        to=today(),
                        source="163",
@@ -201,5 +257,29 @@ p1<-ggplot()+geom_line(data=mydata,aes(x=xx,y=close))+
         axis.ticks.x = element_blank())+
   labs(x=NULL)
 p1+transition_reveal(xx)
+```
+
+---
+
+# 3D plot3
+```{r}
+library(plotly)
+x<- seq(0, 24) /24
+t <- seq(0, 575, by = 0.5) / 575*20 *pi + 4 *pi
+grid <- expand.grid(x = x, t = t)
+x <- matrix(grid$x, ncol = 25, byrow = TRUE)
+t <- matrix(grid$t, ncol = 25, byrow = TRUE)
+p<- (pi/2)*exp(-t/(8*pi))
+change <- sin(15 * t) /150
+u<-1-(1-(3.6*t)%%(2*pi) /pi)^4/2+change
+y <- 2*(x^2- x)^2* sin(p)
+r<- u*(x*sin(p) +y *cos(p))
+xx=r*cos(t)
+yy=r*sin(t)
+zz=u*(x*cos(p)-y*sin(p))
+plot_ly(x = ~xx, y = ~yy, z = ~zz,color = ~zz, colors = 'Reds',opacity = 0.5)%>% add_surface()->plot
+add_trace(plot,x=rep(0,4),y=rep(0,4),z=seq(-0.5,0,length=4), mode='lines', line = list(color = 'green', width = 8)) %>% 
+  add_text(x=0,y=0,z=1,text="曹华彰",list(color = 'green', size = 8))
+
 ```
 
