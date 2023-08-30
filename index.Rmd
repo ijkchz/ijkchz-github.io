@@ -1,166 +1,567 @@
 ---
-title: "我的每日ppt"
-subtitle: "第一版"
-author: "caohuazhang"
-institute: "R"
-date: "`r Sys.Date()`"
-output: 
-  xaringan::moon_reader:
-    css: ["zh-CN.css","style.css"]
-    highlightLines: true
-
+title: "资料集合"
+output:
+  html_document:
+    # runtime: shiny
+    code_folding: hide
+    highlight: tango
+    theme: flatly
+    toc: true
+    number_sections: true
+    toc_float:
+      collapsed: false
+      smooth_scroll: false
+editor_options: 
+  markdown: 
+    wrap: 72
 ---
 
-background-image: url(www/bg.jpeg)
+<!-- 为了满足颜值党的差异化需求，html_document -->
+<!-- 自带了多个不同的主题。这些主题来自于 Bootswatch。可用的主题名称包括 -->
+<!-- default，cerulean，journal，flatly，darkly，readable，spacelab，united，cosmo，lumen，paper，sandstone，simplex -->
+<!-- 和 yeti 等等。 -->
+
 
 ```{r setup, include=FALSE}
-options(htmltools.dir.version = FALSE)
-knitr::opts_chunk$set(
-	echo = F,
-	message = FALSE,
-	warning = FALSE
-)
+knitr::opts_chunk$set(echo = TRUE,warning = F,message = F)
 library(plotly)
 library(gganimate)
 library(tidyverse)
 library(pedquant)
 library(leaflet)
 library(DiagrammeR)
-# background-image: url('www/ganyu.jpeg')
-# background-size: contain
-# /* 关键字 */
-# background-size: cover
-# background-size: contain
-# 
-# /* 一个值：这个值指定图片的宽度，图片的高度隐式的为 auto */
-# background-size: 50%
-# background-size: 3em
-# background-size: 12px
-# background-size: auto
-
 ```
 
-
-# myppt
-
-### <font color=Blue size=50>我是蓝色</font>
-
----
-<!-- 按顺序出现 -->
-除非你是六指琴魔，否则我建议安装 [RStudio 编辑器](https://www.rstudio.com/products/rstudio/)，它会让你做幻灯片做得飞起。
-
-- 从菜单 `File -> New File -> R Markdown -> From Template -> Ninja Presentation (Simplified Chinese)` 创建一个新文档；
-
---
-
-- 点击 `Knit` 按钮编译文档；
-
---
-
-- 或者点击 [RStudio 插件](https://rstudio.github.io/rstudioaddins/)<sup>*</sup> “Infinite Moon Reader” 在 RStudio 里实时预览幻灯片（每次你保存文档的时候，它会自动重新编译）；
-
-<!-- 尾注 -->
-.footnote[[*] 如果你看不到模板或者插件，请参见 [#2](https://github.com/yihui/xaringan/issues/2)，你的某些 R 包可能崩坏了，需要重新安装。]
+![](www/Bottom_up.svg)
 
 
----
+|主题|工具|
+|----------------|-------------------------------------------------|
+|**Domain Knownledge**| [![Machine Learning Badge](https://img.shields.io/badge/-Machine%20Learning-01D277?style=flat&logoColor=white)](https://github.com/BEPb/BEPb) [![Computer Science Development Badge](https://img.shields.io/badge/-Computer%20Science-FAB040?style=flat&logoColor=white)](https://github.com/search?q=user%3ABEPb&type=Repositories)|  
+|**地址**|[![1](https://img.shields.io/badge/status-updating-brightgreen.svg)](https://github.com/ijkchz/chz) [![2](https://img.shields.io/badge/Python-3.10-FF1493.svg)](https://github.com/python/cpython)|
 
-# R 图形
+# table {.tabset .tabset-pills}
 
-```{r plot, fig.height=3.5, message=FALSE, warning=FALSE}
-p<-ggplot(mtcars,aes(x=cyl,fill=factor(vs)))+
-  geom_bar()
-ggplotly(p)
-```
+## gt表 {.tabset .tabset-fade}
 
-
----
-
-# 动态图
-
-```{r,fig.height=3,fig.width=4}
-as.tibble(EuStockMarkets) %>% mutate(year=c(1:1860)) %>% 
-ggplot(aes(x=SMI,y=CAC)) +
-geom_point(size=1,alpha=0.6,col='red') +
-transition_states(year,
-                  transition_length = 2,
-                  state_length = 1)+
-ease_aes('linear')+
-ggtitle('Timepoints is {closest_state} \n VL(M) is ture?')+
-  shadow_mark(size = 0.5, colour = 'lightblue')
-
-```
-
----
-
-[地图学习](https://rstudio.github.io/leaflet/popups.html)
-
-# 地图模式
 ```{r}
-df <- sp::SpatialPointsDataFrame(
-  cbind(
-    (runif(4,-0.5,0.5))/2 + 112.99,  # lng
-    (runif(4,-0.5,0.5))/2 + 28.11  # lat
-  ),
-  data.frame(type = factor(
-    rep(c("pirate", "ship"),2),
-    c("ship", "pirate")
-  ))
-)
-
-oceanIcons <- iconList(
-  ship = makeIcon(iconUrl = "www/lp_lh1.png",
-  iconWidth =50, iconHeight = 50),
-  pirate = makeIcon(iconUrl = "www/lp_lh2.png",
-  iconWidth =50, iconHeight = 50)
-)
+library(tidyverse)
+library(gt)
+library(gtExtras)
 ```
 
+[学习gt表网站](https://gt.rstudio.com/reference/index.html)
 
-```{r out.width='100%', fig.height=6}
-m<-leaflet() %>% 
-  addTiles(group = "OSM (default)") %>% 
-  setView(112.99, 28.11, zoom = 10) %>% 
-  addMarkers(112.99, 28.11, popup="The birthplace of R",
-             group = "1") %>%
-  addCircleMarkers(112.99, 28.11,radius = 10, color = c('red'),
-                   group = "2") %>% 
-  addCircles(112.99, 28.11,weight = 3,radius = 10000, color =    c('red'),group = "3") %>% 
-  addRectangles(
-    lng1=113.2, lat1=28.3,lng2=112.8, lat2=27.9,fillColor = "yellow",group = "4") %>% 
-  addMarkers(data=df,icon = ~oceanIcons[type],clusterOptions = markerClusterOptions(),group = "5") %>% 
-    addLayersControl(
-    baseGroups = c("OSM (default)"),
-    overlayGroups = c("1", "2","3", "4","5"),
-    options = layersControlOptions(collapsed = FALSE),
-  )
-m
+### 表格1
+
+```{r}
+mtcars %>% 
+  head() %>% 
+  gt() %>% 
+  gt_theme_538()
 ```
 
----
+### 表格2
 
-# 可选表格
-```{r , tidy=FALSE}
-DT::datatable(
-  head(mtcars, 10),
-  fillContainer = FALSE,
-  options = list(pageLength = 8)
-)
+```{r}
+mtcars %>% 
+  head() %>% 
+  gt() %>% 
+  gt_theme_espn() %>% # gt_theme_nytimes() %>% 
+  tab_header(title = "ESPN 风格表格")
 ```
 
----
+### 颜色表格
 
-background-image: url(www/sto.png)
-background-size: 350px
-background-position: 90% 8%
+高亮行 高亮 mpg, wt 列的 1-5 行。 gt_highlight_rows
 
-# 视频
-<video src="./www/1.mp4" width="600px" height="400px" controls="controls"></video>
+```{r}
+mtcars %>% 
+  head() %>% 
+  gt() %>% 
+  gt_highlight_cols(c(cyl, vs:carb),
+                    fill = "lightblue", 
+                    alpha = .5)%>%
+  gt_highlight_rows(1:5, columns = c(mpg, wt)) %>% 
+  gt_color_rows(hp,palette = "ggsci::blue_material")
+  #palette = c("darkred", "orange")
+```
 
----
+### 增加图像
 
-# 流程图
-```{r 流程图, echo=FALSE}
+```{r}
+mtcars %>%
+  select(cyl:wt, mpg) %>% 
+  head() %>%
+  gt() %>%
+  gt_plt_bar(column = mpg, keep_column = TRUE, width = 35)
+```
+
+```{r}
+mtcars %>%
+   head() %>%
+   select(cyl, mpg) %>%
+   mutate(mpg_pct_max = round(mpg/max(mpg) * 100, digits = 2),
+                 mpg_scaled = mpg/max(mpg) * 100) %>%
+   mutate(mpg_unscaled = mpg) %>%
+   gt() %>%
+   gt_plt_bar_pct(column = mpg_scaled, scaled = TRUE) %>%
+   gt_plt_bar_pct(column = mpg_unscaled, scaled = FALSE,
+                  fill = "blue", background = "lightblue") %>%
+   cols_align("center", contains("scale")) %>%
+   cols_width(4 ~ px(125),
+              5 ~ px(125))
+```
+
+### 自定义图片
+```{r}
+a=tibble(a=c(1,2),b=c(2,3),who=c('lp1',"lp2"))
+a$b=c("./www/lp_lh1.png","./www/lp_lh2.png")
+  a %>% 
+  gt(groupname_col = "team_conf") %>%
+  # gt_merge_stack(col1 = team_nick, col2 = team_division) %>%
+  gt_img_rows(b)
+```
+
+### 美元
+
+```{r}
+start_date <- "2010-06-07"
+end_date <- "2010-06-14"
+sp500 |>
+  dplyr::filter(date >= start_date & date <= end_date) |>
+  dplyr::select(-adj_close) |>
+  gt() |>
+  tab_header(
+    title = "S&P 500",
+    subtitle = glue::glue("{start_date} to {end_date}")
+  ) |>
+  fmt_currency() |>
+  fmt_date(columns = date, date_style = "wd_m_day_year") |>
+  fmt_number(columns = volume, suffixing = TRUE)
+```
+
+## 2
+
+# Plots {.tabset .tabset-pills}
+
+## 箱线图/小提琴图
+
+```{r}
+p1<-mtcars %>% mutate(am=factor(am),
+                  vs=factor(vs)) %>% 
+  ggplot(aes(x=vs,y=mpg,fill=am))+
+  geom_violin(col="white",trim = FALSE)+
+  geom_boxplot(width=.3,position=position_dodge(width=0.9))+
+  theme_bw()+theme(legend.position = c(0.15,0.85))+
+  guides(alpha='none')+
+  labs(x='Name of person',y='Heart rate',title = "Performance on lie detector test")+
+  scale_fill_brewer(palette="Set2")
+p1
+```
+
+## p2
+
+```{r}
+mtcars %>% count(vs,cyl) %>% mutate(name=c("a","b","c","d","e")) %>% 
+  mutate_at(c('vs','cyl'),as.factor) %>% 
+  ggplot(aes(x=vs,y=n,fill=cyl,label=name))+
+  geom_bar(stat = "identity",
+           position = 'fill',col=1)+
+  geom_text(aes(label=name),size=4,vjust=0.5,position = 'fill')+
+  scale_fill_brewer(palette="Set2")+
+  # scale_fill_manual(values = heat.colors(7))+
+  # scale_fill_manual(values = terrain.colors(7))+
+  labs(title="Facebook theme",caption = "made by chz")+
+  theme(plot.title = element_text(hjust = 0.5,#居中
+                                  vjust =0,#上下
+                                  color = 'red',
+                                  face = "italic")
+  )+
+theme_minimal()
+```
+
+## 点线图
+
+```{r}
+dd<-tibble(name=rep(letters[1:10],2),health=rnorm(20,10,1),time=rep(c('a','n'),each=10))
+dd%>%ggplot(aes(x= health, y= name)) + 
+  geom_line(aes(group = name))+geom_point(aes(fill=time),shape = 21, size = 1)+
+  labs(title="Changes in health on time",x="health", y="name")+
+  theme(axis.text.y = element_text(size = 5))
+```
+
+## 树图
+
+```{r}
+library(ggplot2) 
+library(treemapify)
+
+ggplot(G20, aes(area = gdp_mil_usd, fill = hdi,label = country)) + 
+  geom_treemap()+
+  geom_treemap_text(fontface = "italic", colour = "red",
+                    place = "centre",grow = TRUE,alpha=.6)+
+  scale_fill_distiller(palette="Reds")
+# 其中place参数控制每一个方块中标签相对于四周的位置，
+# grow则控制标签是否与方块大小自适应（呈大致比例放大缩小）
+
+# 次级分组（亚群）：
+ggplot(G20, aes(area = gdp_mil_usd, fill = hdi, label = country,subgroup = region)) +
+  geom_treemap() +
+  geom_treemap_subgroup_border() +
+  geom_treemap_subgroup_text(place = "centre", grow = T,
+                             alpha = 0.8, colour ="black", fontface = "italic", min.size = 0) +
+  geom_treemap_text(colour = "red", place = "topleft", reflow = T,alpha=.5)+
+  scale_fill_distiller(palette="Reds")
+```
+
+# 仪表盘 {.tabset .tabset-pills}
+
+## 1
+```{r}
+source("gba-464-A5-laser-tag-data.R")#放在同一文件夹
+#预处理数据
+n=8#比赛场数
+scores_red=matrix(0,n,length(red_player_scores_game_1))#名字作为列名，行代表场次存放比赛成绩
+scores_green=matrix(0,n,length(green_player_scores_game_1))
+for(i in 1:n){
+  sco_red=paste0("red_player_scores_game_",i)
+  sco_green=paste0("green_player_scores_game_",i)
+  scores_red[i,]=get(sco_red)
+  scores_green[i,]=get(sco_green)
+}
+colnames(scores_green)=red_team_players
+colnames(scores_red)=green_team_players
+scores_green;scores_red#作为下列函数输入参数
+
+#1A
+partA=function(green_team_players,red_team_players){
+  cat("Part A: Team Roster Dashboard Prototype");  cat('\n');
+  cat("---------------------------------------");  cat('\n');
+  cat(paste('The green has',length(green_team_players),"players:"));cat('\n');
+  cat("palyer");cat("\t");cat(format('name',width=8,justify="c"));cat("\n")
+  for(i in 1:length(green_team_players)){
+    cat(paste(i,"\t",green_team_players[i]),fill = T)
+  }
+  cat('\n')
+  cat(paste('The red has',length(red_team_players),"players:"));cat('\n');
+  cat("palyer");cat("\t");cat(format('name',width=8,justify="c"));cat("\n")
+  for(i in 1:length(red_team_players)){
+    cat(paste(i,"\t",red_team_players[i]),fill = T)
+  }
+}
+
+partA(green_team_players,red_team_players)
+
+format("Green",width=8,justify="c")
+```
+
+## 2
+
+```{r}
+#2B
+partB=function(scores_red,scores_green){
+  cat("Part B: Game Summary Dashboard Protype A");  cat('\n');
+  cat("---------------------------------------");  cat('\n');
+  cat('\n');
+  cat("Game");cat("\t");cat(format("Green",width=8,justify="c"));cat("\t");cat(format("Red",width=8,justify="c"));cat("\n")
+  for(i in 1:nrow(scores_red)){
+    cat(paste(i,"\t",as.character(format(round(mean(scores_green[i,]),0),big.mark=','),0),"\t",as.character(format(round(mean(scores_red[i,]),0),big.mark=','))),fill = T)
+  }
+}
+
+partB(scores_red,scores_green)
+
+#3C
+partC=function(scores_red,scores_green){
+  cat("Part C: Game Summary Dashboard Prototype B");  cat('\n');
+  cat("---------------------------------------");  cat('\n');
+  cat('\n');
+  cat("Game");cat("\t");cat(format("Green",width=12,justify="c"));
+  cat(format("Red",width=12,justify="c"));
+  cat(format("Total",width=6,justify="c"));cat("\t");cat("Winner");cat("\n")
+  for(i in 1:nrow(scores_red)){
+    cat(paste(i,"\t",
+        format(round(mean(scores_green[i,]),0),width=6,justify="c",big.mark=','),
+        format(round(mean(scores_red[i,]),0),width=12,justify="c",big.mark=','),
+        format(round(mean(scores_red[i,])+mean(scores_green[i,]),0),width=6,justify="c",big.mark=','),
+        (if(mean(scores_red[i,])>mean(scores_green[i,]))'red' else 'green')),
+        fill = T)
+  }
+}
+
+partC(scores_red,scores_green)
+
+#4D
+partD=function(scores_green,scores_red){ 
+  t=0;
+  MVP=names(which(colMeans(scores_green)==max(colMeans(scores_green))))
+  stars=paste0(names(which(colMeans(scores_green)>=30000)))
+  for(i in 1:nrow(scores_green)){
+    if(mean(scores_red[i,])>mean(scores_green[i,])) t=t+1
+    }
+  cat("Part D: Green Team Post-Game Dashboard Prototype");cat('\n');
+  cat("---------------------------------------");cat('\n');
+  cat('\n');
+  cat(paste0(format("Number of Playear:",width=30,justify="l"),ncol(scores_green)));cat('\n');
+  cat(paste0(format("Games Won:",width=30,justify="l"), nrow(scores_green),"(",t/nrow(scores_green)*100,"%)"));cat('\n');
+  cat(paste0(format("Average team:",width=30,justify="l"),mean(scores_green),"points"));cat('\n');
+  cat(paste0(format("Average Individual Score:",width=30,justify="l"),mean(scores_green[,MVP]),"points"));cat('\n');
+  cat(format("Team All-Stars:",width=28,justify="l"));cat(stars[stars!=MVP]);cat('\n');
+  cat(paste0(format("Team MVP:",width=30,justify="l"),MVP,"(",sum(scores_green[,MVP]),"total points)"));cat('\n');
+}
+
+partD(scores_green,scores_red)
+
+#5E
+partE=function(scores_green){
+  d5=as.data.frame(scores_green)
+  a1=format(sapply(d5,max),big.mark=',')
+  a2=sapply(d5,which.max)
+  Best_Score=paste0(a1,"(",a2,")")
+  a3=format(sapply(d5,min),big.mark=',')
+  a4=sapply(d5,which.min)
+  Worst_Score=paste0(a3,"(",a4,")")
+  Average=format(round(sapply(d5,mean),0),big.mark=',')
+  Tolal=format(sapply(d5,sum),big.mark=',')
+  a7=round(colSums(d5)/sum(d5)*100,2)
+  Percent=paste0(a7,"%")
+  a8=data.frame(Best_Score,Worst_Score,Average,Tolal,Percent)
+  colSums(d5)/sum(d5)*100
+  cat("Part E:Player Summary Dashboard Prototype");cat('\n');
+  cat("---------------------------------------");cat('\n');
+  cat(format("Player",width=12,justify="c"));cat(format(names(a8),width=10,justify="c"));cat('\n');
+  for(i in 1:nrow(a8)){
+    cat(format(row.names(a8)[i],width=12,justify="c"))
+    for(j in 1:ncol(a8)){
+      cat(format(as.character(a8[i,j]),width=12,justify="c"))
+    }
+    cat('\n')
+  } 
+  }
+
+partE(scores_green)
+#6F
+partF=function(scores_green,scores_red){
+  d5=as.data.frame(scores_green)
+  d5red=as.data.frame(scores_red)
+  d6=cbind.data.frame(scores_green,scores_red)
+  b1=sapply(d6, sum)
+  rankname=names(sort(b1,decreasing = T))
+  rankgreen=names(sort(colSums(d5),decreasing = T))
+  rankred=names(sort(colSums(d5red),decreasing = T))
+  hhgeern=data.frame(name=rankgreen,rank1=c(1:length(rankgreen)))
+  hhred=data.frame(name=rankred,rank1=c(1:length(rankred)))
+  hh1=rbind(hhgeern,hhred)
+  hh2=data.frame(name=rankname,rank2=c(1:length(rankname)))
+  tab6=merge(hh1,hh2)
+  for(i in 1:nrow(tab6)){
+    for (j in 1:ncol(tab6)) {
+      if(nchar(tab6[i,j])<2)
+        tab6[i,j]=paste0('0',tab6[i,j])
+    }
+  }
+  tab66=data.frame(Toltal_Score=format(b1,big.mark=','),Team_rank=tab6$rank1,Overrall_rank=tab6$rank2)
+  cat("Part F: Player Rank Dashboard Prototype");cat('\n');
+  cat("---------------------------------------");cat('\n');
+  cat(format("Player",width=12,justify="c"));cat(format(names(tab66),width=12,justify="c"));cat('\n');
+  for(i in 1:nrow(tab66)){
+    cat(format(row.names(tab66)[i],width=12,justify="c"))
+    for(j in 1:ncol(tab66)){
+      cat(format(as.character(tab66[i,j]),width=12,justify="c"))
+    }
+    cat('\n')
+  }  
+}
+partF(scores_green,scores_red)
+```
+
+## 3 {#qq}
+
+```{r}
+#####part1####
+cereals=read_csv("gba-464-A6-breakfast-cereals-data.csv")
+
+#####part2####
+fun1=function(data){
+cat("PART 2: EXPLORE");cat("\n");cat(paste0(rep("-",16),collapse = ''))
+  cat('\n')
+print(data[1:4,]);cat("\n")
+cat(paste0('There are',' ',nrow(cereals),' ','rows in the data'))
+cat('\n');cat('\n')
+col_name=names(data)
+for (i in 1:length(col_name)) {
+  cat(i,'.',col_name[i],fill = T)
+}
+}
+fun1(cereals)
+
+#####part3####
+names(cereals)=c('shelf','type','calories','rating','protein','sodium','potassium','name','vitamins','weight','company','cups','fiber','carbs','fat','sugar')
+cereals<-cereals%>% 
+mutate(shelfName=case_when(shelf==1~"BottomShelf",
+                           shelf==2~"EyeLevel",
+                           shelf==3~"TopShelf"
+                           ))
+cereals<-cereals %>% 
+  mutate(caloriesPerCup=round(calories/cups),0) %>% 
+  arrange(desc(caloriesPerCup))
+
+cereals=cereals %>% mutate(company=case_when(company=='A'~"American Home Food Products",
+                                         company=='G'~"General Mills",
+                           company=='K'~"Kellogg's",
+                           company=='N'~"Nabisco",
+                           company=='P'~"Post",
+                           company=='Q'~"Quaker Oats",
+                           company=="R"~"Ralston Purina"))
+
+cereals=cereals %>% mutate(type=case_when(type=='H'~"Hot",
+                                         type=='C'~"Cold"
+                                   ))
+
+cereals$rating=round(cereals$rating,0)
+library('gt')
+a=cereals[1:10,] %>% 
+select(company,name,type,shelfName,rating,
+  caloriesPerCup,vitamins,sugar) %>% 
+gt()
+a <-a %>%tab_header(title = "Highest-Calorie Cereals")
+a
+
+#####part4####
+b=cereals %>%group_by(type) %>% 
+  summarise( averageCaloriesPerCup=mean(calories/cups,na.rm = TRUE))
+c=cereals %>% 
+  summarise( averageRating=mean(rating,na.rm = TRUE))
+
+part4=function(b,c){
+    cat("PART 4: ANALYZE");cat("\n");cat(paste0(rep("-",16),collapse = ''))
+    cat('\n');cat('\n');cat('The average calories per of cup of cold cereal:')
+    cat("\n");print(b[1,2])
+    cat('\n');cat('The average calories per of cup of hot cereal:')
+    cat("\n");print(b[2,2])
+    cat('\n');cat('The average calories per of cup of hot cereal:')
+    cat("\n");print(c)
+}
+part4(b,c)
+
+cc1=cereals%>%filter(type=='Cold') %>% select(company,name,sugar)%>%
+  arrange(desc(sugar)) 
+cc1[1:10,]%>% gt() %>% tab_header(title = "Most Sugary cereals")
+  
+
+cc2=cereals%>%filter(type=='Cold') %>% select(company,name,rating)%>%
+  arrange(rating) 
+cc2[1:10,]%>% gt() %>% tab_header(title = "Lowest-rated Cereals")
+
+cc3=cereals%>%filter(type=='Cold'&vitamins==0) %>% select(company,name,vitamins)%>%
+  arrange(name)
+cc3%>% gt() %>% tab_header(title = "Cereals with No Nutritional Value")
+
+
+
+#####part5####
+library(ggplot2)
+ggplot(cereals, aes(x=sugar,y=rating))+
+  geom_smooth(method = "lm", se=T,formula =y~x )+
+  geom_point()+xlab("Grams of Sugar Per Serving")+
+  ylab("Consumer Reposts Rating")
+
+ggplot(cereals, aes(rating)) + 
+  geom_histogram(binwidth = 5.1,color=1,fill=5)+ggtitle("Number of Cereals by Consumer Reports Rating") +
+  theme(plot.title = element_text(hjust = 0.1,size =10))+xlab("Consumer Reports Rating")+
+  ylab("Number of Cereals")
+
+
+dat1=cereals %>% filter(rating>42.8) %>% select(rating,shelfName)
+ggplot(dat1, aes(shelfName)) + 
+  geom_bar(color=1,fill=5)+ggtitle("Number of Cereals with Above Average Rating by supermarket Shelf Placement") +
+  theme(plot.title = element_text(hjust = 0.1,size =10))+xlab("Supermarket Shelf Placement
+")+
+  ylab("Number of Cereals")
+
+ggplot(cereals, aes(y=caloriesPerCup)) + 
+  geom_boxplot()+ggtitle("Box Plot for Cereal Calories Per Cup") +
+  theme(plot.title = element_text(hjust = 0.1,size =10))
+```
+
+# 画图等 {.tabset .tabset-pills}
+
+## R Markdown
+
+1.  **加粗**
+2.  *斜体*
+3.  ~~删除~~
+4.  ***斜体加粗的文字***
+
+<font color=Blue size=50>我是蓝色</font>
+
+## Slide with Bullets
+
+-   Bullet 1
+-   Bullet 2
+-   Bullet 3
+-   Bullet 4
+
+## 表格1
+
+| 姓名 | 性别 | 分数 |
+|------|:----:|-----:|
+| 小明 |  男  |  100 |
+| 小红 |  女  |   89 |
+| 小飞 |  男  |   88 |
+
+## 表格2 {data-background="www/lp_lh1.png" data-background-size="cover"}
+
+```{r}
+cars %>% flextable::as_flextable()
+```
+
+## 可查询表格
+
+```{r table}
+DT::datatable(mtcars)
+```
+
+## 时间动态图
+
+```{r,fig.height=3,fig.width=6,cache=TRUE}
+library(patchwork)
+mydat=tibble(a=rep(2000:2019,each=2),b=runif(40,1,100),c=sample(c('a','b'),40,replace = T))
+p1<-ggplot(mydat,aes(x=a,y=b,col=c,group=c))+geom_line()+geom_point()
+p2<-ggplot(mydat,aes(x=c,y=b,col=c,group=c))+geom_boxplot()
+pp<-(p1/ plot_spacer())|p2
+p1+transition_reveal(a)
+ggplotly(p1)
+ggplotly(p2)
+```
+
+## 3D玫瑰
+
+```{r 3D}
+x<- seq(0, 24) /24
+t <- seq(0, 575, by = 0.5) / 575*20 *pi + 4 *pi
+grid <- expand.grid(x = x, t = t)
+x <- matrix(grid$x, ncol = 25, byrow = TRUE)
+t <- matrix(grid$t, ncol = 25, byrow = TRUE)
+p<- (pi/2)*exp(-t/(8*pi))
+change <- sin(15 * t) /150
+u<-1-(1-(3.6*t)%%(2*pi) /pi)^4/2+change
+y <- 2*(x^2- x)^2* sin(p)
+r<- u*(x*sin(p) +y *cos(p))
+xx=r*cos(t)
+yy=r*sin(t)
+zz=u*(x*cos(p)-y*sin(p))
+plot_ly(x = ~xx, y = ~yy, z = ~zz,color = ~zz, colors = 'Reds',opacity = 0.5)%>% add_surface()->plot
+add_trace(plot,x=rep(0,4),y=rep(0,4),z=seq(-0.5,0,length=4), mode='lines', line = list(color = 'green', width = 8)) %>% 
+  add_text(x=0,y=0,z=1,text="plot by chz",list(color = 'green', size = 8))
+
+```
+
+## 流程图
+
+```{r 流程图}
+library(DiagrammeR)
 grViz("
   digraph {
 # initiate graph
@@ -215,71 +616,86 @@ blank1[label = '', width = 0.01, height = 0.01]
 ")
 ```
 
----
+## 自定义视频
 
-# 3D plot
-```{r 3D}
-x<- seq(0, 24) /24
-t <- seq(0, 575, by = 0.5) / 575*20 *pi + 4 *pi
-grid <- expand.grid(x = x, t = t)
-x <- matrix(grid$x, ncol = 25, byrow = TRUE)
-t <- matrix(grid$t, ncol = 25, byrow = TRUE)
-p<- (pi/2)*exp(-t/(8*pi))
-change <- sin(15 * t) /150
-u<-1-(1-(3.6*t)%%(2*pi) /pi)^4/2+change
-y <- 2*(x^2- x)^2* sin(p)
-r<- u*(x*sin(p) +y *cos(p))
-xx=r*cos(t)
-yy=r*sin(t)
-zz=u*(x*cos(p)-y*sin(p))
-dat<-data_frame(x=c(as.vector(t(xx)),as.vector(xx)), y =c(as.vector(t(yy)),as.vector(yy)), z=c(as.vector(t(zz)),as.vector(zz)))
-plot_ly(dat,x = ~x, y = ~y, z = ~z,type = 'scatter3d', mode = 'lines',line = list(color = ~z,alpha=0.5, reverscale = FALSE))->
-  plot 
-add_trace(plot,x=rep(0,4),y=rep(0,4),z=seq(-0.5,0,length=4), mode='lines', line = list(color = 'green', width = 8))
+<video src="./www/1.mp4" width="600px" height="400px" controls="controls">
+
+</video>
+
+## 动态图(点图)
+
+```{r,cache=TRUE,fig.height=3,fig.width=4}
+as.tibble(EuStockMarkets) %>% mutate(year=c(1:1860)) %>% 
+ggplot(aes(x=SMI,y=CAC)) +
+geom_point(size=1,alpha=0.6,col='red') +
+transition_states(year,
+                  transition_length = 2,
+                  state_length = 1)+
+ease_aes('linear')+
+ggtitle('Timepoints is {closest_state} \n VL(M) is ture?')+
+  shadow_mark(size = 0.5, colour = 'lightblue')
 ```
 
----
+## 地图leaflet
 
-# stock
-```{r echo=FALSE,include=FALSE}
-stock<-md_stock("002468.sz",from='2019-01-01',
-                       to=today(),
-                       source="163",
-                       adjust="dividend")
-mydata<-stock[[1]]%>%as_tibble() %>%
-  filter(date>ymd(20230101)) %>% 
-  mutate(date=ymd(date),xx=c(1:length(date)))
-xdat<-mydata[seq(1,nrow(mydata),30),c('xx',"date")]
-p1<-ggplot()+geom_line(data=mydata,aes(x=xx,y=close))+
-  theme_classic()+
-  theme(axis.text.x = element_blank(),
-        axis.line.x = element_blank(),
-        axis.ticks.x = element_blank())+
-  labs(x=NULL)
-p1+transition_reveal(xx)
-```
+[地图学习](https://rstudio.github.io/leaflet/popups.html)
 
----
-
-# 3D plot3
 ```{r}
-library(plotly)
-x<- seq(0, 24) /24
-t <- seq(0, 575, by = 0.5) / 575*20 *pi + 4 *pi
-grid <- expand.grid(x = x, t = t)
-x <- matrix(grid$x, ncol = 25, byrow = TRUE)
-t <- matrix(grid$t, ncol = 25, byrow = TRUE)
-p<- (pi/2)*exp(-t/(8*pi))
-change <- sin(15 * t) /150
-u<-1-(1-(3.6*t)%%(2*pi) /pi)^4/2+change
-y <- 2*(x^2- x)^2* sin(p)
-r<- u*(x*sin(p) +y *cos(p))
-xx=r*cos(t)
-yy=r*sin(t)
-zz=u*(x*cos(p)-y*sin(p))
-plot_ly(x = ~xx, y = ~yy, z = ~zz,color = ~zz, colors = 'Reds',opacity = 0.5)%>% add_surface()->plot
-add_trace(plot,x=rep(0,4),y=rep(0,4),z=seq(-0.5,0,length=4), mode='lines', line = list(color = 'green', width = 8)) %>% 
-  add_text(x=0,y=0,z=1,text="曹华彰",list(color = 'green', size = 8))
+df <- sp::SpatialPointsDataFrame(
+  cbind(
+    (runif(4,-0.5,0.5))/2 + 112.99,  # lng
+    (runif(4,-0.5,0.5))/2 + 28.11  # lat
+  ),
+  data.frame(type = factor(
+    rep(c("pirate", "ship"),2),
+    c("ship", "pirate")
+  ))
+)
 
+oceanIcons <- iconList(
+  ship = makeIcon(iconUrl = "www/lp_lh1.png",
+  iconWidth =50, iconHeight = 50),
+  pirate = makeIcon(iconUrl = "www/lp_lh2.png",
+  iconWidth =50, iconHeight = 50)
+)
 ```
 
+```{r , fig.height=6}
+m<-leaflet() %>% 
+  addTiles(group = "OSM (default)") %>% 
+  setView(112.99, 28.11, zoom = 10) %>% 
+  addMarkers(112.99, 28.11, popup="The birthplace of R",
+             group = "1") %>%
+  addCircleMarkers(112.99, 28.11,radius = 10, color = c('red'),
+                   group = "2") %>% 
+  addCircles(112.99, 28.11,weight = 3,radius = 10000, color =    c('red'),group = "3") %>% 
+  addRectangles(
+    lng1=113.2, lat1=28.3,lng2=112.8, lat2=27.9,fillColor = "yellow",group = "4") %>% 
+  addMarkers(data=df,icon = ~oceanIcons[type],clusterOptions = markerClusterOptions(),group = "5") %>% 
+    addLayersControl(
+    baseGroups = c("OSM (default)"),
+    overlayGroups = c("1", "2","3", "4","5"),
+    options = layersControlOptions(collapsed = T,autoZIndex = TRUE)
+  )
+m
+```
+
+# 免费书籍学习 {.tabset .tabset-pills}
+
+![](./www/header_.png)
+
+## 所有
+
+[bookdown](https://bookdown.org/)
+
+## 链接1
+
+<a href="https://r-graphics.org/">
+<img src="www/lp_lh2.png" alt="ss" width="100" height="200"/> </a>
+
+## 链接2
+
+<hr style="width: 90%; height: 1px; border:none; background-color: #282828">
+
+<a href="https://bookdown.org/yihui/rmarkdown-cookbook/">
+<img src="www/lp_lh1.png" alt="ss" width="100" height="200"/> </a>
