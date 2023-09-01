@@ -173,12 +173,13 @@ mtcars %>% count(vs,cyl) %>% mutate(name=c("a","b","c","d","e")) %>%
   # scale_fill_manual(values = heat.colors(7))+
   # scale_fill_manual(values = terrain.colors(7))+
   labs(title="Facebook theme",caption = "made by chz")+
+  theme_minimal()+
   theme(plot.title = element_text(hjust = 0.5,#居中
                                   vjust =0,#上下
                                   color = 'red',
                                   face = "italic")
-  )+
-theme_minimal()
+  )
+
 ```
 
 ## 点线图
@@ -680,6 +681,77 @@ m<-leaflet() %>%
 m
 ```
 
+# 线性规划  {.tabset .tabset-pills}
+
+## 问题
+
+![](www/R_exam.png)
+
+## 答案
+```{r}
+# 1
+FIB=c(1,1)
+for(i in 3:100){
+  FIB[i]=FIB[i-1]+FIB[i-2]
+}
+FIB
+# There are too many digits to display
+
+# 2
+FIBMAT=matrix(FIB,byrow =T,ncol=10)
+
+# 3
+for(i in 1:nrow(FIBMAT)){
+  FIBMAT[i,i]=FIBMAT[i,i]^2
+}
+# 4
+hist(diag(FIBMAT),col="red")
+# The distribution is mainly concentrated in the small value, 
+# there is a small number of maximum value, jump growth
+
+# 5
+t.test(FIBMAT[,1],FIBMAT[,2])
+# p=0.7475,do not reject H0, no diff
+
+# 6
+Price=readxl::read_xlsx('data.xlsx',skip = 11)
+Price=as.data.frame(Price)
+colnames(Price)[4]="A"
+head(Price,6)
+
+# 7
+Price=cbind(T=c(1:240),Price)
+plot(Price$T,Price$A,type="l")
+lines(Price$T,Price$T*0.355+176.8)
+
+
+# 8
+dat=Price$A#ts data
+AM=c()
+for(i in 7:length(dat)){
+  AM[i-6]=mean(dat[i-6:i])
+}
+head(AM) #The prediction begins with the 7 phase
+
+# 9
+xl1=dat[-239:-240]#Yn-2
+xl2=dat[c(-1,-240)]#Yn-1
+xl=dat[-1:-2]#Y The prediction begins with the third phase
+myfun<-function(myvalues){x1<-myvalues[1];x2<-myvalues[2];x3<-myvalues[3]; 
+y=x1*xl1+x2*xl2+x3
+e=abs(xl-y);sum(e)}
+AR<-optim(c(1,1,1), myfun)
+AR$par#Model coefficient
+
+# 10
+# AR
+mean(abs(xl1*(-0.5628388)+xl2*1.5582601+1.5582601-xl))
+# AM
+mean(abs(AM-dat[-1:-6]))
+# AR is better
+```
+
+
 # 免费书籍学习 {.tabset .tabset-pills}
 
 ![](./www/header_.png)
@@ -699,3 +771,16 @@ m
 
 <a href="https://bookdown.org/yihui/rmarkdown-cookbook/">
 <img src="www/lp_lh1.png" alt="ss" width="100" height="200"/> </a>
+
+# 赞助
+
+<table>
+    <tr>
+<td ><center>
+<img src="www/pay_wx.png" alt="wx" width="200" height="230" align="left"> 
+</center></td>
+<td ><center> 
+<img src="www/pay_zfb.png" alt="zfb" width="200" height="230" align="right"> 
+</center></td>
+</table>
+
