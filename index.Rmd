@@ -30,6 +30,7 @@ library(tidyverse)
 library(pedquant)
 library(leaflet)
 library(DiagrammeR)
+library(reshape2)
 ```
 
 ![](www/Bottom_up.svg)
@@ -115,12 +116,13 @@ mtcars %>%
 
 ### 自定义图片
 ```{r}
-a=tibble(a=c(1,2),b=c(2,3),who=c('lp1',"lp2"))
-a$b=c("./www/lp_lh1.png","./www/lp_lh2.png")
-  a %>% 
-  gt(groupname_col = "team_conf") %>%
+a=tibble(a=c(1:5),who=paste0('lp',1:5))
+png<-paste0("./www/",list.files("./www",pattern = ".png"))
+a$c=png[1:5]
+a$d=png[6:10]
+a%>% gt(groupname_col = "team_conf") %>% gt_img_rows(c) %>% gt_img_rows(d)
   # gt_merge_stack(col1 = team_nick, col2 = team_division) %>%
-  gt_img_rows(b)
+
 ```
 
 ### 美元
@@ -215,6 +217,78 @@ ggplot(G20, aes(area = gdp_mil_usd, fill = hdi, label = country,subgroup = regio
   geom_treemap_text(colour = "red", place = "topleft", reflow = T,alpha=.5)+
   scale_fill_distiller(palette="Reds")
 ```
+
+## 交互图
+```{r}
+library(ggiraph)
+data <- mtcars
+data$carname <- row.names(data)
+
+gg_point = ggplot(data = data) +
+  geom_point_interactive(aes(x = wt, y = qsec, color = disp,
+                             tooltip = carname, data_id = carname)) + 
+  theme_minimal()
+
+girafe(ggobj = gg_point)
+
+```
+
+
+
+## 自定义
+```{r}
+library(magick)
+library(grid)
+library(ggplot2)
+# install.packages("palmerpenguins")
+library(palmerpenguins)
+p<-ggplot(penguins,aes(x = species, y = body_mass_g)) +
+  geom_violin(width=0.5,cex=1.2,aes(fill = species),alpha=0.5) +
+  geom_boxplot(width=0.1,cex=1.2)+
+  geom_jitter(width = 0.2)+
+  scale_y_continuous(limits = c(2500,8000))+
+  theme_classic(base_size = 20) +
+  scale_fill_manual(values = c("darkorange","purple","cyan4"))
+```
+
+
+```{r}
+p
+image <- image_read('www/lp_lh1.png') #magick包的函数读取图片
+grid.raster(image, x=0.25, y=0.65, height=0.2) #grid包的函数，叠加图片到现有绘图上
+image <- image_read('www/lp_lh2.png') 
+grid.raster(image, x=0.45, y=0.65, height=0.2)
+image <- image_read('www/lh_2.png') 
+grid.raster(image, x=0.65, y=0.85, height=0.2)
+```
+
+
+```{r,cache=TRUE}
+library(png) #读取.png图片
+library(jpeg) #读取jpeg图片
+library(grid)
+library(ggimage) #ggplot2扩展包，配合ggplot2绘图
+
+
+t=seq(0, 2*pi, by=0.2)
+x=16*sin(t)^3
+y=13*cos(t)-5*cos(2*t)-2*cos(3*t)-cos(4*t)
+a=(x-min(x))/(max(x)-min(x))
+b=(y-min(y))/(max(y)-min(y))
+bg_img <- image_read('www/xg1.png') 
+bees <- data_frame(x=a,y=b)
+bees$image <- rep(c("www/lp_lh1.png",NA,"www/lh_sm.png",NA),times=8)
+
+ggplot(data = bees, aes(x = x, y = y))+
+  theme_bw(base_size = 20)+
+  annotation_custom(rasterGrob(bg_img, 
+                               width = unit(1,"npc"),
+                               height = unit(1,"npc")), 
+                    -Inf, Inf, -Inf, Inf)+
+  geom_image(aes(image = image), size = 0.1)
+```
+
+
 
 # 仪表盘 {.tabset .tabset-pills}
 
@@ -377,11 +451,11 @@ partF=function(scores_green,scores_red){
 partF(scores_green,scores_red)
 ```
 
-## 3 {#qq}
+## 3
 
 ```{r}
 #####part1####
-cereals=read_csv("gba-464-A6-breakfast-cereals-data.csv")
+cereals=read_csv("data/gba-464-A6-breakfast-cereals-data.csv")
 
 #####part2####
 fun1=function(data){
@@ -497,14 +571,11 @@ ggplot(cereals, aes(y=caloriesPerCup)) +
 
 <font color=Blue size=50>我是蓝色</font>
 
-## Slide with Bullets
-
 -   Bullet 1
 -   Bullet 2
 -   Bullet 3
 -   Bullet 4
 
-## 表格1
 
 | 姓名 | 性别 | 分数 |
 |------|:----:|-----:|
@@ -512,7 +583,7 @@ ggplot(cereals, aes(y=caloriesPerCup)) +
 | 小红 |  女  |   89 |
 | 小飞 |  男  |   88 |
 
-## 表格2 {data-background="www/lp_lh1.png" data-background-size="cover"}
+## 表格2
 
 ```{r}
 cars %>% flextable::as_flextable()
@@ -532,13 +603,18 @@ mydat=tibble(a=rep(2000:2019,each=2),b=runif(40,1,100),c=sample(c('a','b'),40,re
 p1<-ggplot(mydat,aes(x=a,y=b,col=c,group=c))+geom_line()+geom_point()
 p2<-ggplot(mydat,aes(x=c,y=b,col=c,group=c))+geom_boxplot()
 pp<-(p1/ plot_spacer())|p2
+pp
 p1+transition_reveal(a)
-ggplotly(p1)
-ggplotly(p2)
+subplot(ggplotly(p1), 
+             ggplotly(p2), 
+             widths = c(.4, .6), 
+             titleY  = TRUE, titleX = TRUE) %>%
+  layout(showlegend = FALSE)
 ```
 
 ## 3D玫瑰
-
+<http://www.rebeccabarter.com/blog/2017-04-20-interactive/>
+<https://davidgohel.github.io/ggiraph/index.html>
 ```{r 3D}
 x<- seq(0, 24) /24
 t <- seq(0, 575, by = 0.5) / 575*20 *pi + 4 *pi
@@ -637,7 +713,9 @@ ggtitle('Timepoints is {closest_state} \n VL(M) is ture?')+
   shadow_mark(size = 0.5, colour = 'lightblue')
 ```
 
-## 地图leaflet
+## 地图leaflet{.tabset .tabset-fade}
+
+### 1
 
 [地图学习](https://rstudio.github.io/leaflet/popups.html)
 
@@ -661,6 +739,7 @@ oceanIcons <- iconList(
 )
 ```
 
+
 ```{r , fig.height=6}
 m<-leaflet() %>% 
   addTiles(group = "OSM (default)") %>% 
@@ -680,6 +759,43 @@ m<-leaflet() %>%
   )
 m
 ```
+
+### 北京
+
+```{r}
+library(leaflet)
+# install.packages("leafletCN")
+library(leafletCN) # 提供 geojsonMap 函数
+dat <- data.frame(name = regionNames("china"), value = runif(34))
+# 还有很多其他参数设置，类似 leaflet::leaflet
+geojsonMap(dat, mapName = "china", palette = "RdBu", colorMethod = "bin")
+
+dat <- data.frame(name = regionNames("北京"), value = runif(18))
+geojsonMap(dat, mapName = "北京", palette = "RdBu", colorMethod = "bin")
+
+dat <- data.frame(name = regionNames("邵阳"), value = runif(12))
+geojsonMap(dat, mapName = "邵阳", palette = "RdBu", colorMethod = "bin")
+```
+
+### 省区地图
+
+```{r}
+library(sf)
+load('data/chinamap.RData')
+shaoyang_map <- china_map[china_map$NAME_1 == "Hunan" & china_map$NAME_2 == "Shaoyang", ]
+plot(shaoyang_map["NAME_3"], main = "", key.pos = NULL)
+pal=colorFactor(palette='YlOrRd',shaoyang_map$NAME_3)
+leaflet(shaoyang_map) %>%
+  addPolygons(color = "#444444", 
+              weight = 1, smoothFactor = 0.5,
+              opacity = 1.0, fillOpacity = 0.5,
+              fillColor = ~pal(NAME_3),
+              highlightOptions = highlightOptions(color = "white", weight = 2,
+                                                  bringToFront = TRUE))
+```
+
+
+
 
 # 线性规划  {.tabset .tabset-pills}
 
@@ -714,7 +830,7 @@ t.test(FIBMAT[,1],FIBMAT[,2])
 # p=0.7475,do not reject H0, no diff
 
 # 6
-Price=readxl::read_xlsx('data.xlsx',skip = 11)
+Price=readxl::read_xlsx('data/data.xlsx',skip = 11)
 Price=as.data.frame(Price)
 colnames(Price)[4]="A"
 head(Price,6)
@@ -752,13 +868,120 @@ mean(abs(AM-dat[-1:-6]))
 ```
 
 
+
+# PCA&因子  {.tabset .tabset-pills}
+
+## PCA
+```{r,cache=TRUE}
+dat=read_table('data/data-final.csv')
+mydata=dat[,1:50]
+mydata=na.omit(mydata)
+scale_data <- scale(mydata)
+PCA <- prcomp(scale_data)
+eigs_B <- PCA$sdev^2
+pve<-eigs_B/sum(eigs_B)
+cumsum(pve)
+data.frame(variance_explained=pve[1:10],components=factor(paste0('PC',c(1:10)),level=paste0('PC',c(1:10)))) %>% 
+ggplot(aes(x=components,y=variance_explained))+geom_bar(fill="green4",stat = 'identity')
+```
+
+
+```{r,cache=TRUE,fig.height=6}
+pca19=PCA$rotation[,1:19]
+melt(pca19)%>% 
+ggplot(mapping = aes(x =Var2 , y = Var1, fill = value)) + geom_tile() + scale_fill_gradient2(mid="white",low = 'blue', high = 'red') + xlab('components')+ylab('')
+```
+
+
+## 因子
+
+```{r}
+mod1=factanal(covmat=cov(mydata), factors=5, rotation="none")
+mod1$loadings
+```
+5 factors with no rotation can explained 38.9% the total variance.
+
+```{r}
+mod2=factanal(covmat=cov(mydata), factors=5, rotation="varimax")
+out=loadings(mod2)
+
+```
+I will do not add another one,5 factors can express all the problems on loading.
+
+```{r}
+myout=as.data.frame(out[,1:5])
+myout$name=dimnames(out)[[1]]
+melt(myout,id='name') %>% ggplot(mapping = aes(x =variable , y = name, fill = value)) + geom_tile() + scale_fill_gradient2(mid="white",low = 'blue', high = 'red') + xlab('')+ylab('')
+theme(axis.text.x = element_blank ())
+
+```
+
+- Factor1 means EXP: Social Extroversion 
+- Factor2 means EST: Emotional Stability 
+- Factor3 means ARG: Social Concern
+- Factor4 means OPN: Openness to Experience
+- Factor5 means CSN: Conscientiousness 
+
+
+```{r,cache=TRUE}
+# library(psych)
+# fa.out=fa(cor(mydata), nfactors=5, rotation="varimax",fm="pa")
+# fa.diagram(fa.out)
+```
+
+
+# 图片&文字 {.tabset .tabset-pills}
+
+## 图片转文字 
+```{r}
+library('tesseract')
+knitr::include_graphics('www/png_to_word.png')
+#tesseract_info()
+text_1<-ocr('www/png_to_word.png', engine = tesseract("eng"))
+cat(text_1) 
+```
+
+
+
+
+## 图像识别
+```{r}
+library(EBImage)
+img = readImage('www/lp_xg1.png')
+display(img, method="raster")
+dim(img)
+imageData(img)[1:3, 1:6,1]
+hist(img)
+range(img)
+# img_crop = img[366:749, 58:441,1]
+# img_thresh = img_crop > .5
+# display(img_thresh)
+# img_translate = translate(img, c(100,-50))
+# display(img_translate)
+
+img_rotate = rotate(img, 30, bg.col = "white")
+display(img_rotate)
+```
+
+
+
 # 免费书籍学习 {.tabset .tabset-pills}
 
 ![](./www/header_.png)
 
-## 所有
+## lecture
 
-[bookdown](https://bookdown.org/)
+[CVboot.pdf](Lecture_export/Lecture 7/CVboot.pdf) 
+
+## 写过的部分课程
+```{r, out.width = '25%',fig.width=6}
+file=list.files("./www/school")
+pngall=paste0("./www/school/",file)
+knitr::include_graphics(pngall)
+
+```
+
+
 
 ## 链接1
 
@@ -771,6 +994,8 @@ mean(abs(AM-dat[-1:-6]))
 
 <a href="https://bookdown.org/yihui/rmarkdown-cookbook/">
 <img src="www/lp_lh1.png" alt="ss" width="100" height="200"/> </a>
+
+
 
 # 赞助
 
