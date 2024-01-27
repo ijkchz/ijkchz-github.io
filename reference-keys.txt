@@ -38,6 +38,12 @@ option
 section
 极值黑塞矩阵
 app
+用户表
+更新--
+增加--
+删除--
+表结构
+重命名表
 ab-test
 pca-and-xgboot
 数据
@@ -64,6 +70,11 @@ dbscan
 后退法
 lasso
 偏最小二乘
+地图-1
+sales-forecast
+sales-by-state
+sales-by-category
+best-sellers
 sound
 写过的部分课程
 赞助可怜

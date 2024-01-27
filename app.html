@@ -89,6 +89,47 @@
 <link href="libs/dt-core/css/jquery.dataTables.min.css" rel="stylesheet" />
 <link href="libs/dt-core/css/jquery.dataTables.extra.css" rel="stylesheet" />
 <script src="libs/dt-core/js/jquery.dataTables.min.js"></script>
+<script src="libs/proj4js/proj4.js"></script>
+<link href="libs/highcharts/css/motion.css" rel="stylesheet" />
+<script src="libs/highcharts/highcharts.js"></script>
+<script src="libs/highcharts/highcharts-3d.js"></script>
+<script src="libs/highcharts/highcharts-more.js"></script>
+<script src="libs/highcharts/modules/stock.js"></script>
+<script src="libs/highcharts/modules/map.js"></script>
+<script src="libs/highcharts/modules/data.js"></script>
+<script src="libs/highcharts/modules/exporting.js"></script>
+<script src="libs/highcharts/modules/offline-exporting.js"></script>
+<script src="libs/highcharts/modules/drilldown.js"></script>
+<script src="libs/highcharts/modules/item-series.js"></script>
+<script src="libs/highcharts/modules/overlapping-datalabels.js"></script>
+<script src="libs/highcharts/modules/annotations.js"></script>
+<script src="libs/highcharts/modules/export-data.js"></script>
+<script src="libs/highcharts/modules/funnel.js"></script>
+<script src="libs/highcharts/modules/heatmap.js"></script>
+<script src="libs/highcharts/modules/treemap.js"></script>
+<script src="libs/highcharts/modules/sankey.js"></script>
+<script src="libs/highcharts/modules/dependency-wheel.js"></script>
+<script src="libs/highcharts/modules/organization.js"></script>
+<script src="libs/highcharts/modules/solid-gauge.js"></script>
+<script src="libs/highcharts/modules/streamgraph.js"></script>
+<script src="libs/highcharts/modules/sunburst.js"></script>
+<script src="libs/highcharts/modules/vector.js"></script>
+<script src="libs/highcharts/modules/wordcloud.js"></script>
+<script src="libs/highcharts/modules/xrange.js"></script>
+<script src="libs/highcharts/modules/tilemap.js"></script>
+<script src="libs/highcharts/modules/venn.js"></script>
+<script src="libs/highcharts/modules/gantt.js"></script>
+<script src="libs/highcharts/modules/timeline.js"></script>
+<script src="libs/highcharts/modules/parallel-coordinates.js"></script>
+<script src="libs/highcharts/modules/bullet.js"></script>
+<script src="libs/highcharts/modules/coloraxis.js"></script>
+<script src="libs/highcharts/modules/dumbbell.js"></script>
+<script src="libs/highcharts/modules/lollipop.js"></script>
+<script src="libs/highcharts/modules/series-label.js"></script>
+<script src="libs/highcharts/plugins/motion.js"></script>
+<script src="libs/highcharts/custom/reset.js"></script>
+<script src="libs/highcharts/modules/boost.js"></script>
+<script src="libs/highchart-binding/highchart.js"></script>
 
 
 <style type="text/css">
@@ -257,9 +298,17 @@ div.csl-indent {
 <li class="chapter" data-level="3.4.2" data-path="数学.html"><a href="数学.html#极值黑塞矩阵"><i class="fa fa-check"></i><b>3.4.2</b> 极值黑塞矩阵</a></li>
 </ul></li>
 </ul></li>
-<li class="chapter" data-level="4" data-path="app.html"><a href="app.html"><i class="fa fa-check"></i><b>4</b> app</a></li>
+<li class="chapter" data-level="4" data-path="app.html"><a href="app.html"><i class="fa fa-check"></i><b>4</b> app</a>
+<ul>
+<li class="chapter" data-level="4.0.1" data-path="app.html"><a href="app.html#用户表"><i class="fa fa-check"></i><b>4.0.1</b> 用户表</a></li>
+<li class="chapter" data-level="4.1" data-path="app.html"><a href="app.html#更新--"><i class="fa fa-check"></i><b>4.1</b> 更新 ———————————————————————-</a></li>
+<li class="chapter" data-level="4.2" data-path="app.html"><a href="app.html#增加--"><i class="fa fa-check"></i><b>4.2</b> 增加 ———————————————————————-</a></li>
+<li class="chapter" data-level="4.3" data-path="app.html"><a href="app.html#删除--"><i class="fa fa-check"></i><b>4.3</b> 删除 ———————————————————————-</a></li>
+<li class="chapter" data-level="4.4" data-path="app.html"><a href="app.html#表结构"><i class="fa fa-check"></i><b>4.4</b> 表结构 ———————————————————————</a></li>
+<li class="chapter" data-level="4.5" data-path="app.html"><a href="app.html#重命名表"><i class="fa fa-check"></i><b>4.5</b> 重命名表</a></li>
+</ul></li>
 <li class="chapter" data-level="5" data-path="ab-test.html"><a href="ab-test.html"><i class="fa fa-check"></i><b>5</b> AB-test</a></li>
-<li class="chapter" data-level="6" data-path="pca-and-xgboot.html"><a href="pca-and-xgboot.html"><i class="fa fa-check"></i><b>6</b> pca and xgboot、</a>
+<li class="chapter" data-level="6" data-path="pca-and-xgboot.html"><a href="pca-and-xgboot.html"><i class="fa fa-check"></i><b>6</b> pca and xgboot</a>
 <ul>
 <li class="chapter" data-level="6.1" data-path="pca-and-xgboot.html"><a href="pca-and-xgboot.html#数据"><i class="fa fa-check"></i><b>6.1</b> 数据</a></li>
 <li class="chapter" data-level="6.2" data-path="pca-and-xgboot.html"><a href="pca-and-xgboot.html#主成分分析"><i class="fa fa-check"></i><b>6.2</b> 主成分分析</a></li>
@@ -298,6 +347,15 @@ div.csl-indent {
 <li class="chapter" data-level="8.3.3" data-path="回归.html"><a href="回归.html#偏最小二乘"><i class="fa fa-check"></i><b>8.3.3</b> 偏最小二乘</a></li>
 </ul></li>
 </ul></li>
+<li class="chapter" data-level="9" data-path="地图-1.html"><a href="地图-1.html"><i class="fa fa-check"></i><b>9</b> 地图</a>
+<ul>
+<li class="chapter" data-level="9.1" data-path="地图-1.html"><a href="地图-1.html#sales-forecast"><i class="fa fa-check"></i><b>9.1</b> Sales Forecast</a>
+<ul>
+<li class="chapter" data-level="9.1.1" data-path="地图-1.html"><a href="地图-1.html#sales-by-state"><i class="fa fa-check"></i><b>9.1.1</b> Sales by State</a></li>
+<li class="chapter" data-level="9.1.2" data-path="地图-1.html"><a href="地图-1.html#sales-by-category"><i class="fa fa-check"></i><b>9.1.2</b> Sales by Category</a></li>
+<li class="chapter" data-level="9.1.3" data-path="地图-1.html"><a href="地图-1.html#best-sellers"><i class="fa fa-check"></i><b>9.1.3</b> Best Sellers</a></li>
+</ul></li>
+</ul></li>
 <li class="appendix"><span><b>附录</b></span></li>
 <li class="chapter" data-level="A" data-path="sound.html"><a href="sound.html"><i class="fa fa-check"></i><b>A</b> 结尾</a>
 <ul>
@@ -327,11 +385,115 @@ div.csl-indent {
             <section class="normal" id="section-">
 <div id="app" class="section level1 hasAnchor" number="4">
 <h1><span class="header-section-number">第 4 章</span> app<a href="app.html#app" class="anchor-section" aria-label="Anchor link to header"></a></h1>
+<div id="用户表" class="section level3 hasAnchor" number="4.0.1">
+<h3><span class="header-section-number">4.0.1</span> 用户表<a href="app.html#用户表" class="anchor-section" aria-label="Anchor link to header"></a></h3>
 <details class=chunk-details><summary class=chunk-summary><span class=chunk-summary-text>Code</span></summary>
 <div class="sourceCode" id="cb97"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb97-1"><a href="app.html#cb97-1" tabindex="-1"></a><span class="co"># knitr::include_app(&quot; https://chz111.shinyapps.io/shiny_2sql/&quot;,</span></span>
-<span id="cb97-2"><a href="app.html#cb97-2" tabindex="-1"></a><span class="co">#   height = &quot;600px&quot;)</span></span></code></pre></div>
+<span id="cb97-2"><a href="app.html#cb97-2" tabindex="-1"></a><span class="co">#   height = &quot;600px&quot;)</span></span>
+<span id="cb97-3"><a href="app.html#cb97-3" tabindex="-1"></a>user_base<span class="ot">=</span><span class="fu">dbReadTable</span>(conn, <span class="st">&quot;Users&quot;</span>)</span>
+<span id="cb97-4"><a href="app.html#cb97-4" tabindex="-1"></a>user_base <span class="sc">|&gt;</span> knitr<span class="sc">::</span><span class="fu">kable</span>()</span></code></pre></div>
 </details>
+<table>
+<colgroup>
+<col width="8%" />
+<col width="13%" />
+<col width="24%" />
+<col width="4%" />
+<col width="43%" />
+<col width="5%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th align="right">id</th>
+<th align="left">name</th>
+<th align="left">password</th>
+<th align="right">Lv</th>
+<th align="left">Description</th>
+<th align="right">deps</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="right">100001</td>
+<td align="left">caohuazhang</td>
+<td align="left">Cao123456</td>
+<td align="right">999</td>
+<td align="left">我无语了，哈哈哈</td>
+<td align="right">NA</td>
+</tr>
+<tr class="even">
+<td align="right">292096</td>
+<td align="left">indie</td>
+<td align="left">123456</td>
+<td align="right">100</td>
+<td align="left">我无语了，哈哈哈,是你家啊身上看到你撒</td>
+<td align="right">NA</td>
+</tr>
+<tr class="odd">
+<td align="right">521639</td>
+<td align="left">曹华彰</td>
+<td align="left">xampU0-tukwax-bymkyn</td>
+<td align="right">12</td>
+<td align="left">niahsandcas</td>
+<td align="right">NA</td>
+</tr>
+<tr class="even">
+<td align="right">204941</td>
+<td align="left">sis</td>
+<td align="left">xampU0-tukwax-bymkyn</td>
+<td align="right">1</td>
+<td align="left">sahsdasjdbaswdadxas</td>
+<td align="right">NA</td>
+</tr>
+<tr class="odd">
+<td align="right">809583</td>
+<td align="left">纯原创网站</td>
+<td align="left">qysciw-gihhuz-4syHda</td>
+<td align="right">100</td>
+<td align="left">你在哪睡觉啊</td>
+<td align="right">NA</td>
+</tr>
+<tr class="even">
+<td align="right">631580</td>
+<td align="left">chz</td>
+<td align="left">Cao123456</td>
+<td align="right">999</td>
+<td align="left">ss</td>
+<td align="right">2</td>
+</tr>
+</tbody>
+</table>
+<p>octopus::view_database(conn)</p>
+</div>
+<div id="更新--" class="section level2 hasAnchor" number="4.1">
+<h2><span class="header-section-number">4.1</span> 更新 ———————————————————————-<a href="app.html#更新--" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>dbSendQuery(conn,“UPDATE Users SET deps = 2, Description = ‘ss’ WHERE id=631580”)</p>
+</div>
+<div id="增加--" class="section level2 hasAnchor" number="4.2">
+<h2><span class="header-section-number">4.2</span> 增加 ———————————————————————-<a href="app.html#增加--" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>dbSendQuery(conn,“INSERT INTO Users
+VALUES(631580,‘chz’,‘Cao123456’,999,‘new data’,2)”)</p>
+</div>
+<div id="删除--" class="section level2 hasAnchor" number="4.3">
+<h2><span class="header-section-number">4.3</span> 删除 ———————————————————————-<a href="app.html#删除--" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>dbSendQuery(conn,“DELETE FROM Users
+WHERE id=631580”)</p>
+</div>
+<div id="表结构" class="section level2 hasAnchor" number="4.4">
+<h2><span class="header-section-number">4.4</span> 表结构 ———————————————————————<a href="app.html#表结构" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<ul>
+<li><p>dbSendQuery(conn,“alter table Users
+add column dep varchar(32) default NULL
+after Description”)</p></li>
+<li><p>dbSendQuery(conn,“alter table Users change dep deps integer”)</p></li>
+<li><p>dbSendQuery(conn,“alter table Users drop column dep”)</p></li>
+</ul>
+</div>
+<div id="重命名表" class="section level2 hasAnchor" number="4.5">
+<h2><span class="header-section-number">4.5</span> 重命名表<a href="app.html#重命名表" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>alter table t1 rename t2</p>
 
+</div>
 </div>
             </section>
 
@@ -370,7 +532,7 @@ gitbook.start({
 "size": 2
 },
 "edit": {
-"link": "https://github.com/yihui/bookdown-chinese/edit/master/04-实时.Rmd",
+"link": "https://github.com/yihui/bookdown-chinese/edit/master/04-sql.Rmd",
 "text": "编辑"
 },
 "history": {

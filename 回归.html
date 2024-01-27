@@ -31,7 +31,7 @@
   
   <link rel="shortcut icon" href="www/lh_2.png" type="image/x-icon" />
 <link rel="prev" href="聚类.html"/>
-<link rel="next" href="sound.html"/>
+<link rel="next" href="地图-1.html"/>
 <script src="libs/jquery/jquery-3.6.0.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/fuse.js@6.4.6/dist/fuse.min.js"></script>
 <link href="libs/gitbook/css/style.css" rel="stylesheet" />
@@ -89,6 +89,47 @@
 <link href="libs/dt-core/css/jquery.dataTables.min.css" rel="stylesheet" />
 <link href="libs/dt-core/css/jquery.dataTables.extra.css" rel="stylesheet" />
 <script src="libs/dt-core/js/jquery.dataTables.min.js"></script>
+<script src="libs/proj4js/proj4.js"></script>
+<link href="libs/highcharts/css/motion.css" rel="stylesheet" />
+<script src="libs/highcharts/highcharts.js"></script>
+<script src="libs/highcharts/highcharts-3d.js"></script>
+<script src="libs/highcharts/highcharts-more.js"></script>
+<script src="libs/highcharts/modules/stock.js"></script>
+<script src="libs/highcharts/modules/map.js"></script>
+<script src="libs/highcharts/modules/data.js"></script>
+<script src="libs/highcharts/modules/exporting.js"></script>
+<script src="libs/highcharts/modules/offline-exporting.js"></script>
+<script src="libs/highcharts/modules/drilldown.js"></script>
+<script src="libs/highcharts/modules/item-series.js"></script>
+<script src="libs/highcharts/modules/overlapping-datalabels.js"></script>
+<script src="libs/highcharts/modules/annotations.js"></script>
+<script src="libs/highcharts/modules/export-data.js"></script>
+<script src="libs/highcharts/modules/funnel.js"></script>
+<script src="libs/highcharts/modules/heatmap.js"></script>
+<script src="libs/highcharts/modules/treemap.js"></script>
+<script src="libs/highcharts/modules/sankey.js"></script>
+<script src="libs/highcharts/modules/dependency-wheel.js"></script>
+<script src="libs/highcharts/modules/organization.js"></script>
+<script src="libs/highcharts/modules/solid-gauge.js"></script>
+<script src="libs/highcharts/modules/streamgraph.js"></script>
+<script src="libs/highcharts/modules/sunburst.js"></script>
+<script src="libs/highcharts/modules/vector.js"></script>
+<script src="libs/highcharts/modules/wordcloud.js"></script>
+<script src="libs/highcharts/modules/xrange.js"></script>
+<script src="libs/highcharts/modules/tilemap.js"></script>
+<script src="libs/highcharts/modules/venn.js"></script>
+<script src="libs/highcharts/modules/gantt.js"></script>
+<script src="libs/highcharts/modules/timeline.js"></script>
+<script src="libs/highcharts/modules/parallel-coordinates.js"></script>
+<script src="libs/highcharts/modules/bullet.js"></script>
+<script src="libs/highcharts/modules/coloraxis.js"></script>
+<script src="libs/highcharts/modules/dumbbell.js"></script>
+<script src="libs/highcharts/modules/lollipop.js"></script>
+<script src="libs/highcharts/modules/series-label.js"></script>
+<script src="libs/highcharts/plugins/motion.js"></script>
+<script src="libs/highcharts/custom/reset.js"></script>
+<script src="libs/highcharts/modules/boost.js"></script>
+<script src="libs/highchart-binding/highchart.js"></script>
 
 
 <style type="text/css">
@@ -257,9 +298,17 @@ div.csl-indent {
 <li class="chapter" data-level="3.4.2" data-path="数学.html"><a href="数学.html#极值黑塞矩阵"><i class="fa fa-check"></i><b>3.4.2</b> 极值黑塞矩阵</a></li>
 </ul></li>
 </ul></li>
-<li class="chapter" data-level="4" data-path="app.html"><a href="app.html"><i class="fa fa-check"></i><b>4</b> app</a></li>
+<li class="chapter" data-level="4" data-path="app.html"><a href="app.html"><i class="fa fa-check"></i><b>4</b> app</a>
+<ul>
+<li class="chapter" data-level="4.0.1" data-path="app.html"><a href="app.html#用户表"><i class="fa fa-check"></i><b>4.0.1</b> 用户表</a></li>
+<li class="chapter" data-level="4.1" data-path="app.html"><a href="app.html#更新--"><i class="fa fa-check"></i><b>4.1</b> 更新 ———————————————————————-</a></li>
+<li class="chapter" data-level="4.2" data-path="app.html"><a href="app.html#增加--"><i class="fa fa-check"></i><b>4.2</b> 增加 ———————————————————————-</a></li>
+<li class="chapter" data-level="4.3" data-path="app.html"><a href="app.html#删除--"><i class="fa fa-check"></i><b>4.3</b> 删除 ———————————————————————-</a></li>
+<li class="chapter" data-level="4.4" data-path="app.html"><a href="app.html#表结构"><i class="fa fa-check"></i><b>4.4</b> 表结构 ———————————————————————</a></li>
+<li class="chapter" data-level="4.5" data-path="app.html"><a href="app.html#重命名表"><i class="fa fa-check"></i><b>4.5</b> 重命名表</a></li>
+</ul></li>
 <li class="chapter" data-level="5" data-path="ab-test.html"><a href="ab-test.html"><i class="fa fa-check"></i><b>5</b> AB-test</a></li>
-<li class="chapter" data-level="6" data-path="pca-and-xgboot.html"><a href="pca-and-xgboot.html"><i class="fa fa-check"></i><b>6</b> pca and xgboot、</a>
+<li class="chapter" data-level="6" data-path="pca-and-xgboot.html"><a href="pca-and-xgboot.html"><i class="fa fa-check"></i><b>6</b> pca and xgboot</a>
 <ul>
 <li class="chapter" data-level="6.1" data-path="pca-and-xgboot.html"><a href="pca-and-xgboot.html#数据"><i class="fa fa-check"></i><b>6.1</b> 数据</a></li>
 <li class="chapter" data-level="6.2" data-path="pca-and-xgboot.html"><a href="pca-and-xgboot.html#主成分分析"><i class="fa fa-check"></i><b>6.2</b> 主成分分析</a></li>
@@ -296,6 +345,15 @@ div.csl-indent {
 <li class="chapter" data-level="8.3.1" data-path="回归.html"><a href="回归.html#后退法"><i class="fa fa-check"></i><b>8.3.1</b> 后退法</a></li>
 <li class="chapter" data-level="8.3.2" data-path="回归.html"><a href="回归.html#lasso"><i class="fa fa-check"></i><b>8.3.2</b> lasso</a></li>
 <li class="chapter" data-level="8.3.3" data-path="回归.html"><a href="回归.html#偏最小二乘"><i class="fa fa-check"></i><b>8.3.3</b> 偏最小二乘</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="9" data-path="地图-1.html"><a href="地图-1.html"><i class="fa fa-check"></i><b>9</b> 地图</a>
+<ul>
+<li class="chapter" data-level="9.1" data-path="地图-1.html"><a href="地图-1.html#sales-forecast"><i class="fa fa-check"></i><b>9.1</b> Sales Forecast</a>
+<ul>
+<li class="chapter" data-level="9.1.1" data-path="地图-1.html"><a href="地图-1.html#sales-by-state"><i class="fa fa-check"></i><b>9.1.1</b> Sales by State</a></li>
+<li class="chapter" data-level="9.1.2" data-path="地图-1.html"><a href="地图-1.html#sales-by-category"><i class="fa fa-check"></i><b>9.1.2</b> Sales by Category</a></li>
+<li class="chapter" data-level="9.1.3" data-path="地图-1.html"><a href="地图-1.html#best-sellers"><i class="fa fa-check"></i><b>9.1.3</b> Best Sellers</a></li>
 </ul></li>
 </ul></li>
 <li class="appendix"><span><b>附录</b></span></li>
@@ -779,7 +837,7 @@ div.csl-indent {
 <span id="cb215-4"><a href="回归.html#cb215-4" tabindex="-1"></a>     <span class="at">xlab=</span><span class="st">&#39;time&#39;</span>,<span class="at">ylab=</span><span class="st">&#39;concentration&#39;</span>)</span>
 <span id="cb215-5"><a href="回归.html#cb215-5" tabindex="-1"></a><span class="fu">points</span>(data<span class="sc">$</span>Time,data<span class="sc">$</span>Concentration,<span class="at">pch=</span><span class="dv">20</span>,<span class="at">cex=</span><span class="fl">0.5</span>,<span class="at">col=</span><span class="st">&quot;blue4&quot;</span>)</span></code></pre></div>
 </details>
-<p><img src="bookdown_files/figure-html/unnamed-chunk-88-1.png" width="480" /></p>
+<p><img src="bookdown_files/figure-html/unnamed-chunk-89-1.png" width="480" /></p>
 <p><span class="math display">\[y=log(c)+(b-1)*log(\frac{x}{a})-(x/a)^b\]</span></p>
 <details class=chunk-details><summary class=chunk-summary><span class=chunk-summary-text>Code</span></summary>
 <div class="sourceCode" id="cb216"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb216-1"><a href="回归.html#cb216-1" tabindex="-1"></a><span class="co"># 2</span></span>
@@ -814,7 +872,7 @@ div.csl-indent {
 <span id="cb218-4"><a href="回归.html#cb218-4" tabindex="-1"></a><span class="fu">plot</span>(x,y,<span class="at">cex=</span><span class="fl">0.6</span>)</span>
 <span id="cb218-5"><a href="回归.html#cb218-5" tabindex="-1"></a><span class="fu">lines</span>(x,ynew,<span class="at">col=</span><span class="st">&#39;red&#39;</span>,<span class="at">lwd=</span><span class="fl">1.5</span>)</span></code></pre></div>
 </details>
-<p><img src="bookdown_files/figure-html/unnamed-chunk-89-1.png" width="480" /></p>
+<p><img src="bookdown_files/figure-html/unnamed-chunk-90-1.png" width="480" /></p>
 </div>
 <div id="多余变量" class="section level2 hasAnchor" number="8.3">
 <h2><span class="header-section-number">8.3</span> 多余变量<a href="回归.html#多余变量" class="anchor-section" aria-label="Anchor link to header"></a></h2>
@@ -900,7 +958,7 @@ div.csl-indent {
 <span id="cb227-9"><a href="回归.html#cb227-9" tabindex="-1"></a>       <span class="at">y=</span><span class="st">&quot;estimate&quot;</span>, </span>
 <span id="cb227-10"><a href="回归.html#cb227-10" tabindex="-1"></a>       <span class="at">x=</span><span class="st">&quot;Figure 1: Estimate&quot;</span>)</span></code></pre></div>
 </details>
-<p><img src="bookdown_files/figure-html/unnamed-chunk-92-1.png" width="480" /></p>
+<p><img src="bookdown_files/figure-html/unnamed-chunk-93-1.png" width="480" /></p>
 </div>
 <div id="lasso" class="section level3 hasAnchor" number="8.3.2">
 <h3><span class="header-section-number">8.3.2</span> lasso<a href="回归.html#lasso" class="anchor-section" aria-label="Anchor link to header"></a></h3>
@@ -922,7 +980,7 @@ div.csl-indent {
 <span id="cb230-5"><a href="回归.html#cb230-5" tabindex="-1"></a>       <span class="at">y=</span><span class="st">&quot;estimate beta&quot;</span>, </span>
 <span id="cb230-6"><a href="回归.html#cb230-6" tabindex="-1"></a>       <span class="at">x=</span><span class="st">&quot;log lambda&quot;</span>)</span></code></pre></div>
 </details>
-<p><img src="bookdown_files/figure-html/unnamed-chunk-93-1.png" width="480" /></p>
+<p><img src="bookdown_files/figure-html/unnamed-chunk-94-1.png" width="480" /></p>
 <details class=chunk-details><summary class=chunk-summary><span class=chunk-summary-text>Code</span></summary>
 <div class="sourceCode" id="cb231"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb231-1"><a href="回归.html#cb231-1" tabindex="-1"></a>cvfit<span class="ot">=</span><span class="fu">cv.glmnet</span>(x,y)</span>
 <span id="cb231-2"><a href="回归.html#cb231-2" tabindex="-1"></a>lasso_coef <span class="ot">=</span> <span class="fu">predict</span>(f1, <span class="at">type =</span> <span class="st">&quot;coefficients&quot;</span>, <span class="at">s =</span> cvfit<span class="sc">$</span>lambda.min)</span>
@@ -991,7 +1049,7 @@ div.csl-indent {
 <span id="cb237-3"><a href="回归.html#cb237-3" tabindex="-1"></a><span class="st">  Variance Explained&quot;</span>, <span class="at">ylim =</span> <span class="fu">c</span>(<span class="dv">0</span>, <span class="dv">1</span>), <span class="at">type =</span> <span class="st">&quot;b&quot;</span>)</span>
 <span id="cb237-4"><a href="回归.html#cb237-4" tabindex="-1"></a><span class="fu">plot</span>(<span class="fu">cumsum</span>(pve), <span class="at">xlab =</span> <span class="st">&quot;Principal Component&quot;</span>, <span class="at">ylab =</span> <span class="st">&quot;Cumulative Proportion of Variance Explained&quot;</span>, <span class="at">ylim =</span> <span class="fu">c</span>(<span class="dv">0</span>, <span class="dv">1</span>), <span class="at">type =</span> <span class="st">&quot;b&quot;</span>)</span></code></pre></div>
 </details>
-<p><img src="bookdown_files/figure-html/unnamed-chunk-95-1.png" width="480" /></p>
+<p><img src="bookdown_files/figure-html/unnamed-chunk-96-1.png" width="480" /></p>
 <details class=chunk-details><summary class=chunk-summary><span class=chunk-summary-text>Code</span></summary>
 <div class="sourceCode" id="cb238"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb238-1"><a href="回归.html#cb238-1" tabindex="-1"></a>pca<span class="ot">=</span>pr.out<span class="sc">$</span>rotation <span class="sc">%*%</span> <span class="fu">diag</span>(pr.out<span class="sc">$</span>sdev)<span class="co">#factor loadings</span></span>
 <span id="cb238-2"><a href="回归.html#cb238-2" tabindex="-1"></a>Score<span class="ot">=</span>pr.out<span class="sc">$</span>x</span></code></pre></div>
@@ -1003,7 +1061,7 @@ div.csl-indent {
 <span id="cb239-4"><a href="回归.html#cb239-4" tabindex="-1"></a>  <span class="fu">geom_tile</span>() <span class="sc">+</span> <span class="fu">scale_fill_gradient2</span>(<span class="at">mid=</span><span class="st">&quot;white&quot;</span>,<span class="at">low =</span> <span class="st">&#39;blue&#39;</span>, <span class="at">high =</span> <span class="st">&#39;red&#39;</span>) <span class="sc">+</span> </span>
 <span id="cb239-5"><a href="回归.html#cb239-5" tabindex="-1"></a>  <span class="fu">xlab</span>(<span class="st">&#39;components&#39;</span>)<span class="sc">+</span><span class="fu">ylab</span>(<span class="st">&#39;Var&#39;</span>)</span></code></pre></div>
 </details>
-<p><img src="bookdown_files/figure-html/unnamed-chunk-96-1.png" width="480" /></p>
+<p><img src="bookdown_files/figure-html/unnamed-chunk-97-1.png" width="480" /></p>
 <details class=chunk-details><summary class=chunk-summary><span class=chunk-summary-text>Code</span></summary>
 <div class="sourceCode" id="cb240"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb240-1"><a href="回归.html#cb240-1" tabindex="-1"></a>pcd_dat<span class="ot">=</span><span class="fu">cbind</span>(<span class="at">y=</span>dat[,<span class="dv">1</span>],Score[,<span class="dv">1</span><span class="sc">:</span><span class="dv">3</span>])</span>
 <span id="cb240-2"><a href="回归.html#cb240-2" tabindex="-1"></a>pcd_dat<span class="ot">=</span><span class="fu">as.data.frame</span>(pcd_dat)</span>
@@ -1048,7 +1106,7 @@ div.csl-indent {
 <div class="sourceCode" id="cb244"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb244-1"><a href="回归.html#cb244-1" tabindex="-1"></a><span class="fu">par</span>(<span class="at">mfrow=</span><span class="fu">c</span>(<span class="dv">2</span>,<span class="dv">2</span>))</span>
 <span id="cb244-2"><a href="回归.html#cb244-2" tabindex="-1"></a><span class="fu">plot</span>(modpca)</span></code></pre></div>
 </details>
-<p><img src="bookdown_files/figure-html/unnamed-chunk-97-1.png" width="480" /></p>
+<p><img src="bookdown_files/figure-html/unnamed-chunk-98-1.png" width="480" /></p>
 <details class=chunk-details><summary class=chunk-summary><span class=chunk-summary-text>Code</span></summary>
 <div class="sourceCode" id="cb245"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb245-1"><a href="回归.html#cb245-1" tabindex="-1"></a><span class="fu">par</span>(<span class="at">mfrow=</span><span class="fu">c</span>(<span class="dv">1</span>,<span class="dv">1</span>))</span>
 <span id="cb245-2"><a href="回归.html#cb245-2" tabindex="-1"></a><span class="co">#预测</span></span>
@@ -1062,7 +1120,7 @@ div.csl-indent {
 <span id="cb245-10"><a href="回归.html#cb245-10" tabindex="-1"></a><span class="fu">plot</span>(test<span class="sc">$</span>y,pre1)</span>
 <span id="cb245-11"><a href="回归.html#cb245-11" tabindex="-1"></a><span class="fu">abline</span>(<span class="dv">0</span>,<span class="dv">1</span>,<span class="at">col=</span><span class="dv">2</span>)</span></code></pre></div>
 </details>
-<p><img src="bookdown_files/figure-html/unnamed-chunk-97-2.png" width="480" /></p>
+<p><img src="bookdown_files/figure-html/unnamed-chunk-98-2.png" width="480" /></p>
 <details class=chunk-details><summary class=chunk-summary><span class=chunk-summary-text>Code</span></summary>
 <div class="sourceCode" id="cb246"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb246-1"><a href="回归.html#cb246-1" tabindex="-1"></a><span class="fu">par</span>(<span class="at">mfrow=</span><span class="fu">c</span>(<span class="dv">1</span>,<span class="dv">1</span>))</span>
 <span id="cb246-2"><a href="回归.html#cb246-2" tabindex="-1"></a><span class="co">#预测残差平方和</span></span>
@@ -1141,7 +1199,7 @@ div.csl-indent {
 <span id="cb258-2"><a href="回归.html#cb258-2" tabindex="-1"></a><span class="fu">validationplot</span>(pls1, <span class="at">val.type =</span> <span class="st">&#39;MSEP&#39;</span>)</span>
 <span id="cb258-3"><a href="回归.html#cb258-3" tabindex="-1"></a><span class="fu">validationplot</span>(pls1, <span class="at">val.type =</span> <span class="st">&#39;R2&#39;</span>)</span></code></pre></div>
 </details>
-<p><img src="bookdown_files/figure-html/unnamed-chunk-98-1.png" width="480" /></p>
+<p><img src="bookdown_files/figure-html/unnamed-chunk-99-1.png" width="480" /></p>
 <details class=chunk-details><summary class=chunk-summary><span class=chunk-summary-text>Code</span></summary>
 <div class="sourceCode" id="cb259"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb259-1"><a href="回归.html#cb259-1" tabindex="-1"></a>pre<span class="ot">=</span><span class="fu">predict</span>(pls3,test2)</span>
 <span id="cb259-2"><a href="回归.html#cb259-2" tabindex="-1"></a><span class="fu">summary</span>(pls3)</span></code></pre></div>
@@ -1198,7 +1256,7 @@ div.csl-indent {
 <span id="cb263-6"><a href="回归.html#cb263-6" tabindex="-1"></a><span class="fu">plot</span>(test<span class="sc">$</span>y,pre[,,<span class="dv">5</span>])</span>
 <span id="cb263-7"><a href="回归.html#cb263-7" tabindex="-1"></a><span class="fu">abline</span>(<span class="dv">0</span>,<span class="dv">1</span>,<span class="at">col=</span><span class="dv">2</span>)</span></code></pre></div>
 </details>
-<p><img src="bookdown_files/figure-html/unnamed-chunk-98-2.png" width="480" /></p>
+<p><img src="bookdown_files/figure-html/unnamed-chunk-99-2.png" width="480" /></p>
 <details class=chunk-details><summary class=chunk-summary><span class=chunk-summary-text>Code</span></summary>
 <div class="sourceCode" id="cb264"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb264-1"><a href="回归.html#cb264-1" tabindex="-1"></a><span class="fu">par</span>(<span class="at">mfrow=</span><span class="fu">c</span>(<span class="dv">1</span>,<span class="dv">1</span>))</span>
 <span id="cb264-2"><a href="回归.html#cb264-2" tabindex="-1"></a><span class="do">## 对预测数据的预测能力</span></span>
@@ -1244,16 +1302,13 @@ div.csl-indent {
 </div>
 </div>
 </div>
-
-
-
             </section>
 
           </div>
         </div>
       </div>
 <a href="聚类.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
-<a href="sound.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+<a href="地图-1.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
     </div>
   </div>
 <script src="libs/gitbook/js/app.min.js"></script>

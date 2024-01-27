@@ -89,6 +89,47 @@
 <link href="libs/dt-core/css/jquery.dataTables.min.css" rel="stylesheet" />
 <link href="libs/dt-core/css/jquery.dataTables.extra.css" rel="stylesheet" />
 <script src="libs/dt-core/js/jquery.dataTables.min.js"></script>
+<script src="libs/proj4js/proj4.js"></script>
+<link href="libs/highcharts/css/motion.css" rel="stylesheet" />
+<script src="libs/highcharts/highcharts.js"></script>
+<script src="libs/highcharts/highcharts-3d.js"></script>
+<script src="libs/highcharts/highcharts-more.js"></script>
+<script src="libs/highcharts/modules/stock.js"></script>
+<script src="libs/highcharts/modules/map.js"></script>
+<script src="libs/highcharts/modules/data.js"></script>
+<script src="libs/highcharts/modules/exporting.js"></script>
+<script src="libs/highcharts/modules/offline-exporting.js"></script>
+<script src="libs/highcharts/modules/drilldown.js"></script>
+<script src="libs/highcharts/modules/item-series.js"></script>
+<script src="libs/highcharts/modules/overlapping-datalabels.js"></script>
+<script src="libs/highcharts/modules/annotations.js"></script>
+<script src="libs/highcharts/modules/export-data.js"></script>
+<script src="libs/highcharts/modules/funnel.js"></script>
+<script src="libs/highcharts/modules/heatmap.js"></script>
+<script src="libs/highcharts/modules/treemap.js"></script>
+<script src="libs/highcharts/modules/sankey.js"></script>
+<script src="libs/highcharts/modules/dependency-wheel.js"></script>
+<script src="libs/highcharts/modules/organization.js"></script>
+<script src="libs/highcharts/modules/solid-gauge.js"></script>
+<script src="libs/highcharts/modules/streamgraph.js"></script>
+<script src="libs/highcharts/modules/sunburst.js"></script>
+<script src="libs/highcharts/modules/vector.js"></script>
+<script src="libs/highcharts/modules/wordcloud.js"></script>
+<script src="libs/highcharts/modules/xrange.js"></script>
+<script src="libs/highcharts/modules/tilemap.js"></script>
+<script src="libs/highcharts/modules/venn.js"></script>
+<script src="libs/highcharts/modules/gantt.js"></script>
+<script src="libs/highcharts/modules/timeline.js"></script>
+<script src="libs/highcharts/modules/parallel-coordinates.js"></script>
+<script src="libs/highcharts/modules/bullet.js"></script>
+<script src="libs/highcharts/modules/coloraxis.js"></script>
+<script src="libs/highcharts/modules/dumbbell.js"></script>
+<script src="libs/highcharts/modules/lollipop.js"></script>
+<script src="libs/highcharts/modules/series-label.js"></script>
+<script src="libs/highcharts/plugins/motion.js"></script>
+<script src="libs/highcharts/custom/reset.js"></script>
+<script src="libs/highcharts/modules/boost.js"></script>
+<script src="libs/highchart-binding/highchart.js"></script>
 
 
 <style type="text/css">
@@ -257,9 +298,17 @@ div.csl-indent {
 <li class="chapter" data-level="3.4.2" data-path="数学.html"><a href="数学.html#极值黑塞矩阵"><i class="fa fa-check"></i><b>3.4.2</b> 极值黑塞矩阵</a></li>
 </ul></li>
 </ul></li>
-<li class="chapter" data-level="4" data-path="app.html"><a href="app.html"><i class="fa fa-check"></i><b>4</b> app</a></li>
+<li class="chapter" data-level="4" data-path="app.html"><a href="app.html"><i class="fa fa-check"></i><b>4</b> app</a>
+<ul>
+<li class="chapter" data-level="4.0.1" data-path="app.html"><a href="app.html#用户表"><i class="fa fa-check"></i><b>4.0.1</b> 用户表</a></li>
+<li class="chapter" data-level="4.1" data-path="app.html"><a href="app.html#更新--"><i class="fa fa-check"></i><b>4.1</b> 更新 ———————————————————————-</a></li>
+<li class="chapter" data-level="4.2" data-path="app.html"><a href="app.html#增加--"><i class="fa fa-check"></i><b>4.2</b> 增加 ———————————————————————-</a></li>
+<li class="chapter" data-level="4.3" data-path="app.html"><a href="app.html#删除--"><i class="fa fa-check"></i><b>4.3</b> 删除 ———————————————————————-</a></li>
+<li class="chapter" data-level="4.4" data-path="app.html"><a href="app.html#表结构"><i class="fa fa-check"></i><b>4.4</b> 表结构 ———————————————————————</a></li>
+<li class="chapter" data-level="4.5" data-path="app.html"><a href="app.html#重命名表"><i class="fa fa-check"></i><b>4.5</b> 重命名表</a></li>
+</ul></li>
 <li class="chapter" data-level="5" data-path="ab-test.html"><a href="ab-test.html"><i class="fa fa-check"></i><b>5</b> AB-test</a></li>
-<li class="chapter" data-level="6" data-path="pca-and-xgboot.html"><a href="pca-and-xgboot.html"><i class="fa fa-check"></i><b>6</b> pca and xgboot、</a>
+<li class="chapter" data-level="6" data-path="pca-and-xgboot.html"><a href="pca-and-xgboot.html"><i class="fa fa-check"></i><b>6</b> pca and xgboot</a>
 <ul>
 <li class="chapter" data-level="6.1" data-path="pca-and-xgboot.html"><a href="pca-and-xgboot.html#数据"><i class="fa fa-check"></i><b>6.1</b> 数据</a></li>
 <li class="chapter" data-level="6.2" data-path="pca-and-xgboot.html"><a href="pca-and-xgboot.html#主成分分析"><i class="fa fa-check"></i><b>6.2</b> 主成分分析</a></li>
@@ -296,6 +345,15 @@ div.csl-indent {
 <li class="chapter" data-level="8.3.1" data-path="回归.html"><a href="回归.html#后退法"><i class="fa fa-check"></i><b>8.3.1</b> 后退法</a></li>
 <li class="chapter" data-level="8.3.2" data-path="回归.html"><a href="回归.html#lasso"><i class="fa fa-check"></i><b>8.3.2</b> lasso</a></li>
 <li class="chapter" data-level="8.3.3" data-path="回归.html"><a href="回归.html#偏最小二乘"><i class="fa fa-check"></i><b>8.3.3</b> 偏最小二乘</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="9" data-path="地图-1.html"><a href="地图-1.html"><i class="fa fa-check"></i><b>9</b> 地图</a>
+<ul>
+<li class="chapter" data-level="9.1" data-path="地图-1.html"><a href="地图-1.html#sales-forecast"><i class="fa fa-check"></i><b>9.1</b> Sales Forecast</a>
+<ul>
+<li class="chapter" data-level="9.1.1" data-path="地图-1.html"><a href="地图-1.html#sales-by-state"><i class="fa fa-check"></i><b>9.1.1</b> Sales by State</a></li>
+<li class="chapter" data-level="9.1.2" data-path="地图-1.html"><a href="地图-1.html#sales-by-category"><i class="fa fa-check"></i><b>9.1.2</b> Sales by Category</a></li>
+<li class="chapter" data-level="9.1.3" data-path="地图-1.html"><a href="地图-1.html#best-sellers"><i class="fa fa-check"></i><b>9.1.3</b> Best Sellers</a></li>
 </ul></li>
 </ul></li>
 <li class="appendix"><span><b>附录</b></span></li>
@@ -482,7 +540,7 @@ We analyzed the case k equal to 2 − 15 directly on the original data.</p>
 <span id="cb161-5"><a href="聚类.html#cb161-5" tabindex="-1"></a>  <span class="fu">ylab</span>(<span class="st">&quot;Silh.Coef.&quot;</span>)<span class="sc">+</span></span>
 <span id="cb161-6"><a href="聚类.html#cb161-6" tabindex="-1"></a>  <span class="fu">theme_bw</span>()</span></code></pre></div>
 </details>
-<p><img src="bookdown_files/figure-html/unnamed-chunk-75-1.png" width="480" />
+<p><img src="bookdown_files/figure-html/unnamed-chunk-76-1.png" width="480" />
 Select K=4 which is the highest average silhouette coefficient.</p>
 <p>2.Using the Elbow method,We need to find the obvious turning point.</p>
 <details class=chunk-details><summary class=chunk-summary><span class=chunk-summary-text>Code</span></summary>
@@ -496,7 +554,7 @@ Select K=4 which is the highest average silhouette coefficient.</p>
 <span id="cb162-8"><a href="聚类.html#cb162-8" tabindex="-1"></a>  <span class="fu">ylab</span>(<span class="st">&quot;Total Within-Cluster Sum of Squares&quot;</span>)<span class="sc">+</span></span>
 <span id="cb162-9"><a href="聚类.html#cb162-9" tabindex="-1"></a>  <span class="fu">theme_bw</span>()</span></code></pre></div>
 </details>
-<p><img src="bookdown_files/figure-html/unnamed-chunk-76-1.png" width="480" />
+<p><img src="bookdown_files/figure-html/unnamed-chunk-77-1.png" width="480" />
 Select K at the inflection point (K=4).</p>
 <p>The most appropriate number of clusters is four in 2-6.It is the category with the largest silhouette coefficient and is clearly turning Using the Elbow method</p>
 </div>
@@ -509,7 +567,7 @@ Select K at the inflection point (K=4).</p>
 <span id="cb163-4"><a href="聚类.html#cb163-4" tabindex="-1"></a><span class="fu">plot</span>(h)</span>
 <span id="cb163-5"><a href="聚类.html#cb163-5" tabindex="-1"></a><span class="fu">rect.hclust</span>(h,<span class="at">k=</span><span class="dv">3</span>,<span class="at">border=</span><span class="st">&quot;red&quot;</span>)</span></code></pre></div>
 </details>
-<p><img src="bookdown_files/figure-html/unnamed-chunk-77-1.png" width="864" /></p>
+<p><img src="bookdown_files/figure-html/unnamed-chunk-78-1.png" width="864" /></p>
 <details class=chunk-details><summary class=chunk-summary><span class=chunk-summary-text>Code</span></summary>
 <div class="sourceCode" id="cb164"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb164-1"><a href="聚类.html#cb164-1" tabindex="-1"></a>cls <span class="ot">&lt;-</span> <span class="fu">cutree</span>(h,<span class="dv">3</span>)</span>
 <span id="cb164-2"><a href="聚类.html#cb164-2" tabindex="-1"></a><span class="fu">table</span>(cls)</span></code></pre></div>
@@ -539,7 +597,7 @@ There is an intersection of the three categories</p>
 <details class=chunk-details><summary class=chunk-summary><span class=chunk-summary-text>Code</span></summary>
 <div class="sourceCode" id="cb168"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb168-1"><a href="聚类.html#cb168-1" tabindex="-1"></a><span class="fu">clusplot</span>(pam_gower, <span class="at">main =</span> <span class="st">&quot;Cluster Analysis using PAM&quot;</span>)</span></code></pre></div>
 </details>
-<p><img src="bookdown_files/figure-html/unnamed-chunk-79-1.png" width="480" /></p>
+<p><img src="bookdown_files/figure-html/unnamed-chunk-80-1.png" width="480" /></p>
 <ul>
 <li>the 3 cluster means (center).
 We can focus on variables that are significantly different.like 3 is high anaemia.</li>
@@ -571,12 +629,12 @@ We can focus on variables that are significantly different.like 3 is high anaemi
 <span id="cb171-4"><a href="聚类.html#cb171-4" tabindex="-1"></a>  <span class="fu">geom_boxplot</span>()<span class="sc">+</span></span>
 <span id="cb171-5"><a href="聚类.html#cb171-5" tabindex="-1"></a>  <span class="fu">facet_wrap</span>(<span class="sc">~</span>name,<span class="at">scales=</span><span class="st">&quot;free&quot;</span>)</span></code></pre></div>
 </details>
-<p><img src="bookdown_files/figure-html/unnamed-chunk-81-1.png" width="480" /></p>
+<p><img src="bookdown_files/figure-html/unnamed-chunk-82-1.png" width="480" /></p>
 <p>Classical multidimensional scaling (MDS) of a data matrix. Also known as principal coordinates analysis,We’re going to convert this to two dimensional coordinates and look at the distribution</p>
 <details class=chunk-details><summary class=chunk-summary><span class=chunk-summary-text>Code</span></summary>
 <div class="sourceCode" id="cb172"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb172-1"><a href="聚类.html#cb172-1" tabindex="-1"></a><span class="fu">ggplot</span>(<span class="fu">data.frame</span>(<span class="fu">cmdscale</span>(<span class="fu">daisy</span>(heart2[,<span class="sc">-</span><span class="dv">13</span>], <span class="at">metric =</span> <span class="st">&quot;gower&quot;</span>),<span class="at">k=</span><span class="dv">2</span>),<span class="at">lab=</span><span class="dv">1</span><span class="sc">:</span><span class="dv">299</span>),<span class="fu">aes</span>(<span class="at">x=</span>X1,<span class="at">y=</span>X2,<span class="at">label=</span>lab))<span class="sc">+</span><span class="fu">geom_point</span>(<span class="at">alpha=</span><span class="fl">0.5</span>,<span class="at">size=</span><span class="fl">0.5</span>)<span class="sc">+</span><span class="fu">geom_text</span>(<span class="at">size=</span><span class="dv">3</span>,<span class="at">col=</span>pam_gower<span class="sc">$</span>clustering)</span></code></pre></div>
 </details>
-<p><img src="bookdown_files/figure-html/unnamed-chunk-82-1.png" width="480" /></p>
+<p><img src="bookdown_files/figure-html/unnamed-chunk-83-1.png" width="480" /></p>
 </div>
 <div id="clustering-evaluation-and-comparison" class="section level2 hasAnchor" number="7.4">
 <h2><span class="header-section-number">7.4</span> 4 Clustering evaluation and comparison<a href="聚类.html#clustering-evaluation-and-comparison" class="anchor-section" aria-label="Anchor link to header"></a></h2>
@@ -588,23 +646,23 @@ We can focus on variables that are significantly different.like 3 is high anaemi
 <span id="cb173-5"><a href="聚类.html#cb173-5" tabindex="-1"></a>         <span class="fu">geom_point</span>(<span class="at">alpha=</span><span class="fl">0.5</span>,<span class="at">size=</span><span class="fl">0.5</span>)<span class="sc">+</span></span>
 <span id="cb173-6"><a href="聚类.html#cb173-6" tabindex="-1"></a>  <span class="fu">geom_text</span>(<span class="at">size=</span><span class="dv">3</span>,<span class="at">col=</span>km3<span class="sc">$</span>cluster)</span></code></pre></div>
 </details>
-<p><img src="bookdown_files/figure-html/unnamed-chunk-83-1.png" width="480" /></p>
+<p><img src="bookdown_files/figure-html/unnamed-chunk-84-1.png" width="480" /></p>
 <details class=chunk-details><summary class=chunk-summary><span class=chunk-summary-text>Code</span></summary>
 <div class="sourceCode" id="cb174"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb174-1"><a href="聚类.html#cb174-1" tabindex="-1"></a>s1 <span class="ot">&lt;-</span> <span class="fu">silhouette</span>(km3<span class="sc">$</span>cluster,<span class="fu">dist</span>(heart[,<span class="sc">-</span><span class="dv">13</span>]))</span>
 <span id="cb174-2"><a href="聚类.html#cb174-2" tabindex="-1"></a><span class="fu">plot</span>(s1, <span class="at">main =</span> <span class="st">&quot;silhouette coefficient of Kmeans&quot;</span>, <span class="at">border =</span> <span class="cn">NA</span>)</span></code></pre></div>
 </details>
-<p><img src="bookdown_files/figure-html/unnamed-chunk-83-2.png" width="480" /></p>
+<p><img src="bookdown_files/figure-html/unnamed-chunk-84-2.png" width="480" /></p>
 <details class=chunk-details><summary class=chunk-summary><span class=chunk-summary-text>Code</span></summary>
 <div class="sourceCode" id="cb175"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb175-1"><a href="聚类.html#cb175-1" tabindex="-1"></a>s3 <span class="ot">&lt;-</span> <span class="fu">silhouette</span>(pam_gower<span class="sc">$</span>clustering,<span class="fu">daisy</span>(heart2[,<span class="sc">-</span><span class="dv">13</span>], <span class="at">metric =</span> <span class="st">&quot;gower&quot;</span>))</span>
 <span id="cb175-2"><a href="聚类.html#cb175-2" tabindex="-1"></a><span class="fu">plot</span>(s3, <span class="at">main =</span> <span class="st">&quot;silhouette coefficient of PAM&quot;</span>, <span class="at">border =</span> <span class="cn">NA</span>)</span></code></pre></div>
 </details>
-<p><img src="bookdown_files/figure-html/unnamed-chunk-83-3.png" width="480" /></p>
+<p><img src="bookdown_files/figure-html/unnamed-chunk-84-3.png" width="480" /></p>
 <details class=chunk-details><summary class=chunk-summary><span class=chunk-summary-text>Code</span></summary>
 <div class="sourceCode" id="cb176"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb176-1"><a href="聚类.html#cb176-1" tabindex="-1"></a><span class="fu">ggplot</span>(<span class="fu">data.frame</span>(<span class="fu">cmdscale</span>(<span class="fu">daisy</span>(heart2[,<span class="sc">-</span><span class="dv">13</span>], <span class="at">metric =</span> <span class="st">&quot;gower&quot;</span>),<span class="at">k=</span><span class="dv">2</span>),<span class="at">lab=</span><span class="dv">1</span><span class="sc">:</span><span class="dv">299</span>), <span class="fu">aes</span>(<span class="at">x=</span>X1,<span class="at">y=</span>X2,<span class="at">label=</span>lab))<span class="sc">+</span></span>
 <span id="cb176-2"><a href="聚类.html#cb176-2" tabindex="-1"></a>   <span class="fu">geom_point</span>(<span class="at">alpha=</span><span class="fl">0.5</span>,<span class="at">size=</span><span class="fl">0.5</span>)<span class="sc">+</span></span>
 <span id="cb176-3"><a href="聚类.html#cb176-3" tabindex="-1"></a>  <span class="fu">geom_text</span>(<span class="at">size=</span><span class="dv">3</span>,<span class="at">col=</span>pam_gower<span class="sc">$</span>clustering)<span class="sc">+</span><span class="fu">theme_bw</span>()</span></code></pre></div>
 </details>
-<p><img src="bookdown_files/figure-html/unnamed-chunk-83-4.png" width="480" />
+<p><img src="bookdown_files/figure-html/unnamed-chunk-84-4.png" width="480" />
 - The comparison reveals that 4 K-means has the best silhouette coefficient,
 Hierarchical clustering has three classes but the sample size of one class is too small to be considered outlier. PAM three classes are fairly uniform, but we saw earlier that it overlaps.</p>
 <ul>
@@ -710,7 +768,7 @@ Hierarchical clustering has three classes but the sample size of one class is to
 <span id="cb183-3"><a href="聚类.html#cb183-3" tabindex="-1"></a><span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x=</span>X1,<span class="at">y=</span>X2,<span class="at">label=</span>lab,<span class="at">col=</span>col))<span class="sc">+</span></span>
 <span id="cb183-4"><a href="聚类.html#cb183-4" tabindex="-1"></a>   <span class="fu">geom_point</span>(<span class="at">alpha=</span><span class="fl">0.5</span>,<span class="at">size=</span><span class="fl">0.5</span>)<span class="sc">+</span><span class="fu">geom_text</span>(<span class="at">size=</span><span class="dv">3</span>)<span class="sc">+</span><span class="fu">theme_bw</span>()</span></code></pre></div>
 </details>
-<p><img src="bookdown_files/figure-html/unnamed-chunk-84-1.png" width="480" /></p>
+<p><img src="bookdown_files/figure-html/unnamed-chunk-85-1.png" width="480" /></p>
 </div>
 <div id="dbscan" class="section level3 hasAnchor" number="7.5.2">
 <h3><span class="header-section-number">7.5.2</span> DBSCAN<a href="聚类.html#dbscan" class="anchor-section" aria-label="Anchor link to header"></a></h3>
@@ -835,7 +893,7 @@ We counted 19 samples as outliers.</p>
 <span id="cb190-3"><a href="聚类.html#cb190-3" tabindex="-1"></a><span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x=</span>X1,<span class="at">y=</span>X2,<span class="at">label=</span>lab,<span class="at">col=</span>col))<span class="sc">+</span></span>
 <span id="cb190-4"><a href="聚类.html#cb190-4" tabindex="-1"></a>   <span class="fu">geom_point</span>(<span class="at">alpha=</span><span class="fl">0.5</span>,<span class="at">size=</span><span class="fl">0.5</span>)<span class="sc">+</span><span class="fu">geom_text</span>(<span class="at">size=</span><span class="dv">3</span>)<span class="sc">+</span><span class="fu">theme_bw</span>()</span></code></pre></div>
 </details>
-<p><img src="bookdown_files/figure-html/unnamed-chunk-85-1.png" width="480" /></p>
+<p><img src="bookdown_files/figure-html/unnamed-chunk-86-1.png" width="480" /></p>
 <p>no both algorithm
 Sample 2 appears in both methods</p>
 <details class=chunk-details><summary class=chunk-summary><span class=chunk-summary-text>Code</span></summary>

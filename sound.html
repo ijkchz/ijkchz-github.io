@@ -30,7 +30,7 @@
   <meta name="apple-mobile-web-app-status-bar-style" content="black" />
   
   <link rel="shortcut icon" href="www/lh_2.png" type="image/x-icon" />
-<link rel="prev" href="回归.html"/>
+<link rel="prev" href="地图-1.html"/>
 <link rel="next" href="references.html"/>
 <script src="libs/jquery/jquery-3.6.0.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/fuse.js@6.4.6/dist/fuse.min.js"></script>
@@ -89,6 +89,47 @@
 <link href="libs/dt-core/css/jquery.dataTables.min.css" rel="stylesheet" />
 <link href="libs/dt-core/css/jquery.dataTables.extra.css" rel="stylesheet" />
 <script src="libs/dt-core/js/jquery.dataTables.min.js"></script>
+<script src="libs/proj4js/proj4.js"></script>
+<link href="libs/highcharts/css/motion.css" rel="stylesheet" />
+<script src="libs/highcharts/highcharts.js"></script>
+<script src="libs/highcharts/highcharts-3d.js"></script>
+<script src="libs/highcharts/highcharts-more.js"></script>
+<script src="libs/highcharts/modules/stock.js"></script>
+<script src="libs/highcharts/modules/map.js"></script>
+<script src="libs/highcharts/modules/data.js"></script>
+<script src="libs/highcharts/modules/exporting.js"></script>
+<script src="libs/highcharts/modules/offline-exporting.js"></script>
+<script src="libs/highcharts/modules/drilldown.js"></script>
+<script src="libs/highcharts/modules/item-series.js"></script>
+<script src="libs/highcharts/modules/overlapping-datalabels.js"></script>
+<script src="libs/highcharts/modules/annotations.js"></script>
+<script src="libs/highcharts/modules/export-data.js"></script>
+<script src="libs/highcharts/modules/funnel.js"></script>
+<script src="libs/highcharts/modules/heatmap.js"></script>
+<script src="libs/highcharts/modules/treemap.js"></script>
+<script src="libs/highcharts/modules/sankey.js"></script>
+<script src="libs/highcharts/modules/dependency-wheel.js"></script>
+<script src="libs/highcharts/modules/organization.js"></script>
+<script src="libs/highcharts/modules/solid-gauge.js"></script>
+<script src="libs/highcharts/modules/streamgraph.js"></script>
+<script src="libs/highcharts/modules/sunburst.js"></script>
+<script src="libs/highcharts/modules/vector.js"></script>
+<script src="libs/highcharts/modules/wordcloud.js"></script>
+<script src="libs/highcharts/modules/xrange.js"></script>
+<script src="libs/highcharts/modules/tilemap.js"></script>
+<script src="libs/highcharts/modules/venn.js"></script>
+<script src="libs/highcharts/modules/gantt.js"></script>
+<script src="libs/highcharts/modules/timeline.js"></script>
+<script src="libs/highcharts/modules/parallel-coordinates.js"></script>
+<script src="libs/highcharts/modules/bullet.js"></script>
+<script src="libs/highcharts/modules/coloraxis.js"></script>
+<script src="libs/highcharts/modules/dumbbell.js"></script>
+<script src="libs/highcharts/modules/lollipop.js"></script>
+<script src="libs/highcharts/modules/series-label.js"></script>
+<script src="libs/highcharts/plugins/motion.js"></script>
+<script src="libs/highcharts/custom/reset.js"></script>
+<script src="libs/highcharts/modules/boost.js"></script>
+<script src="libs/highchart-binding/highchart.js"></script>
 
 
 <style type="text/css">
@@ -257,9 +298,17 @@ div.csl-indent {
 <li class="chapter" data-level="3.4.2" data-path="数学.html"><a href="数学.html#极值黑塞矩阵"><i class="fa fa-check"></i><b>3.4.2</b> 极值黑塞矩阵</a></li>
 </ul></li>
 </ul></li>
-<li class="chapter" data-level="4" data-path="app.html"><a href="app.html"><i class="fa fa-check"></i><b>4</b> app</a></li>
+<li class="chapter" data-level="4" data-path="app.html"><a href="app.html"><i class="fa fa-check"></i><b>4</b> app</a>
+<ul>
+<li class="chapter" data-level="4.0.1" data-path="app.html"><a href="app.html#用户表"><i class="fa fa-check"></i><b>4.0.1</b> 用户表</a></li>
+<li class="chapter" data-level="4.1" data-path="app.html"><a href="app.html#更新--"><i class="fa fa-check"></i><b>4.1</b> 更新 ———————————————————————-</a></li>
+<li class="chapter" data-level="4.2" data-path="app.html"><a href="app.html#增加--"><i class="fa fa-check"></i><b>4.2</b> 增加 ———————————————————————-</a></li>
+<li class="chapter" data-level="4.3" data-path="app.html"><a href="app.html#删除--"><i class="fa fa-check"></i><b>4.3</b> 删除 ———————————————————————-</a></li>
+<li class="chapter" data-level="4.4" data-path="app.html"><a href="app.html#表结构"><i class="fa fa-check"></i><b>4.4</b> 表结构 ———————————————————————</a></li>
+<li class="chapter" data-level="4.5" data-path="app.html"><a href="app.html#重命名表"><i class="fa fa-check"></i><b>4.5</b> 重命名表</a></li>
+</ul></li>
 <li class="chapter" data-level="5" data-path="ab-test.html"><a href="ab-test.html"><i class="fa fa-check"></i><b>5</b> AB-test</a></li>
-<li class="chapter" data-level="6" data-path="pca-and-xgboot.html"><a href="pca-and-xgboot.html"><i class="fa fa-check"></i><b>6</b> pca and xgboot、</a>
+<li class="chapter" data-level="6" data-path="pca-and-xgboot.html"><a href="pca-and-xgboot.html"><i class="fa fa-check"></i><b>6</b> pca and xgboot</a>
 <ul>
 <li class="chapter" data-level="6.1" data-path="pca-and-xgboot.html"><a href="pca-and-xgboot.html#数据"><i class="fa fa-check"></i><b>6.1</b> 数据</a></li>
 <li class="chapter" data-level="6.2" data-path="pca-and-xgboot.html"><a href="pca-and-xgboot.html#主成分分析"><i class="fa fa-check"></i><b>6.2</b> 主成分分析</a></li>
@@ -298,6 +347,15 @@ div.csl-indent {
 <li class="chapter" data-level="8.3.3" data-path="回归.html"><a href="回归.html#偏最小二乘"><i class="fa fa-check"></i><b>8.3.3</b> 偏最小二乘</a></li>
 </ul></li>
 </ul></li>
+<li class="chapter" data-level="9" data-path="地图-1.html"><a href="地图-1.html"><i class="fa fa-check"></i><b>9</b> 地图</a>
+<ul>
+<li class="chapter" data-level="9.1" data-path="地图-1.html"><a href="地图-1.html#sales-forecast"><i class="fa fa-check"></i><b>9.1</b> Sales Forecast</a>
+<ul>
+<li class="chapter" data-level="9.1.1" data-path="地图-1.html"><a href="地图-1.html#sales-by-state"><i class="fa fa-check"></i><b>9.1.1</b> Sales by State</a></li>
+<li class="chapter" data-level="9.1.2" data-path="地图-1.html"><a href="地图-1.html#sales-by-category"><i class="fa fa-check"></i><b>9.1.2</b> Sales by Category</a></li>
+<li class="chapter" data-level="9.1.3" data-path="地图-1.html"><a href="地图-1.html#best-sellers"><i class="fa fa-check"></i><b>9.1.3</b> Best Sellers</a></li>
+</ul></li>
+</ul></li>
 <li class="appendix"><span><b>附录</b></span></li>
 <li class="chapter" data-level="A" data-path="sound.html"><a href="sound.html"><i class="fa fa-check"></i><b>A</b> 结尾</a>
 <ul>
@@ -325,19 +383,19 @@ div.csl-indent {
           <div class="page-inner">
 
             <section class="normal" id="section-">
-<div id="sound" class="section level1 hasAnchor" number="9">
+<div id="sound" class="section level1 hasAnchor" number="10">
 <h1><span class="header-section-number">A</span> 结尾<a href="sound.html#sound" class="anchor-section" aria-label="Anchor link to header"></a></h1>
 <p><img src="www/header_.png" /></p>
-<div id="写过的部分课程" class="section level2 hasAnchor" number="9.1">
+<div id="写过的部分课程" class="section level2 hasAnchor" number="10.1">
 <h2><span class="header-section-number">A.1</span> 写过的部分课程<a href="sound.html#写过的部分课程" class="anchor-section" aria-label="Anchor link to header"></a></h2>
 <details class=chunk-details><summary class=chunk-summary><span class=chunk-summary-text>Code</span></summary>
-<div class="sourceCode" id="cb276"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb276-1"><a href="sound.html#cb276-1" tabindex="-1"></a>file<span class="ot">=</span><span class="fu">list.files</span>(<span class="st">&quot;./www/school&quot;</span>)</span>
-<span id="cb276-2"><a href="sound.html#cb276-2" tabindex="-1"></a>pngall<span class="ot">=</span><span class="fu">paste0</span>(<span class="st">&quot;./www/school/&quot;</span>,file)</span>
-<span id="cb276-3"><a href="sound.html#cb276-3" tabindex="-1"></a>knitr<span class="sc">::</span><span class="fu">include_graphics</span>(pngall)</span></code></pre></div>
+<div class="sourceCode" id="cb281"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb281-1"><a href="sound.html#cb281-1" tabindex="-1"></a>file<span class="ot">=</span><span class="fu">list.files</span>(<span class="st">&quot;./www/school&quot;</span>)</span>
+<span id="cb281-2"><a href="sound.html#cb281-2" tabindex="-1"></a>pngall<span class="ot">=</span><span class="fu">paste0</span>(<span class="st">&quot;./www/school/&quot;</span>,file)</span>
+<span id="cb281-3"><a href="sound.html#cb281-3" tabindex="-1"></a>knitr<span class="sc">::</span><span class="fu">include_graphics</span>(pngall)</span></code></pre></div>
 </details>
 <p><img src="www/school/BROWN.png" width="25%" /><img src="www/school/p1.png" width="25%" /><img src="www/school/p10.png" width="25%" /><img src="www/school/p11.png" width="25%" /><img src="www/school/p12.png" width="25%" /><img src="www/school/p13.png" width="25%" /><img src="www/school/p14.png" width="25%" /><img src="www/school/p15.png" width="25%" /><img src="www/school/p16.png" width="25%" /><img src="www/school/p17.png" width="25%" /><img src="www/school/p18.png" width="25%" /><img src="www/school/p19.png" width="25%" /><img src="www/school/p2.png" width="25%" /><img src="www/school/p3.png" width="25%" /><img src="www/school/p4.png" width="25%" /><img src="www/school/p5.png" width="25%" /><img src="www/school/p6.png" width="25%" /><img src="www/school/p7.png" width="25%" /><img src="www/school/p8.png" width="25%" /><img src="www/school/p9.png" width="25%" /><img src="www/school/SYDNEY.png" width="25%" /></p>
 </div>
-<div id="赞助可怜" class="section level2 hasAnchor" number="9.2">
+<div id="赞助可怜" class="section level2 hasAnchor" number="10.2">
 <h2><span class="header-section-number">A.2</span> 赞助(可怜)<a href="sound.html#赞助可怜" class="anchor-section" aria-label="Anchor link to header"></a></h2>
 <table>
 <tbody>
@@ -356,7 +414,7 @@ div.csl-indent {
           </div>
         </div>
       </div>
-<a href="回归.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="地图-1.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
 <a href="references.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
     </div>
   </div>
