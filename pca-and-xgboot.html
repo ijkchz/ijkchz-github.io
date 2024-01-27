@@ -1,0 +1,710 @@
+<!DOCTYPE html>
+<html lang="" xml:lang="">
+<head>
+
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <title>第 6 章 pca and xgboot、 | 记录R学习</title>
+  <meta name="description" content="日常记录数据" />
+  <meta name="generator" content="bookdown 0.37 and GitBook 2.6.7" />
+
+  <meta property="og:title" content="第 6 章 pca and xgboot、 | 记录R学习" />
+  <meta property="og:type" content="book" />
+  <meta property="og:image" content="/www/lh_2.png" />
+  <meta property="og:description" content="日常记录数据" />
+  <meta name="github-repo" content="ijkchz/book.git" />
+
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:title" content="第 6 章 pca and xgboot、 | 记录R学习" />
+  
+  <meta name="twitter:description" content="日常记录数据" />
+  <meta name="twitter:image" content="/www/lh_2.png" />
+
+<meta name="author" content="chz" />
+
+
+<meta name="date" content="2024-01-27" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+  
+  <link rel="shortcut icon" href="www/lh_2.png" type="image/x-icon" />
+<link rel="prev" href="ab-test.html"/>
+<link rel="next" href="聚类.html"/>
+<script src="libs/jquery/jquery-3.6.0.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/fuse.js@6.4.6/dist/fuse.min.js"></script>
+<link href="libs/gitbook/css/style.css" rel="stylesheet" />
+<link href="libs/gitbook/css/plugin-table.css" rel="stylesheet" />
+<link href="libs/gitbook/css/plugin-bookdown.css" rel="stylesheet" />
+<link href="libs/gitbook/css/plugin-highlight.css" rel="stylesheet" />
+<link href="libs/gitbook/css/plugin-search.css" rel="stylesheet" />
+<link href="libs/gitbook/css/plugin-fontsettings.css" rel="stylesheet" />
+<link href="libs/gitbook/css/plugin-clipboard.css" rel="stylesheet" />
+
+
+
+
+
+
+
+
+<link href="libs/codefolding-lua/codefolding-lua.css" rel="stylesheet" />
+<link href="libs/anchor-sections/anchor-sections.css" rel="stylesheet" />
+<link href="libs/anchor-sections/anchor-sections-hash.css" rel="stylesheet" />
+<script src="libs/anchor-sections/anchor-sections.js"></script>
+<script src="libs/htmlwidgets/htmlwidgets.js"></script>
+<script src="libs/d3-bundle/d3-bundle.min.js"></script>
+<script src="libs/d3-lasso/d3-lasso.min.js"></script>
+<script src="libs/save-svg-as-png/save-svg-as-png.min.js"></script>
+<script src="libs/flatbush/flatbush.min.js"></script>
+<link href="libs/ggiraphjs/ggiraphjs.min.css" rel="stylesheet" />
+<script src="libs/ggiraphjs/ggiraphjs.min.js"></script>
+<script src="libs/girafe-binding/girafe.js"></script>
+<script src="libs/plotly-binding/plotly.js"></script>
+<script src="libs/typedarray/typedarray.min.js"></script>
+<link href="libs/crosstalk/css/crosstalk.min.css" rel="stylesheet" />
+<script src="libs/crosstalk/js/crosstalk.min.js"></script>
+<link href="libs/plotly-htmlwidgets-css/plotly-htmlwidgets.css" rel="stylesheet" />
+<script src="libs/plotly-main/plotly-latest.min.js"></script>
+<script src="libs/viz/viz.js"></script>
+<link href="libs/DiagrammeR-styles/styles.css" rel="stylesheet" />
+<script src="libs/grViz-binding/grViz.js"></script>
+<link href="libs/leaflet/leaflet.css" rel="stylesheet" />
+<script src="libs/leaflet/leaflet.js"></script>
+<link href="libs/leafletfix/leafletfix.css" rel="stylesheet" />
+<script src="libs/proj4/proj4.min.js"></script>
+<script src="libs/Proj4Leaflet/proj4leaflet.js"></script>
+<link href="libs/rstudio_leaflet/rstudio_leaflet.css" rel="stylesheet" />
+<script src="libs/leaflet-binding/leaflet.js"></script>
+<link href="libs/leaflet-markercluster/MarkerCluster.css" rel="stylesheet" />
+<link href="libs/leaflet-markercluster/MarkerCluster.Default.css" rel="stylesheet" />
+<script src="libs/leaflet-markercluster/leaflet.markercluster.js"></script>
+<script src="libs/leaflet-markercluster/leaflet.markercluster.freezable.js"></script>
+<script src="libs/leaflet-markercluster/leaflet.markercluster.layersupport.js"></script>
+<link href="libs/tabwid/tabwid.css" rel="stylesheet" />
+<script src="libs/tabwid/tabwid.js"></script>
+<link href="libs/datatables-css/datatables-crosstalk.css" rel="stylesheet" />
+<script src="libs/datatables-binding/datatables.js"></script>
+<link href="libs/dt-core/css/jquery.dataTables.min.css" rel="stylesheet" />
+<link href="libs/dt-core/css/jquery.dataTables.extra.css" rel="stylesheet" />
+<script src="libs/dt-core/js/jquery.dataTables.min.js"></script>
+
+
+<style type="text/css">
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #7d9029; } /* Attribute */
+code span.bn { color: #40a070; } /* BaseN */
+code span.bu { color: #008000; } /* BuiltIn */
+code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4070a0; } /* Char */
+code span.cn { color: #880000; } /* Constant */
+code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code span.dt { color: #902000; } /* DataType */
+code span.dv { color: #40a070; } /* DecVal */
+code span.er { color: #ff0000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #40a070; } /* Float */
+code span.fu { color: #06287e; } /* Function */
+code span.im { color: #008000; font-weight: bold; } /* Import */
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code span.op { color: #666666; } /* Operator */
+code span.ot { color: #007020; } /* Other */
+code span.pp { color: #bc7a00; } /* Preprocessor */
+code span.sc { color: #4070a0; } /* SpecialChar */
+code span.ss { color: #bb6688; } /* SpecialString */
+code span.st { color: #4070a0; } /* String */
+code span.va { color: #19177c; } /* Variable */
+code span.vs { color: #4070a0; } /* VerbatimString */
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+</style>
+
+<style type="text/css">
+  
+  div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+</style>
+<style type="text/css">
+/* Used with Pandoc 2.11+ new --citeproc when CSL is used */
+div.csl-bib-body { }
+div.csl-entry {
+  clear: both;
+}
+.hanging div.csl-entry {
+  margin-left:2em;
+  text-indent:-2em;
+}
+div.csl-left-margin {
+  min-width:2em;
+  float:left;
+}
+div.csl-right-inline {
+  margin-left:2em;
+  padding-left:1em;
+}
+div.csl-indent {
+  margin-left: 2em;
+}
+</style>
+
+<link rel="stylesheet" href="css/style.css" type="text/css" />
+</head>
+
+<body>
+
+
+
+  <div class="book without-animation with-summary font-size-2 font-family-1" data-basepath=".">
+
+    <div class="book-summary">
+      <nav role="navigation">
+
+<ul class="summary">
+<li><a href="./">杂乱的干货</a></li>
+
+<li class="divider"></li>
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i>前言</a>
+<ul>
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html#致谢"><i class="fa fa-check"></i>致谢</a></li>
+</ul></li>
+<li class="chapter" data-level="" data-path="author.html"><a href="author.html"><i class="fa fa-check"></i>作者简介</a></li>
+<li class="chapter" data-level="1" data-path="plot.html"><a href="plot.html"><i class="fa fa-check"></i><b>1</b> Plots</a>
+<ul>
+<li class="chapter" data-level="1.1" data-path="plot.html"><a href="plot.html#箱线图小提琴图"><i class="fa fa-check"></i><b>1.1</b> 箱线图/小提琴图</a></li>
+<li class="chapter" data-level="1.2" data-path="plot.html"><a href="plot.html#柱状图"><i class="fa fa-check"></i><b>1.2</b> 柱状图</a></li>
+<li class="chapter" data-level="1.3" data-path="plot.html"><a href="plot.html#点线图"><i class="fa fa-check"></i><b>1.3</b> 点线图</a></li>
+<li class="chapter" data-level="1.4" data-path="plot.html"><a href="plot.html#树图"><i class="fa fa-check"></i><b>1.4</b> 树图</a></li>
+<li class="chapter" data-level="1.5" data-path="plot.html"><a href="plot.html#交互图"><i class="fa fa-check"></i><b>1.5</b> 交互图</a></li>
+<li class="chapter" data-level="1.6" data-path="plot.html"><a href="plot.html#自定义"><i class="fa fa-check"></i><b>1.6</b> 自定义</a></li>
+<li class="chapter" data-level="1.7" data-path="plot.html"><a href="plot.html#时间动态图"><i class="fa fa-check"></i><b>1.7</b> 时间动态图</a></li>
+<li class="chapter" data-level="1.8" data-path="plot.html"><a href="plot.html#d玫瑰"><i class="fa fa-check"></i><b>1.8</b> 3D玫瑰</a></li>
+<li class="chapter" data-level="1.9" data-path="plot.html"><a href="plot.html#流程图"><i class="fa fa-check"></i><b>1.9</b> 流程图</a></li>
+<li class="chapter" data-level="1.10" data-path="plot.html"><a href="plot.html#地图"><i class="fa fa-check"></i><b>1.10</b> 地图</a>
+<ul>
+<li class="chapter" data-level="1.10.1" data-path="plot.html"><a href="plot.html#天心区"><i class="fa fa-check"></i><b>1.10.1</b> 天心区</a></li>
+<li class="chapter" data-level="1.10.2" data-path="plot.html"><a href="plot.html#北京"><i class="fa fa-check"></i><b>1.10.2</b> 北京</a></li>
+<li class="chapter" data-level="1.10.3" data-path="plot.html"><a href="plot.html#省区地图"><i class="fa fa-check"></i><b>1.10.3</b> 省区地图</a></li>
+</ul></li>
+<li class="chapter" data-level="1.11" data-path="plot.html"><a href="plot.html#ggtree"><i class="fa fa-check"></i><b>1.11</b> ggtree</a>
+<ul>
+<li class="chapter" data-level="1.11.1" data-path="plot.html"><a href="plot.html#more-forms-of-phylogenetic-tree"><i class="fa fa-check"></i><b>1.11.1</b> More forms of phylogenetic tree</a></li>
+<li class="chapter" data-level="1.11.2" data-path="plot.html"><a href="plot.html#run-with-another-dataset"><i class="fa fa-check"></i><b>1.11.2</b> run with another dataset</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="2" data-path="tab.html"><a href="tab.html"><i class="fa fa-check"></i><b>2</b> table</a>
+<ul>
+<li class="chapter" data-level="2.1" data-path="tab.html"><a href="tab.html#gt表"><i class="fa fa-check"></i><b>2.1</b> gt表</a>
+<ul>
+<li class="chapter" data-level="2.1.1" data-path="tab.html"><a href="tab.html#表格1"><i class="fa fa-check"></i><b>2.1.1</b> 表格1</a></li>
+<li class="chapter" data-level="2.1.2" data-path="tab.html"><a href="tab.html#表格2"><i class="fa fa-check"></i><b>2.1.2</b> 表格2</a></li>
+<li class="chapter" data-level="2.1.3" data-path="tab.html"><a href="tab.html#颜色表格"><i class="fa fa-check"></i><b>2.1.3</b> 颜色表格</a></li>
+<li class="chapter" data-level="2.1.4" data-path="tab.html"><a href="tab.html#增加图像"><i class="fa fa-check"></i><b>2.1.4</b> 增加图像</a></li>
+<li class="chapter" data-level="2.1.5" data-path="tab.html"><a href="tab.html#自定义图片"><i class="fa fa-check"></i><b>2.1.5</b> 自定义图片</a></li>
+<li class="chapter" data-level="2.1.6" data-path="tab.html"><a href="tab.html#美元"><i class="fa fa-check"></i><b>2.1.6</b> 美元</a></li>
+</ul></li>
+<li class="chapter" data-level="2.2" data-path="tab.html"><a href="tab.html#flextable"><i class="fa fa-check"></i><b>2.2</b> flextable</a></li>
+<li class="chapter" data-level="2.3" data-path="tab.html"><a href="tab.html#stargazer"><i class="fa fa-check"></i><b>2.3</b> stargazer</a></li>
+<li class="chapter" data-level="2.4" data-path="tab.html"><a href="tab.html#可查询表格"><i class="fa fa-check"></i><b>2.4</b> 可查询表格</a></li>
+</ul></li>
+<li class="chapter" data-level="3" data-path="数学.html"><a href="数学.html"><i class="fa fa-check"></i><b>3</b> 数学</a>
+<ul>
+<li class="chapter" data-level="3.1" data-path="数学.html"><a href="数学.html#距离最短"><i class="fa fa-check"></i><b>3.1</b> 距离最短</a></li>
+<li class="chapter" data-level="3.2" data-path="数学.html"><a href="数学.html#牛顿迭代"><i class="fa fa-check"></i><b>3.2</b> 牛顿迭代</a></li>
+<li class="chapter" data-level="3.3" data-path="数学.html"><a href="数学.html#微分"><i class="fa fa-check"></i><b>3.3</b> 微分</a>
+<ul>
+<li class="chapter" data-level="3.3.1" data-path="数学.html"><a href="数学.html#高次微分"><i class="fa fa-check"></i><b>3.3.1</b> 高次微分</a></li>
+<li class="chapter" data-level="3.3.2" data-path="数学.html"><a href="数学.html#微分方程组"><i class="fa fa-check"></i><b>3.3.2</b> 微分方程组</a></li>
+</ul></li>
+<li class="chapter" data-level="3.4" data-path="数学.html"><a href="数学.html#option"><i class="fa fa-check"></i><b>3.4</b> option</a>
+<ul>
+<li class="chapter" data-level="3.4.1" data-path="数学.html"><a href="数学.html#section"><i class="fa fa-check"></i><b>3.4.1</b> 1</a></li>
+<li class="chapter" data-level="3.4.2" data-path="数学.html"><a href="数学.html#极值黑塞矩阵"><i class="fa fa-check"></i><b>3.4.2</b> 极值黑塞矩阵</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="4" data-path="app.html"><a href="app.html"><i class="fa fa-check"></i><b>4</b> app</a></li>
+<li class="chapter" data-level="5" data-path="ab-test.html"><a href="ab-test.html"><i class="fa fa-check"></i><b>5</b> AB-test</a></li>
+<li class="chapter" data-level="6" data-path="pca-and-xgboot.html"><a href="pca-and-xgboot.html"><i class="fa fa-check"></i><b>6</b> pca and xgboot、</a>
+<ul>
+<li class="chapter" data-level="6.1" data-path="pca-and-xgboot.html"><a href="pca-and-xgboot.html#数据"><i class="fa fa-check"></i><b>6.1</b> 数据</a></li>
+<li class="chapter" data-level="6.2" data-path="pca-and-xgboot.html"><a href="pca-and-xgboot.html#主成分分析"><i class="fa fa-check"></i><b>6.2</b> 主成分分析</a></li>
+<li class="chapter" data-level="6.3" data-path="pca-and-xgboot.html"><a href="pca-and-xgboot.html#计算反差贡献"><i class="fa fa-check"></i><b>6.3</b> 计算反差贡献</a>
+<ul>
+<li class="chapter" data-level="6.3.1" data-path="pca-and-xgboot.html"><a href="pca-and-xgboot.html#总结"><i class="fa fa-check"></i><b>6.3.1</b> 总结</a></li>
+</ul></li>
+<li class="chapter" data-level="6.4" data-path="pca-and-xgboot.html"><a href="pca-and-xgboot.html#xgboot"><i class="fa fa-check"></i><b>6.4</b> XGboot</a></li>
+</ul></li>
+<li class="chapter" data-level="7" data-path="聚类.html"><a href="聚类.html"><i class="fa fa-check"></i><b>7</b> 聚类</a>
+<ul>
+<li class="chapter" data-level="7.1" data-path="聚类.html"><a href="聚类.html#data-importing"><i class="fa fa-check"></i><b>7.1</b> 1 Data Importing</a></li>
+<li class="chapter" data-level="7.2" data-path="聚类.html"><a href="聚类.html#clustering"><i class="fa fa-check"></i><b>7.2</b> 2 Clustering</a>
+<ul>
+<li class="chapter" data-level="7.2.1" data-path="聚类.html"><a href="聚类.html#pre-processing"><i class="fa fa-check"></i><b>7.2.1</b> 2.0 pre-processing</a></li>
+<li class="chapter" data-level="7.2.2" data-path="聚类.html"><a href="聚类.html#k-means"><i class="fa fa-check"></i><b>7.2.2</b> 2.1 K-means</a></li>
+<li class="chapter" data-level="7.2.3" data-path="聚类.html"><a href="聚类.html#hierarchical-clusteringmanhattan-distance"><i class="fa fa-check"></i><b>7.2.3</b> 2.2 Hierarchical clustering(Manhattan distance)</a></li>
+<li class="chapter" data-level="7.2.4" data-path="聚类.html"><a href="聚类.html#pam-gower"><i class="fa fa-check"></i><b>7.2.4</b> 2.3 PAM (Gower)</a></li>
+</ul></li>
+<li class="chapter" data-level="7.3" data-path="聚类.html"><a href="聚类.html#describe-the-clusters-you-found-with-pam"><i class="fa fa-check"></i><b>7.3</b> 3 Describe the clusters you found with PAM</a></li>
+<li class="chapter" data-level="7.4" data-path="聚类.html"><a href="聚类.html#clustering-evaluation-and-comparison"><i class="fa fa-check"></i><b>7.4</b> 4 Clustering evaluation and comparison</a></li>
+<li class="chapter" data-level="7.5" data-path="聚类.html"><a href="聚类.html#anomaly-detection"><i class="fa fa-check"></i><b>7.5</b> 5 Anomaly detection</a>
+<ul>
+<li class="chapter" data-level="7.5.1" data-path="聚类.html"><a href="聚类.html#lof"><i class="fa fa-check"></i><b>7.5.1</b> LOF</a></li>
+<li class="chapter" data-level="7.5.2" data-path="聚类.html"><a href="聚类.html#dbscan"><i class="fa fa-check"></i><b>7.5.2</b> DBSCAN</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="8" data-path="回归.html"><a href="回归.html"><i class="fa fa-check"></i><b>8</b> 回归</a>
+<ul>
+<li class="chapter" data-level="8.1" data-path="回归.html"><a href="回归.html#有序glm"><i class="fa fa-check"></i><b>8.1</b> 有序glm</a></li>
+<li class="chapter" data-level="8.2" data-path="回归.html"><a href="回归.html#药物浓度拟合参数方程"><i class="fa fa-check"></i><b>8.2</b> 药物浓度拟合参数方程</a></li>
+<li class="chapter" data-level="8.3" data-path="回归.html"><a href="回归.html#多余变量"><i class="fa fa-check"></i><b>8.3</b> 多余变量</a>
+<ul>
+<li class="chapter" data-level="8.3.1" data-path="回归.html"><a href="回归.html#后退法"><i class="fa fa-check"></i><b>8.3.1</b> 后退法</a></li>
+<li class="chapter" data-level="8.3.2" data-path="回归.html"><a href="回归.html#lasso"><i class="fa fa-check"></i><b>8.3.2</b> lasso</a></li>
+<li class="chapter" data-level="8.3.3" data-path="回归.html"><a href="回归.html#偏最小二乘"><i class="fa fa-check"></i><b>8.3.3</b> 偏最小二乘</a></li>
+</ul></li>
+</ul></li>
+<li class="appendix"><span><b>附录</b></span></li>
+<li class="chapter" data-level="A" data-path="sound.html"><a href="sound.html"><i class="fa fa-check"></i><b>A</b> 结尾</a>
+<ul>
+<li class="chapter" data-level="A.1" data-path="sound.html"><a href="sound.html#写过的部分课程"><i class="fa fa-check"></i><b>A.1</b> 写过的部分课程</a></li>
+<li class="chapter" data-level="A.2" data-path="sound.html"><a href="sound.html#赞助可怜"><i class="fa fa-check"></i><b>A.2</b> 赞助(可怜)</a></li>
+</ul></li>
+<li class="chapter" data-level="" data-path="references.html"><a href="references.html"><i class="fa fa-check"></i>参考文献</a></li>
+<li class="divider"></li>
+<li><a href="https://bookdown.org" target="blank">菜鸟著书by bookdown</a></li>
+
+</ul>
+
+      </nav>
+    </div>
+
+    <div class="book-body">
+      <div class="body-inner">
+        <div class="book-header" role="navigation">
+          <h1>
+            <i class="fa fa-circle-o-notch fa-spin"></i><a href="./">记录R学习</a>
+          </h1>
+        </div>
+
+        <div class="page-wrapper" tabindex="-1" role="main">
+          <div class="page-inner">
+
+            <section class="normal" id="section-">
+<div id="pca-and-xgboot" class="section level1 hasAnchor" number="6">
+<h1><span class="header-section-number">第 6 章</span> pca and xgboot、<a href="pca-and-xgboot.html#pca-and-xgboot" class="anchor-section" aria-label="Anchor link to header"></a></h1>
+<details class=chunk-details><summary class=chunk-summary><span class=chunk-summary-text>Code</span></summary>
+<div class="sourceCode" id="cb112"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb112-1"><a href="pca-and-xgboot.html#cb112-1" tabindex="-1"></a>knitr<span class="sc">::</span>opts_chunk<span class="sc">$</span><span class="fu">set</span>(<span class="at">echo =</span> <span class="cn">TRUE</span>,<span class="at">warning =</span> F,<span class="at">message =</span> F)</span>
+<span id="cb112-2"><a href="pca-and-xgboot.html#cb112-2" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span>
+<span id="cb112-3"><a href="pca-and-xgboot.html#cb112-3" tabindex="-1"></a><span class="fu">library</span>(palmerpenguins)</span>
+<span id="cb112-4"><a href="pca-and-xgboot.html#cb112-4" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span>
+<span id="cb112-5"><a href="pca-and-xgboot.html#cb112-5" tabindex="-1"></a><span class="fu">library</span>(gt)</span>
+<span id="cb112-6"><a href="pca-and-xgboot.html#cb112-6" tabindex="-1"></a><span class="fu">library</span>(gtExtras)</span>
+<span id="cb112-7"><a href="pca-and-xgboot.html#cb112-7" tabindex="-1"></a><span class="fu">library</span>(shiny)</span>
+<span id="cb112-8"><a href="pca-and-xgboot.html#cb112-8" tabindex="-1"></a><span class="fu">library</span>(gtExtras)</span>
+<span id="cb112-9"><a href="pca-and-xgboot.html#cb112-9" tabindex="-1"></a><span class="fu">library</span>(showtext)</span>
+<span id="cb112-10"><a href="pca-and-xgboot.html#cb112-10" tabindex="-1"></a><span class="fu">showtext_auto</span>(<span class="at">enable =</span> <span class="cn">TRUE</span>)</span></code></pre></div>
+</details>
+<details class=chunk-details><summary class=chunk-summary><span class=chunk-summary-text>Code</span></summary>
+<div class="sourceCode" id="cb113"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb113-1"><a href="pca-and-xgboot.html#cb113-1" tabindex="-1"></a>mythem<span class="ot">&lt;-</span><span class="fu">theme</span>(<span class="at">plot.title =</span> <span class="fu">element_text</span>(<span class="at">hjust =</span> <span class="fl">0.5</span>,<span class="co">#居中</span></span>
+<span id="cb113-2"><a href="pca-and-xgboot.html#cb113-2" tabindex="-1"></a>                                  <span class="at">vjust =</span><span class="dv">0</span>,<span class="co">#上下</span></span>
+<span id="cb113-3"><a href="pca-and-xgboot.html#cb113-3" tabindex="-1"></a>                                  <span class="at">color =</span> <span class="st">&#39;black&#39;</span>,</span>
+<span id="cb113-4"><a href="pca-and-xgboot.html#cb113-4" tabindex="-1"></a>                                  <span class="at">face =</span> <span class="st">&quot;italic&quot;</span>))</span></code></pre></div>
+</details>
+<div id="数据" class="section level2 hasAnchor" number="6.1">
+<h2><span class="header-section-number">6.1</span> 数据<a href="pca-and-xgboot.html#数据" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<details class=chunk-details><summary class=chunk-summary><span class=chunk-summary-text>Code</span></summary>
+<div class="sourceCode" id="cb114"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb114-1"><a href="pca-and-xgboot.html#cb114-1" tabindex="-1"></a><span class="fu">library</span>(survival)</span>
+<span id="cb114-2"><a href="pca-and-xgboot.html#cb114-2" tabindex="-1"></a><span class="fu">head</span>(gbsg)</span></code></pre></div>
+</details>
+<pre><code>##    pid age meno size grade nodes pgr er hormon rfstime
+## 1  132  49    0   18     2     2   0  0      0    1838
+## 2 1575  55    1   20     3    16   0  0      0     403
+## 3 1140  56    1   40     3     3   0  0      0    1603
+## 4  769  45    0   25     3     1   0  4      0     177
+## 5  130  65    1   30     2     5   0 36      1    1855
+## 6 1642  48    0   52     2    11   0  0      0     842
+##   status
+## 1      0
+## 2      1
+## 3      0
+## 4      0
+## 5      0
+## 6      1</code></pre>
+<details class=chunk-details><summary class=chunk-summary><span class=chunk-summary-text>Code</span></summary>
+<div class="sourceCode" id="cb116"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb116-1"><a href="pca-and-xgboot.html#cb116-1" tabindex="-1"></a>gbsg <span class="sc">%&gt;%</span> cor <span class="sc">%&gt;%</span> ggcorrplot<span class="sc">::</span><span class="fu">ggcorrplot</span>()<span class="sc">+</span><span class="fu">labs</span>(<span class="at">title=</span><span class="st">&quot;图1:&quot;</span>,<span class="at">caption =</span> <span class="st">&quot;中国制造&quot;</span>)<span class="ot">-&gt;</span>p</span>
+<span id="cb116-2"><a href="pca-and-xgboot.html#cb116-2" tabindex="-1"></a>p<span class="sc">+</span>mythem</span></code></pre></div>
+</details>
+<p><img src="bookdown_files/figure-html/unnamed-chunk-53-1.png" width="480" /></p>
+<ul>
+<li>age：患者年龄</li>
+<li>meno：更年期状态（0表示未更年期，1表示已更年期）</li>
+<li>size：肿瘤大小</li>
+<li>grade：肿瘤分级</li>
+<li>nodes：受累淋巴结数量</li>
+<li>pgr：孕激素受体表达水平</li>
+<li>er：雌激素受体表达水平</li>
+<li>hormon：激素治疗（0表示否，1表示是）</li>
+<li>rfstime：复发或死亡时间（以天为单位）</li>
+<li>status：事件状态（0表示被截尾，1表示事件发生）</li>
+</ul>
+</div>
+<div id="主成分分析" class="section level2 hasAnchor" number="6.2">
+<h2><span class="header-section-number">6.2</span> 主成分分析<a href="pca-and-xgboot.html#主成分分析" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<details class=chunk-details><summary class=chunk-summary><span class=chunk-summary-text>Code</span></summary>
+<div class="sourceCode" id="cb117"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb117-1"><a href="pca-and-xgboot.html#cb117-1" tabindex="-1"></a><span class="co"># 去除pid、分类变量和因变量</span></span>
+<span id="cb117-2"><a href="pca-and-xgboot.html#cb117-2" tabindex="-1"></a>factors <span class="ot">&lt;-</span> gbsg[,<span class="fu">c</span>(<span class="sc">-</span><span class="dv">1</span>,<span class="sc">-</span><span class="dv">3</span>,<span class="sc">-</span><span class="dv">5</span>,<span class="sc">-</span><span class="dv">9</span>,<span class="sc">-</span><span class="dv">11</span>)]</span>
+<span id="cb117-3"><a href="pca-and-xgboot.html#cb117-3" tabindex="-1"></a><span class="co"># 进行主成分分析</span></span>
+<span id="cb117-4"><a href="pca-and-xgboot.html#cb117-4" tabindex="-1"></a>pca_result <span class="ot">&lt;-</span> <span class="fu">prcomp</span>(factors, <span class="at">scale. =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb117-5"><a href="pca-and-xgboot.html#cb117-5" tabindex="-1"></a>pca_result</span></code></pre></div>
+</details>
+<pre><code>## Standard deviations (1, .., p=6):
+## [1] 1.2962 1.1716 0.9650 0.9276 0.7936 0.7254
+## 
+## Rotation (n x k) = (6 x 6):
+##             PC1     PC2      PC3     PC4      PC5
+## age      0.3413 -0.3741  0.69110 -0.2693  0.17943
+## size    -0.3584 -0.4420 -0.35063 -0.4832  0.56009
+## nodes   -0.3745 -0.5435  0.04155 -0.1138 -0.74136
+## pgr      0.4553 -0.2944 -0.60576  0.1897 -0.08063
+## er       0.5266 -0.4167 -0.01334  0.1425  0.02135
+## rfstime  0.3609  0.3302 -0.17492 -0.7904 -0.31231
+##               PC6
+## age     -0.401554
+## size     0.078115
+## nodes    0.004621
+## pgr     -0.544638
+## er       0.726728
+## rfstime  0.088696</code></pre>
+<details class=chunk-details><summary class=chunk-summary><span class=chunk-summary-text>Code</span></summary>
+<div class="sourceCode" id="cb119"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb119-1"><a href="pca-and-xgboot.html#cb119-1" tabindex="-1"></a><span class="fu">summary</span>(pca_result)</span></code></pre></div>
+</details>
+<pre><code>## Importance of components:
+##                         PC1   PC2   PC3   PC4   PC5
+## Standard deviation     1.30 1.172 0.965 0.928 0.794
+## Proportion of Variance 0.28 0.229 0.155 0.143 0.105
+## Cumulative Proportion  0.28 0.509 0.664 0.807 0.912
+##                           PC6
+## Standard deviation     0.7254
+## Proportion of Variance 0.0877
+## Cumulative Proportion  1.0000</code></pre>
+<details class=chunk-details><summary class=chunk-summary><span class=chunk-summary-text>Code</span></summary>
+<div class="sourceCode" id="cb121"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb121-1"><a href="pca-and-xgboot.html#cb121-1" tabindex="-1"></a><span class="fu">plot</span>(pca_result)</span></code></pre></div>
+</details>
+<p><img src="bookdown_files/figure-html/unnamed-chunk-54-1.png" width="480" /></p>
+<details class=chunk-details><summary class=chunk-summary><span class=chunk-summary-text>Code</span></summary>
+<div class="sourceCode" id="cb122"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb122-1"><a href="pca-and-xgboot.html#cb122-1" tabindex="-1"></a><span class="fu">biplot</span>(pca_result)</span></code></pre></div>
+</details>
+<p><img src="bookdown_files/figure-html/unnamed-chunk-54-2.png" width="480" /></p>
+<p>主成分分析通常用于连续变量而不是分类变量。主成分分析是一种多变量统计技术，旨在减少数据维度并捕捉数据中的模式。它通过线性变换将原始变量转换为一组新的、不相关的变量，称为主成分。这些主成分是原始变量的线性组合，能够最大程度地保留原始数据的方差。</p>
+</div>
+<div id="计算反差贡献" class="section level2 hasAnchor" number="6.3">
+<h2><span class="header-section-number">6.3</span> 计算反差贡献<a href="pca-and-xgboot.html#计算反差贡献" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<details class=chunk-details><summary class=chunk-summary><span class=chunk-summary-text>Code</span></summary>
+<div class="sourceCode" id="cb123"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb123-1"><a href="pca-and-xgboot.html#cb123-1" tabindex="-1"></a><span class="co"># 提取每个主成分的方差贡献率</span></span>
+<span id="cb123-2"><a href="pca-and-xgboot.html#cb123-2" tabindex="-1"></a>variance_proportion <span class="ot">&lt;-</span> pca_result<span class="sc">$</span>sdev<span class="sc">^</span><span class="dv">2</span> <span class="sc">/</span> <span class="fu">sum</span>(pca_result<span class="sc">$</span>sdev<span class="sc">^</span><span class="dv">2</span>)</span>
+<span id="cb123-3"><a href="pca-and-xgboot.html#cb123-3" tabindex="-1"></a><span class="co"># 计算累积方差贡献率</span></span>
+<span id="cb123-4"><a href="pca-and-xgboot.html#cb123-4" tabindex="-1"></a>cumulative_variance_proportion <span class="ot">&lt;-</span> <span class="fu">cumsum</span>(variance_proportion)</span>
+<span id="cb123-5"><a href="pca-and-xgboot.html#cb123-5" tabindex="-1"></a></span>
+<span id="cb123-6"><a href="pca-and-xgboot.html#cb123-6" tabindex="-1"></a><span class="co"># 绘制保留方差图</span></span>
+<span id="cb123-7"><a href="pca-and-xgboot.html#cb123-7" tabindex="-1"></a><span class="fu">plot</span>(cumulative_variance_proportion, </span>
+<span id="cb123-8"><a href="pca-and-xgboot.html#cb123-8" tabindex="-1"></a>     <span class="at">xlab =</span> <span class="st">&quot;Number of Principal Components&quot;</span>,</span>
+<span id="cb123-9"><a href="pca-and-xgboot.html#cb123-9" tabindex="-1"></a>     <span class="at">ylab =</span> <span class="st">&quot;Cumulative Variance Proportion&quot;</span>,</span>
+<span id="cb123-10"><a href="pca-and-xgboot.html#cb123-10" tabindex="-1"></a>     <span class="at">ylim =</span> <span class="fu">c</span>(<span class="dv">0</span>, <span class="dv">1</span>),</span>
+<span id="cb123-11"><a href="pca-and-xgboot.html#cb123-11" tabindex="-1"></a>     <span class="at">type =</span> <span class="st">&#39;b&#39;</span></span>
+<span id="cb123-12"><a href="pca-and-xgboot.html#cb123-12" tabindex="-1"></a>)</span></code></pre></div>
+</details>
+<p><img src="bookdown_files/figure-html/unnamed-chunk-55-1.png" width="480" /></p>
+<details class=chunk-details><summary class=chunk-summary><span class=chunk-summary-text>Code</span></summary>
+<div class="sourceCode" id="cb124"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb124-1"><a href="pca-and-xgboot.html#cb124-1" tabindex="-1"></a>pca_score <span class="ot">&lt;-</span> <span class="fu">as.data.frame</span>(pca_result<span class="sc">$</span>x)</span>
+<span id="cb124-2"><a href="pca-and-xgboot.html#cb124-2" tabindex="-1"></a><span class="co"># 通常选择贡献度大于80或者90%的作为分析变量</span></span>
+<span id="cb124-3"><a href="pca-and-xgboot.html#cb124-3" tabindex="-1"></a>score <span class="ot">&lt;-</span> pca_score[,<span class="fu">c</span>(<span class="sc">-</span><span class="dv">1</span>,<span class="sc">-</span><span class="dv">2</span>,<span class="sc">-</span><span class="dv">3</span>)]</span>
+<span id="cb124-4"><a href="pca-and-xgboot.html#cb124-4" tabindex="-1"></a>data <span class="ot">&lt;-</span> <span class="fu">cbind</span>(gbsg[<span class="fu">c</span>(<span class="dv">3</span>,<span class="dv">5</span>,<span class="dv">9</span>,<span class="dv">11</span>)],score)</span></code></pre></div>
+</details>
+<details class=chunk-details><summary class=chunk-summary><span class=chunk-summary-text>Code</span></summary>
+<div class="sourceCode" id="cb125"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb125-1"><a href="pca-and-xgboot.html#cb125-1" tabindex="-1"></a><span class="co"># 划分训练集和测试集</span></span>
+<span id="cb125-2"><a href="pca-and-xgboot.html#cb125-2" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">123</span>)</span>
+<span id="cb125-3"><a href="pca-and-xgboot.html#cb125-3" tabindex="-1"></a>data <span class="ot">&lt;-</span> gbsg[,<span class="fu">c</span>(<span class="sc">-</span><span class="dv">1</span>)] </span>
+<span id="cb125-4"><a href="pca-and-xgboot.html#cb125-4" tabindex="-1"></a><span class="co"># 划分训练集和测试集</span></span>
+<span id="cb125-5"><a href="pca-and-xgboot.html#cb125-5" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">123</span>)</span>
+<span id="cb125-6"><a href="pca-and-xgboot.html#cb125-6" tabindex="-1"></a>train_indices <span class="ot">&lt;-</span> <span class="fu">sample</span>(<span class="at">x =</span> <span class="dv">1</span><span class="sc">:</span><span class="fu">nrow</span>(data), <span class="at">size =</span> <span class="fl">0.7</span> <span class="sc">*</span> <span class="fu">nrow</span>(data), <span class="at">replace =</span> <span class="cn">FALSE</span>)</span>
+<span id="cb125-7"><a href="pca-and-xgboot.html#cb125-7" tabindex="-1"></a>test_indices <span class="ot">&lt;-</span> <span class="fu">sample</span>(<span class="fu">setdiff</span>(<span class="dv">1</span><span class="sc">:</span><span class="fu">nrow</span>(data), train_indices), <span class="at">size =</span> <span class="fl">0.3</span> <span class="sc">*</span> <span class="fu">nrow</span>(data), <span class="at">replace =</span> <span class="cn">FALSE</span>)</span>
+<span id="cb125-8"><a href="pca-and-xgboot.html#cb125-8" tabindex="-1"></a>train_data <span class="ot">&lt;-</span> data[train_indices, ]</span>
+<span id="cb125-9"><a href="pca-and-xgboot.html#cb125-9" tabindex="-1"></a>test_data <span class="ot">&lt;-</span> data[test_indices, ]</span></code></pre></div>
+</details>
+<details class=chunk-details><summary class=chunk-summary><span class=chunk-summary-text>Code</span></summary>
+<div class="sourceCode" id="cb126"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb126-1"><a href="pca-and-xgboot.html#cb126-1" tabindex="-1"></a><span class="co"># 划分训练集和测试集</span></span>
+<span id="cb126-2"><a href="pca-and-xgboot.html#cb126-2" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">123</span>)</span>
+<span id="cb126-3"><a href="pca-and-xgboot.html#cb126-3" tabindex="-1"></a>train_indices <span class="ot">&lt;-</span> <span class="fu">sample</span>(<span class="at">x =</span> <span class="dv">1</span><span class="sc">:</span><span class="fu">nrow</span>(data), <span class="at">size =</span> <span class="fl">0.8</span> <span class="sc">*</span> <span class="fu">nrow</span>(data), <span class="at">replace =</span> <span class="cn">FALSE</span>)</span>
+<span id="cb126-4"><a href="pca-and-xgboot.html#cb126-4" tabindex="-1"></a>test_indices <span class="ot">&lt;-</span> <span class="fu">sample</span>(<span class="fu">setdiff</span>(<span class="dv">1</span><span class="sc">:</span><span class="fu">nrow</span>(data), train_indices), <span class="at">size =</span> <span class="fl">0.2</span> <span class="sc">*</span> <span class="fu">nrow</span>(data), <span class="at">replace =</span> <span class="cn">FALSE</span>)</span>
+<span id="cb126-5"><a href="pca-and-xgboot.html#cb126-5" tabindex="-1"></a>train_data <span class="ot">&lt;-</span> data[train_indices, ]</span>
+<span id="cb126-6"><a href="pca-and-xgboot.html#cb126-6" tabindex="-1"></a>test_data <span class="ot">&lt;-</span> data[test_indices, ]</span>
+<span id="cb126-7"><a href="pca-and-xgboot.html#cb126-7" tabindex="-1"></a>train_gbsg <span class="ot">&lt;-</span> gbsg[train_indices, ]</span>
+<span id="cb126-8"><a href="pca-and-xgboot.html#cb126-8" tabindex="-1"></a>test_gbsg <span class="ot">&lt;-</span> gbsg[test_indices, ]</span>
+<span id="cb126-9"><a href="pca-and-xgboot.html#cb126-9" tabindex="-1"></a></span>
+<span id="cb126-10"><a href="pca-and-xgboot.html#cb126-10" tabindex="-1"></a><span class="fu">library</span>(randomForest)</span>
+<span id="cb126-11"><a href="pca-and-xgboot.html#cb126-11" tabindex="-1"></a><span class="fu">library</span>(pROC)</span>
+<span id="cb126-12"><a href="pca-and-xgboot.html#cb126-12" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">666</span>)</span>
+<span id="cb126-13"><a href="pca-and-xgboot.html#cb126-13" tabindex="-1"></a><span class="co"># 主成分分析后模型</span></span>
+<span id="cb126-14"><a href="pca-and-xgboot.html#cb126-14" tabindex="-1"></a>rf <span class="ot">&lt;-</span> <span class="fu">randomForest</span>(status<span class="sc">~</span>., <span class="at">data=</span>train_data)</span>
+<span id="cb126-15"><a href="pca-and-xgboot.html#cb126-15" tabindex="-1"></a></span>
+<span id="cb126-16"><a href="pca-and-xgboot.html#cb126-16" tabindex="-1"></a><span class="co"># 获取模型预测的概率</span></span>
+<span id="cb126-17"><a href="pca-and-xgboot.html#cb126-17" tabindex="-1"></a>pred_prob <span class="ot">&lt;-</span> <span class="fu">predict</span>(rf, <span class="at">newdata =</span> test_data, <span class="at">type =</span> <span class="st">&quot;class&quot;</span>)</span>
+<span id="cb126-18"><a href="pca-and-xgboot.html#cb126-18" tabindex="-1"></a><span class="co"># 计算真阳性率和假阳性率</span></span>
+<span id="cb126-19"><a href="pca-and-xgboot.html#cb126-19" tabindex="-1"></a>roc1 <span class="ot">&lt;-</span> pROC<span class="sc">::</span><span class="fu">roc</span>(test_data<span class="sc">$</span>status, pred_prob)</span>
+<span id="cb126-20"><a href="pca-and-xgboot.html#cb126-20" tabindex="-1"></a></span>
+<span id="cb126-21"><a href="pca-and-xgboot.html#cb126-21" tabindex="-1"></a><span class="co"># 原始数据模型</span></span>
+<span id="cb126-22"><a href="pca-and-xgboot.html#cb126-22" tabindex="-1"></a><span class="co"># 特征选择后的模型拟合</span></span>
+<span id="cb126-23"><a href="pca-and-xgboot.html#cb126-23" tabindex="-1"></a>rf_handle <span class="ot">&lt;-</span> <span class="fu">randomForest</span>(status<span class="sc">~</span>., <span class="at">data=</span>train_gbsg)</span>
+<span id="cb126-24"><a href="pca-and-xgboot.html#cb126-24" tabindex="-1"></a>pred_prob_handle <span class="ot">&lt;-</span> <span class="fu">predict</span>(rf_handle, <span class="at">newdata =</span> test_gbsg, <span class="at">type =</span> <span class="st">&quot;class&quot;</span>)</span>
+<span id="cb126-25"><a href="pca-and-xgboot.html#cb126-25" tabindex="-1"></a><span class="co"># 计算真阳性率和假阳性率</span></span>
+<span id="cb126-26"><a href="pca-and-xgboot.html#cb126-26" tabindex="-1"></a>roc2 <span class="ot">&lt;-</span> pROC<span class="sc">::</span><span class="fu">roc</span>(test_gbsg<span class="sc">$</span>status, pred_prob_handle)</span>
+<span id="cb126-27"><a href="pca-and-xgboot.html#cb126-27" tabindex="-1"></a></span>
+<span id="cb126-28"><a href="pca-and-xgboot.html#cb126-28" tabindex="-1"></a><span class="fu">plot</span>(roc1,<span class="at">col=</span><span class="st">&quot;#2E9FDF&quot;</span>, <span class="at">legacy.axes =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb126-29"><a href="pca-and-xgboot.html#cb126-29" tabindex="-1"></a><span class="fu">plot.roc</span>(roc2,<span class="at">add=</span><span class="cn">TRUE</span>,<span class="at">col=</span><span class="st">&quot;red&quot;</span>)</span>
+<span id="cb126-30"><a href="pca-and-xgboot.html#cb126-30" tabindex="-1"></a></span>
+<span id="cb126-31"><a href="pca-and-xgboot.html#cb126-31" tabindex="-1"></a><span class="fu">abline</span>(<span class="at">h =</span> <span class="fu">seq</span>(<span class="dv">0</span>, <span class="dv">1</span>, <span class="at">by =</span> <span class="fl">0.1</span>), <span class="at">col =</span> <span class="st">&quot;gray&quot;</span>, <span class="at">lty =</span> <span class="st">&quot;dotted&quot;</span>)</span>
+<span id="cb126-32"><a href="pca-and-xgboot.html#cb126-32" tabindex="-1"></a><span class="fu">legend</span>(<span class="fl">0.40</span>, <span class="fl">0.17</span>,  <span class="co"># 图例位置x，y</span></span>
+<span id="cb126-33"><a href="pca-and-xgboot.html#cb126-33" tabindex="-1"></a>       <span class="at">bty =</span> <span class="st">&quot;n&quot;</span>,   <span class="co"># 图例样式</span></span>
+<span id="cb126-34"><a href="pca-and-xgboot.html#cb126-34" tabindex="-1"></a>       <span class="at">legend=</span><span class="fu">c</span>(<span class="st">&quot;Handle AUC 0.684&quot;</span>,<span class="st">&quot;Unhandle AUC 0.854&quot;</span>),  <span class="co"># 添加分组</span></span>
+<span id="cb126-35"><a href="pca-and-xgboot.html#cb126-35" tabindex="-1"></a>       <span class="at">col=</span><span class="fu">c</span>(<span class="st">&quot;#2E9FDF&quot;</span>,<span class="st">&quot;red&quot;</span>),  <span class="co"># 颜色跟前面一致</span></span>
+<span id="cb126-36"><a href="pca-and-xgboot.html#cb126-36" tabindex="-1"></a>       <span class="at">lwd=</span><span class="dv">2</span>,</span>
+<span id="cb126-37"><a href="pca-and-xgboot.html#cb126-37" tabindex="-1"></a>    <span class="at">border=</span><span class="st">&quot;black&quot;</span>)  <span class="co"># 线条粗</span></span></code></pre></div>
+</details>
+<p><img src="bookdown_files/figure-html/unnamed-chunk-57-1.png" width="480" /></p>
+<div id="总结" class="section level3 hasAnchor" number="6.3.1">
+<h3><span class="header-section-number">6.3.1</span> 总结<a href="pca-and-xgboot.html#总结" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>在乳腺癌研究中，主成分分析（PCA）和随机森林都扮演着重要的角色。PCA可以用于降维，帮助去除数据中的冗余信息，凸显出最重要的特征，从而有助于更好地理解乳腺癌数据集的内在结构。通过这种降维的方式，可以更好地可视化数据、识别潜在的模式，并为后续建模提供更清晰的特征空间。</p>
+<p>另一方面，随机森林是一种强大的机器学习算法，它在处理复杂的、高维度的数据集时表现优异。在乳腺癌研究中，随机森林可以用于特征选择和分类任务，能够有效地处理大量特征并且对噪声具有一定的鲁棒性，因此能够提供对乳腺癌数据进行有效分类和预测的能力。</p>
+<p>数据科学在医疗领域的应用前景广阔。随着医疗技术的不断进步，数据的积累和共享成为可能，数据科学将在医疗领域发挥越来越重要的作用。</p>
+<p>个性化医疗：利用大数据和机器学习技术，可以实现对患者病情、治疗反应等个性化特征的分析，从而实现个性化的医疗方案，提高治疗效果和患者生活质量。 疾病预测和预防：通过对大规模医疗数据的分析，可以发现潜在的疾病发生规律和风险因素，从而提前预测和预防疾病的发生，有助于公共卫生和健康管理工作。 医疗资源优化：通过数据科学的方法，可以对医疗资源的分配和利用进行优化，提高医疗服务的效率和公平性。 总的来说，数据科学在医疗领域的发展将为医疗健康产业带来革命性的变化，为人类健康事业作出重要贡献。</p>
+<p>##逻辑回归</p>
+<details class=chunk-details><summary class=chunk-summary><span class=chunk-summary-text>Code</span></summary>
+<div class="sourceCode" id="cb127"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb127-1"><a href="pca-and-xgboot.html#cb127-1" tabindex="-1"></a><span class="fu">library</span>(rms)</span>
+<span id="cb127-2"><a href="pca-and-xgboot.html#cb127-2" tabindex="-1"></a><span class="fu">library</span>(survival) </span>
+<span id="cb127-3"><a href="pca-and-xgboot.html#cb127-3" tabindex="-1"></a>ddist <span class="ot">&lt;-</span> <span class="fu">datadist</span>(gbsg[,<span class="sc">-</span><span class="dv">1</span>]); </span>
+<span id="cb127-4"><a href="pca-and-xgboot.html#cb127-4" tabindex="-1"></a><span class="fu">options</span>(<span class="at">datadist=</span><span class="st">&#39;ddist&#39;</span>)</span>
+<span id="cb127-5"><a href="pca-and-xgboot.html#cb127-5" tabindex="-1"></a><span class="co"># 拟合逻辑回归模型</span></span>
+<span id="cb127-6"><a href="pca-and-xgboot.html#cb127-6" tabindex="-1"></a>model <span class="ot">&lt;-</span> <span class="fu">lrm</span>(status <span class="sc">~</span> ., <span class="at">data =</span> gbsg[,<span class="sc">-</span><span class="dv">1</span>])</span></code></pre></div>
+</details>
+<p>绘制列线图</p>
+<details class=chunk-details><summary class=chunk-summary><span class=chunk-summary-text>Code</span></summary>
+<div class="sourceCode" id="cb128"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb128-1"><a href="pca-and-xgboot.html#cb128-1" tabindex="-1"></a>nomogram <span class="ot">&lt;-</span> <span class="fu">nomogram</span>(model, <span class="at">fun =</span> <span class="cf">function</span>(x)<span class="dv">1</span><span class="sc">/</span>(<span class="dv">1</span><span class="sc">+</span><span class="fu">exp</span>(<span class="sc">-</span>x))) <span class="co"># 逻辑回归计算公式</span></span>
+<span id="cb128-2"><a href="pca-and-xgboot.html#cb128-2" tabindex="-1"></a><span class="co"># 绘制列线图</span></span>
+<span id="cb128-3"><a href="pca-and-xgboot.html#cb128-3" tabindex="-1"></a><span class="fu">plot</span>(nomogram)</span></code></pre></div>
+</details>
+<p><img src="bookdown_files/figure-html/unnamed-chunk-59-1.png" width="480" /></p>
+<details class=chunk-details><summary class=chunk-summary><span class=chunk-summary-text>Code</span></summary>
+<div class="sourceCode" id="cb129"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb129-1"><a href="pca-and-xgboot.html#cb129-1" tabindex="-1"></a>model <span class="ot">&lt;-</span> <span class="fu">lrm</span>(status <span class="sc">~</span> age <span class="sc">+</span> meno <span class="sc">+</span> nodes, <span class="at">data =</span> gbsg[,<span class="sc">-</span><span class="dv">1</span>])</span>
+<span id="cb129-2"><a href="pca-and-xgboot.html#cb129-2" tabindex="-1"></a>nomogram <span class="ot">&lt;-</span> <span class="fu">nomogram</span>(model, <span class="at">fun =</span> <span class="cf">function</span>(x)<span class="dv">1</span><span class="sc">/</span>(<span class="dv">1</span><span class="sc">+</span><span class="fu">exp</span>(<span class="sc">-</span>x))) <span class="co"># 逻辑回归计算公式</span></span>
+<span id="cb129-3"><a href="pca-and-xgboot.html#cb129-3" tabindex="-1"></a><span class="co"># 绘制列线图</span></span>
+<span id="cb129-4"><a href="pca-and-xgboot.html#cb129-4" tabindex="-1"></a><span class="fu">plot</span>(nomogram)</span></code></pre></div>
+</details>
+<p><img src="bookdown_files/figure-html/unnamed-chunk-60-1.png" width="480" /></p>
+<p>从图中可以看出，age 49时对应的分数是11分，然后meno为0对应的分值为0，nodes为2时对应的分数为3分，总分值为14分，总分值对应的预测值是0.3-0.4之间，小于0.5，所以其预测值应该是0，和实际结果一致。除了这些我们还可以看到哪些信息呢？</p>
+<p>特征的取值范围：比如age的取值范围是20-80，meno取值范围是0-1（分类变量），nodes取值范围是0-55. 特征的权重(特征重要性)：线越长代表权重越大，从图中可以看出：nodes &gt; age &gt; meno; 特征的影响趋势(正向、负向)：age越大，发生事件的概率越低，所以是负向趋势；meno和nodes都是随着值越大发生事件的概率越大，所以是正向趋势； 得分：可以通过point得出单个病人某个指标对应的分值，然后通过分值累加即可获得total point； 预测概率：我们可以通过计算得出的total point比对出事件发生的概率。</p>
+<details class=chunk-details><summary class=chunk-summary><span class=chunk-summary-text>Code</span></summary>
+<div class="sourceCode" id="cb130"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb130-1"><a href="pca-and-xgboot.html#cb130-1" tabindex="-1"></a>ddist <span class="ot">&lt;-</span> <span class="fu">datadist</span>(gbsg[,<span class="sc">-</span><span class="dv">1</span>]); </span>
+<span id="cb130-2"><a href="pca-and-xgboot.html#cb130-2" tabindex="-1"></a><span class="fu">options</span>(<span class="at">datadist=</span><span class="st">&#39;ddist&#39;</span>)</span>
+<span id="cb130-3"><a href="pca-and-xgboot.html#cb130-3" tabindex="-1"></a>model <span class="ot">&lt;-</span> <span class="fu">lrm</span>(status <span class="sc">~</span> ., <span class="at">data =</span> gbsg[,<span class="sc">-</span><span class="dv">1</span>])</span>
+<span id="cb130-4"><a href="pca-and-xgboot.html#cb130-4" tabindex="-1"></a>nomogram <span class="ot">&lt;-</span> <span class="fu">nomogram</span>(model, <span class="at">fun =</span> <span class="cf">function</span>(x)<span class="dv">1</span><span class="sc">/</span>(<span class="dv">1</span><span class="sc">+</span><span class="fu">exp</span>(<span class="sc">-</span>x)),<span class="at">funlabel=</span><span class="st">&quot;Risk of Event&quot;</span>,<span class="at">conf.int=</span>F,<span class="at">lp=</span>F,<span class="at">fun.at=</span><span class="fu">c</span>(.<span class="dv">001</span>,.<span class="dv">01</span>,.<span class="dv">05</span>,<span class="fu">seq</span>(.<span class="dv">1</span>,.<span class="dv">9</span>,<span class="at">by=</span>.<span class="dv">1</span>),.<span class="dv">95</span>,.<span class="dv">99</span>,.<span class="dv">99</span>)) <span class="co"># 逻辑回归计算公式</span></span>
+<span id="cb130-5"><a href="pca-and-xgboot.html#cb130-5" tabindex="-1"></a><span class="co"># 绘制列线图</span></span>
+<span id="cb130-6"><a href="pca-and-xgboot.html#cb130-6" tabindex="-1"></a><span class="fu">plot</span>(nomogram)</span>
+<span id="cb130-7"><a href="pca-and-xgboot.html#cb130-7" tabindex="-1"></a><span class="fu">rect</span>(<span class="fl">0.191</span>,<span class="fl">0.095</span>,<span class="fl">0.65</span>,<span class="fl">0.11</span>,<span class="at">col =</span> <span class="st">&quot;green&quot;</span>) <span class="co"># 添加彩色条带</span></span>
+<span id="cb130-8"><a href="pca-and-xgboot.html#cb130-8" tabindex="-1"></a><span class="fu">rect</span>(<span class="fl">0.65</span>,<span class="fl">0.095</span>,<span class="fl">0.705</span>,<span class="fl">0.11</span>,<span class="at">col =</span> <span class="st">&quot;yellow&quot;</span>) <span class="co"># 添加彩色条带</span></span>
+<span id="cb130-9"><a href="pca-and-xgboot.html#cb130-9" tabindex="-1"></a><span class="fu">rect</span>(<span class="fl">0.705</span>,<span class="fl">0.095</span>,<span class="fl">1.003</span>,<span class="fl">0.11</span>,<span class="at">col =</span> <span class="st">&quot;red&quot;</span>) <span class="co"># 添加彩色条带</span></span>
+<span id="cb130-10"><a href="pca-and-xgboot.html#cb130-10" tabindex="-1"></a><span class="fu">text</span>(<span class="fl">0.4</span>,<span class="fl">0.125</span>,<span class="st">&quot;Low&quot;</span>)</span>
+<span id="cb130-11"><a href="pca-and-xgboot.html#cb130-11" tabindex="-1"></a><span class="fu">text</span>(<span class="fl">0.68</span>,<span class="fl">0.125</span>,<span class="st">&quot;Medium&quot;</span>)</span>
+<span id="cb130-12"><a href="pca-and-xgboot.html#cb130-12" tabindex="-1"></a><span class="fu">text</span>(<span class="fl">0.85</span>,<span class="fl">0.125</span>,<span class="st">&quot;High&quot;</span>)</span></code></pre></div>
+</details>
+<p><img src="bookdown_files/figure-html/unnamed-chunk-61-1.png" width="576" /></p>
+<p>在本文中，我们介绍了列线图的基本概念、绘制方法和应用场景。列线图是一种常用的数据可视化工具，它可以帮助我们探索变量之间的关系，解释模型的预测效果，并支持数据驱动的决策。</p>
+<p>我们提供了一些实用的技巧和建议，如如何解释列线图的结果、如何定制样式、如何探索非线性关系和如何使用交互式可视化工具等。这些技巧可以帮助读者更好地理解和利用列线图。</p>
+<p>未来，我们预计列线图将在数据分析中发挥更重要的作用。随着数据量的不断增加和机器学习的广泛应用，列线图将成为处理大规模数据和评估复杂模型的有力工具。我们鼓励读者继续学习和实践列线图的应用，以应对数据分析领域的挑战。</p>
+</div>
+</div>
+<div id="xgboot" class="section level2 hasAnchor" number="6.4">
+<h2><span class="header-section-number">6.4</span> XGboot<a href="pca-and-xgboot.html#xgboot" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>XGBoost是一个基于梯度提升决策树的机器学习框架，以其高效、可扩展和灵活的特点而著称。其核心算法基于梯度提升决策树，通过迭代地构建一系列弱学习器来逼近一个强大的学习器，从而实现对数据的复杂非线性关系的建模。</p>
+<p>「自适应学习率调整功能」，能够自动调整每个决策树的学习率，以提高模型的训练速度和性能。 「支持处理分类特征」，不需要进行独热编码或标签编码，能够直接处理原始的分类数据，这使得模型更加精确且能够保留分类特征的信息。 「优秀的泛化能力」，在处理较少训练样本和高维度数据时能够表现出色。</p>
+<p>XGBoost与可解释性。传统的决策树可能会因为过拟合而产生过于复杂的结构，使得解释起来非常困难。而XGBoost与可解释性通过使用基于树的梯度提升方法，能够自动地优化树的深度和叶节点的数量，从而生成易于解释的模型。</p>
+<p>「特征重要性评估」：能够计算每个特征对于模型预测的贡献程度，进而帮助我们了解哪些特征对于模型的决策起到了重要作用。这使得我们可以识别出关键特征，进行特征工程或优化模型。 「特征交互可视化」：提供了直观的特征交互可视化功能，能够帮助我们理解不同特征之间的相互作用和影响，例如通过绘制特征之间的依赖关系图或局部影响图。 「模型解释性工具」：提供了一些工具来帮助我们更好地解释模型的决策过程，如决策路径、叶子节点的统计信息等。这些工具可以揭示模型的内部逻辑和规则，从而增强模型的可解释性。 「提供了一系列可视化工具」，如特征重要性评估和模型解释树，帮助用户更好地理解模型决策过程。</p>
+<details class=chunk-details><summary class=chunk-summary><span class=chunk-summary-text>Code</span></summary>
+<div class="sourceCode" id="cb131"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb131-1"><a href="pca-and-xgboot.html#cb131-1" tabindex="-1"></a><span class="fu">library</span>(xgboost)</span>
+<span id="cb131-2"><a href="pca-and-xgboot.html#cb131-2" tabindex="-1"></a><span class="fu">library</span>(pROC)</span>
+<span id="cb131-3"><a href="pca-and-xgboot.html#cb131-3" tabindex="-1"></a></span>
+<span id="cb131-4"><a href="pca-and-xgboot.html#cb131-4" tabindex="-1"></a>bst <span class="ot">&lt;-</span> <span class="fu">xgboost</span>(<span class="at">data =</span> <span class="fu">as.matrix</span>(train_data[,<span class="fu">c</span>(<span class="sc">-</span><span class="dv">10</span>,<span class="sc">-</span><span class="dv">11</span>)]), <span class="at">label =</span> train_data<span class="sc">$</span>status,</span>
+<span id="cb131-5"><a href="pca-and-xgboot.html#cb131-5" tabindex="-1"></a>               <span class="at">max_depth =</span> <span class="dv">2</span>, <span class="at">eta =</span> <span class="dv">1</span>, <span class="at">nthread =</span> <span class="dv">2</span>, <span class="at">nrounds =</span> <span class="dv">2</span>,</span>
+<span id="cb131-6"><a href="pca-and-xgboot.html#cb131-6" tabindex="-1"></a>               <span class="at">objective =</span> <span class="st">&quot;binary:logistic&quot;</span>)</span></code></pre></div>
+</details>
+<pre><code>## [1]  train-logloss:0.547861 
+## [2]  train-logloss:0.521312</code></pre>
+<details class=chunk-details><summary class=chunk-summary><span class=chunk-summary-text>Code</span></summary>
+<div class="sourceCode" id="cb133"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb133-1"><a href="pca-and-xgboot.html#cb133-1" tabindex="-1"></a><span class="fu">library</span>(DALEXtra)</span>
+<span id="cb133-2"><a href="pca-and-xgboot.html#cb133-2" tabindex="-1"></a>cat_exp <span class="ot">&lt;-</span> <span class="fu">explain_tidymodels</span>(bst,</span>
+<span id="cb133-3"><a href="pca-and-xgboot.html#cb133-3" tabindex="-1"></a>                              <span class="at">data =</span> <span class="fu">as.matrix</span>(train_data[,<span class="fu">c</span>(<span class="sc">-</span><span class="dv">10</span>,<span class="sc">-</span><span class="dv">11</span>)]),</span>
+<span id="cb133-4"><a href="pca-and-xgboot.html#cb133-4" tabindex="-1"></a>                              <span class="at">y=</span>train_data<span class="sc">$</span>status,</span>
+<span id="cb133-5"><a href="pca-and-xgboot.html#cb133-5" tabindex="-1"></a>                              <span class="at">label =</span> <span class="st">&quot;Catboost&quot;</span>)</span></code></pre></div>
+</details>
+<pre><code>## Preparation of a new explainer is initiated
+##   -&gt; model label       :  Catboost 
+##   -&gt; data              :  548  rows  9  cols 
+##   -&gt; target variable   :  548  values 
+##   -&gt; predict function  :  yhat.xgb.Booster  will be used (  default  )
+##   -&gt; predicted values  :  No value for predict function target column. (  default  )
+##   -&gt; model_info        :  package xgboost , ver. 1.7.6.1 , task classification (  default  ) 
+##   -&gt; predicted values  :  numerical, min =  0.1217 , mean =  0.4412 , max =  0.8024  
+##   -&gt; residual function :  difference between y and yhat (  default  )
+##   -&gt; residuals         :  numerical, min =  -0.8024 , mean =  -0.001398 , max =  0.8781  
+##   A new explainer has been created!</code></pre>
+<details class=chunk-details><summary class=chunk-summary><span class=chunk-summary-text>Code</span></summary>
+<div class="sourceCode" id="cb135"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb135-1"><a href="pca-and-xgboot.html#cb135-1" tabindex="-1"></a>cat_shap <span class="ot">&lt;-</span> <span class="fu">predict_parts</span>(cat_exp,</span>
+<span id="cb135-2"><a href="pca-and-xgboot.html#cb135-2" tabindex="-1"></a>             <span class="at">new_observation=</span><span class="fu">as.matrix</span>(train_data[<span class="dv">3</span>,<span class="fu">c</span>(<span class="sc">-</span><span class="dv">10</span>,<span class="sc">-</span><span class="dv">11</span>)]),</span>
+<span id="cb135-3"><a href="pca-and-xgboot.html#cb135-3" tabindex="-1"></a>                          <span class="at">type =</span> <span class="st">&quot;shap&quot;</span>)</span>
+<span id="cb135-4"><a href="pca-and-xgboot.html#cb135-4" tabindex="-1"></a><span class="fu">plot</span>(cat_shap,<span class="at">show_boxplots=</span><span class="cn">TRUE</span>)</span></code></pre></div>
+</details>
+<p><img src="bookdown_files/figure-html/unnamed-chunk-64-1.png" width="480" /></p>
+<p>个体SHAP图展示每个特征对个体预测的贡献度，从图中我们可以看出，rfstime和grade 对预测的贡献度较大。</p>
+<details class=chunk-details><summary class=chunk-summary><span class=chunk-summary-text>Code</span></summary>
+<div class="sourceCode" id="cb136"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb136-1"><a href="pca-and-xgboot.html#cb136-1" tabindex="-1"></a>cat_cp <span class="ot">&lt;-</span> <span class="fu">predict_profile</span>(cat_exp,</span>
+<span id="cb136-2"><a href="pca-and-xgboot.html#cb136-2" tabindex="-1"></a>                          <span class="at">new_observation =</span> <span class="fu">as.matrix</span>(train_data[<span class="dv">3</span>,<span class="fu">c</span>(<span class="sc">-</span><span class="dv">10</span>,<span class="sc">-</span><span class="dv">11</span>)]))</span>
+<span id="cb136-3"><a href="pca-and-xgboot.html#cb136-3" tabindex="-1"></a><span class="fu">plot</span>(cat_cp,<span class="at">subtitle=</span><span class="st">&quot;&quot;</span>)</span></code></pre></div>
+</details>
+<p><img src="bookdown_files/figure-html/unnamed-chunk-65-1.png" width="480" /></p>
+<p>CP图显示特征对目标值的影响情况，图中圆点表示样本2 的每个特征的值。</p>
+<p>部分依赖图（PDP</p>
+<details class=chunk-details><summary class=chunk-summary><span class=chunk-summary-text>Code</span></summary>
+<div class="sourceCode" id="cb137"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb137-1"><a href="pca-and-xgboot.html#cb137-1" tabindex="-1"></a><span class="fu">library</span>(ingredients)</span>
+<span id="cb137-2"><a href="pca-and-xgboot.html#cb137-2" tabindex="-1"></a>cat_pd <span class="ot">&lt;-</span> <span class="fu">partial_dependence</span>(cat_exp)</span>
+<span id="cb137-3"><a href="pca-and-xgboot.html#cb137-3" tabindex="-1"></a><span class="fu">plot</span>(cat_pd,<span class="at">subtitle=</span><span class="st">&quot;&quot;</span>)</span></code></pre></div>
+</details>
+<p><img src="bookdown_files/figure-html/unnamed-chunk-66-1.png" width="480" /></p>
+<p>变量重要性</p>
+<details class=chunk-details><summary class=chunk-summary><span class=chunk-summary-text>Code</span></summary>
+<div class="sourceCode" id="cb138"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb138-1"><a href="pca-and-xgboot.html#cb138-1" tabindex="-1"></a><span class="fu">library</span>(vivo)</span>
+<span id="cb138-2"><a href="pca-and-xgboot.html#cb138-2" tabindex="-1"></a>cat_profiles <span class="ot">&lt;-</span> <span class="fu">model_profile</span>(cat_exp)</span>
+<span id="cb138-3"><a href="pca-and-xgboot.html#cb138-3" tabindex="-1"></a>cat_vp <span class="ot">&lt;-</span> <span class="fu">global_variable_importance</span>(cat_profiles)</span>
+<span id="cb138-4"><a href="pca-and-xgboot.html#cb138-4" tabindex="-1"></a><span class="fu">plot</span>(cat_vp)</span></code></pre></div>
+</details>
+<p><img src="bookdown_files/figure-html/unnamed-chunk-67-1.png" width="480" /></p>
+<p>ROC</p>
+<details class=chunk-details><summary class=chunk-summary><span class=chunk-summary-text>Code</span></summary>
+<div class="sourceCode" id="cb139"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb139-1"><a href="pca-and-xgboot.html#cb139-1" tabindex="-1"></a><span class="fu">library</span>(auditor)</span>
+<span id="cb139-2"><a href="pca-and-xgboot.html#cb139-2" tabindex="-1"></a><span class="fu">plot</span>(<span class="fu">model_evaluation</span>(cat_exp))<span class="sc">+</span><span class="fu">geom_abline</span>()</span></code></pre></div>
+</details>
+<p><img src="bookdown_files/figure-html/unnamed-chunk-68-1.png" width="480" /></p>
+
+</div>
+</div>
+            </section>
+
+          </div>
+        </div>
+      </div>
+<a href="ab-test.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="聚类.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+    </div>
+  </div>
+<script src="libs/gitbook/js/app.min.js"></script>
+<script src="libs/gitbook/js/clipboard.min.js"></script>
+<script src="libs/gitbook/js/plugin-search.js"></script>
+<script src="libs/gitbook/js/plugin-sharing.js"></script>
+<script src="libs/gitbook/js/plugin-fontsettings.js"></script>
+<script src="libs/gitbook/js/plugin-bookdown.js"></script>
+<script src="libs/gitbook/js/jquery.highlight.js"></script>
+<script src="libs/gitbook/js/plugin-clipboard.js"></script>
+<script>
+gitbook.require(["gitbook"], function(gitbook) {
+gitbook.start({
+"sharing": {
+"github": true,
+"facebook": true,
+"twitter": true,
+"linkedin": false,
+"weibo": false,
+"instapaper": false,
+"vk": false,
+"whatsapp": false,
+"all": ["facebook", "twitter", "linkedin", "weibo", "instapaper"]
+},
+"fontsettings": {
+"theme": "white",
+"family": "sans",
+"size": 2
+},
+"edit": {
+"link": "https://github.com/yihui/bookdown-chinese/edit/master/07-主成分和xgboot.Rmd",
+"text": "编辑"
+},
+"history": {
+"link": null,
+"text": null
+},
+"view": {
+"link": null,
+"text": null
+},
+"download": ["bookdown.pdf", "bookdown.epub"],
+"search": {
+"engine": "fuse",
+"options": null
+},
+"toc": {
+"collapse": "section",
+"scroll_highlight": true
+}
+});
+});
+</script>
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    var src = "true";
+    if (src === "" || src === "true") src = "https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.9/latest.js?config=TeX-MML-AM_CHTML";
+    if (location.protocol !== "file:")
+      if (/^https?:/.test(src))
+        src = src.replace(/^https?:/, '');
+    script.src = src;
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+</body>
+
+</html>

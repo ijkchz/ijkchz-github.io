@@ -1,0 +1,926 @@
+<!DOCTYPE html>
+<html lang="" xml:lang="">
+<head>
+
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <title>第 7 章 聚类 | 记录R学习</title>
+  <meta name="description" content="日常记录数据" />
+  <meta name="generator" content="bookdown 0.37 and GitBook 2.6.7" />
+
+  <meta property="og:title" content="第 7 章 聚类 | 记录R学习" />
+  <meta property="og:type" content="book" />
+  <meta property="og:image" content="/www/lh_2.png" />
+  <meta property="og:description" content="日常记录数据" />
+  <meta name="github-repo" content="ijkchz/book.git" />
+
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:title" content="第 7 章 聚类 | 记录R学习" />
+  
+  <meta name="twitter:description" content="日常记录数据" />
+  <meta name="twitter:image" content="/www/lh_2.png" />
+
+<meta name="author" content="chz" />
+
+
+<meta name="date" content="2024-01-27" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+  
+  <link rel="shortcut icon" href="www/lh_2.png" type="image/x-icon" />
+<link rel="prev" href="pca-and-xgboot.html"/>
+<link rel="next" href="回归.html"/>
+<script src="libs/jquery/jquery-3.6.0.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/fuse.js@6.4.6/dist/fuse.min.js"></script>
+<link href="libs/gitbook/css/style.css" rel="stylesheet" />
+<link href="libs/gitbook/css/plugin-table.css" rel="stylesheet" />
+<link href="libs/gitbook/css/plugin-bookdown.css" rel="stylesheet" />
+<link href="libs/gitbook/css/plugin-highlight.css" rel="stylesheet" />
+<link href="libs/gitbook/css/plugin-search.css" rel="stylesheet" />
+<link href="libs/gitbook/css/plugin-fontsettings.css" rel="stylesheet" />
+<link href="libs/gitbook/css/plugin-clipboard.css" rel="stylesheet" />
+
+
+
+
+
+
+
+
+<link href="libs/codefolding-lua/codefolding-lua.css" rel="stylesheet" />
+<link href="libs/anchor-sections/anchor-sections.css" rel="stylesheet" />
+<link href="libs/anchor-sections/anchor-sections-hash.css" rel="stylesheet" />
+<script src="libs/anchor-sections/anchor-sections.js"></script>
+<script src="libs/htmlwidgets/htmlwidgets.js"></script>
+<script src="libs/d3-bundle/d3-bundle.min.js"></script>
+<script src="libs/d3-lasso/d3-lasso.min.js"></script>
+<script src="libs/save-svg-as-png/save-svg-as-png.min.js"></script>
+<script src="libs/flatbush/flatbush.min.js"></script>
+<link href="libs/ggiraphjs/ggiraphjs.min.css" rel="stylesheet" />
+<script src="libs/ggiraphjs/ggiraphjs.min.js"></script>
+<script src="libs/girafe-binding/girafe.js"></script>
+<script src="libs/plotly-binding/plotly.js"></script>
+<script src="libs/typedarray/typedarray.min.js"></script>
+<link href="libs/crosstalk/css/crosstalk.min.css" rel="stylesheet" />
+<script src="libs/crosstalk/js/crosstalk.min.js"></script>
+<link href="libs/plotly-htmlwidgets-css/plotly-htmlwidgets.css" rel="stylesheet" />
+<script src="libs/plotly-main/plotly-latest.min.js"></script>
+<script src="libs/viz/viz.js"></script>
+<link href="libs/DiagrammeR-styles/styles.css" rel="stylesheet" />
+<script src="libs/grViz-binding/grViz.js"></script>
+<link href="libs/leaflet/leaflet.css" rel="stylesheet" />
+<script src="libs/leaflet/leaflet.js"></script>
+<link href="libs/leafletfix/leafletfix.css" rel="stylesheet" />
+<script src="libs/proj4/proj4.min.js"></script>
+<script src="libs/Proj4Leaflet/proj4leaflet.js"></script>
+<link href="libs/rstudio_leaflet/rstudio_leaflet.css" rel="stylesheet" />
+<script src="libs/leaflet-binding/leaflet.js"></script>
+<link href="libs/leaflet-markercluster/MarkerCluster.css" rel="stylesheet" />
+<link href="libs/leaflet-markercluster/MarkerCluster.Default.css" rel="stylesheet" />
+<script src="libs/leaflet-markercluster/leaflet.markercluster.js"></script>
+<script src="libs/leaflet-markercluster/leaflet.markercluster.freezable.js"></script>
+<script src="libs/leaflet-markercluster/leaflet.markercluster.layersupport.js"></script>
+<link href="libs/tabwid/tabwid.css" rel="stylesheet" />
+<script src="libs/tabwid/tabwid.js"></script>
+<link href="libs/datatables-css/datatables-crosstalk.css" rel="stylesheet" />
+<script src="libs/datatables-binding/datatables.js"></script>
+<link href="libs/dt-core/css/jquery.dataTables.min.css" rel="stylesheet" />
+<link href="libs/dt-core/css/jquery.dataTables.extra.css" rel="stylesheet" />
+<script src="libs/dt-core/js/jquery.dataTables.min.js"></script>
+
+
+<style type="text/css">
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #7d9029; } /* Attribute */
+code span.bn { color: #40a070; } /* BaseN */
+code span.bu { color: #008000; } /* BuiltIn */
+code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4070a0; } /* Char */
+code span.cn { color: #880000; } /* Constant */
+code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code span.dt { color: #902000; } /* DataType */
+code span.dv { color: #40a070; } /* DecVal */
+code span.er { color: #ff0000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #40a070; } /* Float */
+code span.fu { color: #06287e; } /* Function */
+code span.im { color: #008000; font-weight: bold; } /* Import */
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code span.op { color: #666666; } /* Operator */
+code span.ot { color: #007020; } /* Other */
+code span.pp { color: #bc7a00; } /* Preprocessor */
+code span.sc { color: #4070a0; } /* SpecialChar */
+code span.ss { color: #bb6688; } /* SpecialString */
+code span.st { color: #4070a0; } /* String */
+code span.va { color: #19177c; } /* Variable */
+code span.vs { color: #4070a0; } /* VerbatimString */
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+</style>
+
+<style type="text/css">
+  
+  div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+</style>
+<style type="text/css">
+/* Used with Pandoc 2.11+ new --citeproc when CSL is used */
+div.csl-bib-body { }
+div.csl-entry {
+  clear: both;
+}
+.hanging div.csl-entry {
+  margin-left:2em;
+  text-indent:-2em;
+}
+div.csl-left-margin {
+  min-width:2em;
+  float:left;
+}
+div.csl-right-inline {
+  margin-left:2em;
+  padding-left:1em;
+}
+div.csl-indent {
+  margin-left: 2em;
+}
+</style>
+
+<link rel="stylesheet" href="css/style.css" type="text/css" />
+</head>
+
+<body>
+
+
+
+  <div class="book without-animation with-summary font-size-2 font-family-1" data-basepath=".">
+
+    <div class="book-summary">
+      <nav role="navigation">
+
+<ul class="summary">
+<li><a href="./">杂乱的干货</a></li>
+
+<li class="divider"></li>
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i>前言</a>
+<ul>
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html#致谢"><i class="fa fa-check"></i>致谢</a></li>
+</ul></li>
+<li class="chapter" data-level="" data-path="author.html"><a href="author.html"><i class="fa fa-check"></i>作者简介</a></li>
+<li class="chapter" data-level="1" data-path="plot.html"><a href="plot.html"><i class="fa fa-check"></i><b>1</b> Plots</a>
+<ul>
+<li class="chapter" data-level="1.1" data-path="plot.html"><a href="plot.html#箱线图小提琴图"><i class="fa fa-check"></i><b>1.1</b> 箱线图/小提琴图</a></li>
+<li class="chapter" data-level="1.2" data-path="plot.html"><a href="plot.html#柱状图"><i class="fa fa-check"></i><b>1.2</b> 柱状图</a></li>
+<li class="chapter" data-level="1.3" data-path="plot.html"><a href="plot.html#点线图"><i class="fa fa-check"></i><b>1.3</b> 点线图</a></li>
+<li class="chapter" data-level="1.4" data-path="plot.html"><a href="plot.html#树图"><i class="fa fa-check"></i><b>1.4</b> 树图</a></li>
+<li class="chapter" data-level="1.5" data-path="plot.html"><a href="plot.html#交互图"><i class="fa fa-check"></i><b>1.5</b> 交互图</a></li>
+<li class="chapter" data-level="1.6" data-path="plot.html"><a href="plot.html#自定义"><i class="fa fa-check"></i><b>1.6</b> 自定义</a></li>
+<li class="chapter" data-level="1.7" data-path="plot.html"><a href="plot.html#时间动态图"><i class="fa fa-check"></i><b>1.7</b> 时间动态图</a></li>
+<li class="chapter" data-level="1.8" data-path="plot.html"><a href="plot.html#d玫瑰"><i class="fa fa-check"></i><b>1.8</b> 3D玫瑰</a></li>
+<li class="chapter" data-level="1.9" data-path="plot.html"><a href="plot.html#流程图"><i class="fa fa-check"></i><b>1.9</b> 流程图</a></li>
+<li class="chapter" data-level="1.10" data-path="plot.html"><a href="plot.html#地图"><i class="fa fa-check"></i><b>1.10</b> 地图</a>
+<ul>
+<li class="chapter" data-level="1.10.1" data-path="plot.html"><a href="plot.html#天心区"><i class="fa fa-check"></i><b>1.10.1</b> 天心区</a></li>
+<li class="chapter" data-level="1.10.2" data-path="plot.html"><a href="plot.html#北京"><i class="fa fa-check"></i><b>1.10.2</b> 北京</a></li>
+<li class="chapter" data-level="1.10.3" data-path="plot.html"><a href="plot.html#省区地图"><i class="fa fa-check"></i><b>1.10.3</b> 省区地图</a></li>
+</ul></li>
+<li class="chapter" data-level="1.11" data-path="plot.html"><a href="plot.html#ggtree"><i class="fa fa-check"></i><b>1.11</b> ggtree</a>
+<ul>
+<li class="chapter" data-level="1.11.1" data-path="plot.html"><a href="plot.html#more-forms-of-phylogenetic-tree"><i class="fa fa-check"></i><b>1.11.1</b> More forms of phylogenetic tree</a></li>
+<li class="chapter" data-level="1.11.2" data-path="plot.html"><a href="plot.html#run-with-another-dataset"><i class="fa fa-check"></i><b>1.11.2</b> run with another dataset</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="2" data-path="tab.html"><a href="tab.html"><i class="fa fa-check"></i><b>2</b> table</a>
+<ul>
+<li class="chapter" data-level="2.1" data-path="tab.html"><a href="tab.html#gt表"><i class="fa fa-check"></i><b>2.1</b> gt表</a>
+<ul>
+<li class="chapter" data-level="2.1.1" data-path="tab.html"><a href="tab.html#表格1"><i class="fa fa-check"></i><b>2.1.1</b> 表格1</a></li>
+<li class="chapter" data-level="2.1.2" data-path="tab.html"><a href="tab.html#表格2"><i class="fa fa-check"></i><b>2.1.2</b> 表格2</a></li>
+<li class="chapter" data-level="2.1.3" data-path="tab.html"><a href="tab.html#颜色表格"><i class="fa fa-check"></i><b>2.1.3</b> 颜色表格</a></li>
+<li class="chapter" data-level="2.1.4" data-path="tab.html"><a href="tab.html#增加图像"><i class="fa fa-check"></i><b>2.1.4</b> 增加图像</a></li>
+<li class="chapter" data-level="2.1.5" data-path="tab.html"><a href="tab.html#自定义图片"><i class="fa fa-check"></i><b>2.1.5</b> 自定义图片</a></li>
+<li class="chapter" data-level="2.1.6" data-path="tab.html"><a href="tab.html#美元"><i class="fa fa-check"></i><b>2.1.6</b> 美元</a></li>
+</ul></li>
+<li class="chapter" data-level="2.2" data-path="tab.html"><a href="tab.html#flextable"><i class="fa fa-check"></i><b>2.2</b> flextable</a></li>
+<li class="chapter" data-level="2.3" data-path="tab.html"><a href="tab.html#stargazer"><i class="fa fa-check"></i><b>2.3</b> stargazer</a></li>
+<li class="chapter" data-level="2.4" data-path="tab.html"><a href="tab.html#可查询表格"><i class="fa fa-check"></i><b>2.4</b> 可查询表格</a></li>
+</ul></li>
+<li class="chapter" data-level="3" data-path="数学.html"><a href="数学.html"><i class="fa fa-check"></i><b>3</b> 数学</a>
+<ul>
+<li class="chapter" data-level="3.1" data-path="数学.html"><a href="数学.html#距离最短"><i class="fa fa-check"></i><b>3.1</b> 距离最短</a></li>
+<li class="chapter" data-level="3.2" data-path="数学.html"><a href="数学.html#牛顿迭代"><i class="fa fa-check"></i><b>3.2</b> 牛顿迭代</a></li>
+<li class="chapter" data-level="3.3" data-path="数学.html"><a href="数学.html#微分"><i class="fa fa-check"></i><b>3.3</b> 微分</a>
+<ul>
+<li class="chapter" data-level="3.3.1" data-path="数学.html"><a href="数学.html#高次微分"><i class="fa fa-check"></i><b>3.3.1</b> 高次微分</a></li>
+<li class="chapter" data-level="3.3.2" data-path="数学.html"><a href="数学.html#微分方程组"><i class="fa fa-check"></i><b>3.3.2</b> 微分方程组</a></li>
+</ul></li>
+<li class="chapter" data-level="3.4" data-path="数学.html"><a href="数学.html#option"><i class="fa fa-check"></i><b>3.4</b> option</a>
+<ul>
+<li class="chapter" data-level="3.4.1" data-path="数学.html"><a href="数学.html#section"><i class="fa fa-check"></i><b>3.4.1</b> 1</a></li>
+<li class="chapter" data-level="3.4.2" data-path="数学.html"><a href="数学.html#极值黑塞矩阵"><i class="fa fa-check"></i><b>3.4.2</b> 极值黑塞矩阵</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="4" data-path="app.html"><a href="app.html"><i class="fa fa-check"></i><b>4</b> app</a></li>
+<li class="chapter" data-level="5" data-path="ab-test.html"><a href="ab-test.html"><i class="fa fa-check"></i><b>5</b> AB-test</a></li>
+<li class="chapter" data-level="6" data-path="pca-and-xgboot.html"><a href="pca-and-xgboot.html"><i class="fa fa-check"></i><b>6</b> pca and xgboot、</a>
+<ul>
+<li class="chapter" data-level="6.1" data-path="pca-and-xgboot.html"><a href="pca-and-xgboot.html#数据"><i class="fa fa-check"></i><b>6.1</b> 数据</a></li>
+<li class="chapter" data-level="6.2" data-path="pca-and-xgboot.html"><a href="pca-and-xgboot.html#主成分分析"><i class="fa fa-check"></i><b>6.2</b> 主成分分析</a></li>
+<li class="chapter" data-level="6.3" data-path="pca-and-xgboot.html"><a href="pca-and-xgboot.html#计算反差贡献"><i class="fa fa-check"></i><b>6.3</b> 计算反差贡献</a>
+<ul>
+<li class="chapter" data-level="6.3.1" data-path="pca-and-xgboot.html"><a href="pca-and-xgboot.html#总结"><i class="fa fa-check"></i><b>6.3.1</b> 总结</a></li>
+</ul></li>
+<li class="chapter" data-level="6.4" data-path="pca-and-xgboot.html"><a href="pca-and-xgboot.html#xgboot"><i class="fa fa-check"></i><b>6.4</b> XGboot</a></li>
+</ul></li>
+<li class="chapter" data-level="7" data-path="聚类.html"><a href="聚类.html"><i class="fa fa-check"></i><b>7</b> 聚类</a>
+<ul>
+<li class="chapter" data-level="7.1" data-path="聚类.html"><a href="聚类.html#data-importing"><i class="fa fa-check"></i><b>7.1</b> 1 Data Importing</a></li>
+<li class="chapter" data-level="7.2" data-path="聚类.html"><a href="聚类.html#clustering"><i class="fa fa-check"></i><b>7.2</b> 2 Clustering</a>
+<ul>
+<li class="chapter" data-level="7.2.1" data-path="聚类.html"><a href="聚类.html#pre-processing"><i class="fa fa-check"></i><b>7.2.1</b> 2.0 pre-processing</a></li>
+<li class="chapter" data-level="7.2.2" data-path="聚类.html"><a href="聚类.html#k-means"><i class="fa fa-check"></i><b>7.2.2</b> 2.1 K-means</a></li>
+<li class="chapter" data-level="7.2.3" data-path="聚类.html"><a href="聚类.html#hierarchical-clusteringmanhattan-distance"><i class="fa fa-check"></i><b>7.2.3</b> 2.2 Hierarchical clustering(Manhattan distance)</a></li>
+<li class="chapter" data-level="7.2.4" data-path="聚类.html"><a href="聚类.html#pam-gower"><i class="fa fa-check"></i><b>7.2.4</b> 2.3 PAM (Gower)</a></li>
+</ul></li>
+<li class="chapter" data-level="7.3" data-path="聚类.html"><a href="聚类.html#describe-the-clusters-you-found-with-pam"><i class="fa fa-check"></i><b>7.3</b> 3 Describe the clusters you found with PAM</a></li>
+<li class="chapter" data-level="7.4" data-path="聚类.html"><a href="聚类.html#clustering-evaluation-and-comparison"><i class="fa fa-check"></i><b>7.4</b> 4 Clustering evaluation and comparison</a></li>
+<li class="chapter" data-level="7.5" data-path="聚类.html"><a href="聚类.html#anomaly-detection"><i class="fa fa-check"></i><b>7.5</b> 5 Anomaly detection</a>
+<ul>
+<li class="chapter" data-level="7.5.1" data-path="聚类.html"><a href="聚类.html#lof"><i class="fa fa-check"></i><b>7.5.1</b> LOF</a></li>
+<li class="chapter" data-level="7.5.2" data-path="聚类.html"><a href="聚类.html#dbscan"><i class="fa fa-check"></i><b>7.5.2</b> DBSCAN</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="8" data-path="回归.html"><a href="回归.html"><i class="fa fa-check"></i><b>8</b> 回归</a>
+<ul>
+<li class="chapter" data-level="8.1" data-path="回归.html"><a href="回归.html#有序glm"><i class="fa fa-check"></i><b>8.1</b> 有序glm</a></li>
+<li class="chapter" data-level="8.2" data-path="回归.html"><a href="回归.html#药物浓度拟合参数方程"><i class="fa fa-check"></i><b>8.2</b> 药物浓度拟合参数方程</a></li>
+<li class="chapter" data-level="8.3" data-path="回归.html"><a href="回归.html#多余变量"><i class="fa fa-check"></i><b>8.3</b> 多余变量</a>
+<ul>
+<li class="chapter" data-level="8.3.1" data-path="回归.html"><a href="回归.html#后退法"><i class="fa fa-check"></i><b>8.3.1</b> 后退法</a></li>
+<li class="chapter" data-level="8.3.2" data-path="回归.html"><a href="回归.html#lasso"><i class="fa fa-check"></i><b>8.3.2</b> lasso</a></li>
+<li class="chapter" data-level="8.3.3" data-path="回归.html"><a href="回归.html#偏最小二乘"><i class="fa fa-check"></i><b>8.3.3</b> 偏最小二乘</a></li>
+</ul></li>
+</ul></li>
+<li class="appendix"><span><b>附录</b></span></li>
+<li class="chapter" data-level="A" data-path="sound.html"><a href="sound.html"><i class="fa fa-check"></i><b>A</b> 结尾</a>
+<ul>
+<li class="chapter" data-level="A.1" data-path="sound.html"><a href="sound.html#写过的部分课程"><i class="fa fa-check"></i><b>A.1</b> 写过的部分课程</a></li>
+<li class="chapter" data-level="A.2" data-path="sound.html"><a href="sound.html#赞助可怜"><i class="fa fa-check"></i><b>A.2</b> 赞助(可怜)</a></li>
+</ul></li>
+<li class="chapter" data-level="" data-path="references.html"><a href="references.html"><i class="fa fa-check"></i>参考文献</a></li>
+<li class="divider"></li>
+<li><a href="https://bookdown.org" target="blank">菜鸟著书by bookdown</a></li>
+
+</ul>
+
+      </nav>
+    </div>
+
+    <div class="book-body">
+      <div class="body-inner">
+        <div class="book-header" role="navigation">
+          <h1>
+            <i class="fa fa-circle-o-notch fa-spin"></i><a href="./">记录R学习</a>
+          </h1>
+        </div>
+
+        <div class="page-wrapper" tabindex="-1" role="main">
+          <div class="page-inner">
+
+            <section class="normal" id="section-">
+<div id="聚类" class="section level1 hasAnchor" number="7">
+<h1><span class="header-section-number">第 7 章</span> 聚类<a href="聚类.html#聚类" class="anchor-section" aria-label="Anchor link to header"></a></h1>
+<details class=chunk-details><summary class=chunk-summary><span class=chunk-summary-text>Code</span></summary>
+<div class="sourceCode" id="cb140"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb140-1"><a href="聚类.html#cb140-1" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">111</span>)</span>
+<span id="cb140-2"><a href="聚类.html#cb140-2" tabindex="-1"></a>(<span class="at">ind=</span><span class="fu">floor</span>(<span class="fu">runif</span>(<span class="dv">10</span>)<span class="sc">*</span><span class="dv">150</span>))</span></code></pre></div>
+</details>
+<pre><code>##  [1]  88 108  55  77  56  62   1  79  64  14</code></pre>
+<details class=chunk-details><summary class=chunk-summary><span class=chunk-summary-text>Code</span></summary>
+<div class="sourceCode" id="cb142"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb142-1"><a href="聚类.html#cb142-1" tabindex="-1"></a>iristest<span class="ot">=</span>iris[ind,]</span>
+<span id="cb142-2"><a href="聚类.html#cb142-2" tabindex="-1"></a>irisdata<span class="ot">=</span>iris[<span class="sc">-</span>ind,]</span></code></pre></div>
+</details>
+<details class=chunk-details><summary class=chunk-summary><span class=chunk-summary-text>Code</span></summary>
+<div class="sourceCode" id="cb143"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb143-1"><a href="聚类.html#cb143-1" tabindex="-1"></a><span class="co"># 3</span></span>
+<span id="cb143-2"><a href="聚类.html#cb143-2" tabindex="-1"></a>d1<span class="ot">=</span><span class="fu">dist</span>(irisdata[<span class="dv">1</span><span class="sc">:</span><span class="dv">6</span>,<span class="sc">-</span><span class="dv">5</span>],<span class="at">method =</span> <span class="st">&quot;euclidean&quot;</span>)<span class="co">#求解距离矩阵，默认为欧几里得距离</span></span>
+<span id="cb143-3"><a href="聚类.html#cb143-3" tabindex="-1"></a>d2<span class="ot">=</span><span class="fu">dist</span>(irisdata[<span class="dv">1</span><span class="sc">:</span><span class="dv">6</span>,<span class="sc">-</span><span class="dv">5</span>],<span class="at">method =</span> <span class="st">&quot;manhattan&quot;</span>)<span class="co">#计算马氏距离矩阵</span></span>
+<span id="cb143-4"><a href="聚类.html#cb143-4" tabindex="-1"></a>d3<span class="ot">=</span><span class="fu">dist</span>(irisdata[<span class="dv">1</span><span class="sc">:</span><span class="dv">6</span>,<span class="sc">-</span><span class="dv">5</span>],<span class="at">method =</span> <span class="st">&quot;canberra&quot;</span>)<span class="co">#计算兰氏距离矩阵</span></span>
+<span id="cb143-5"><a href="聚类.html#cb143-5" tabindex="-1"></a></span>
+<span id="cb143-6"><a href="聚类.html#cb143-6" tabindex="-1"></a><span class="co"># 4</span></span>
+<span id="cb143-7"><a href="聚类.html#cb143-7" tabindex="-1"></a><span class="fu">hclust</span>(<span class="fu">dist</span>(irisdata[,<span class="sc">-</span><span class="dv">5</span>]),<span class="at">method =</span> <span class="st">&quot;single&quot;</span>)</span></code></pre></div>
+</details>
+<pre><code>## 
+## Call:
+## hclust(d = dist(irisdata[, -5]), method = &quot;single&quot;)
+## 
+## Cluster method   : single 
+## Distance         : euclidean 
+## Number of objects: 140</code></pre>
+<details class=chunk-details><summary class=chunk-summary><span class=chunk-summary-text>Code</span></summary>
+<div class="sourceCode" id="cb145"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb145-1"><a href="聚类.html#cb145-1" tabindex="-1"></a><span class="fu">hclust</span>(<span class="fu">dist</span>(irisdata[,<span class="sc">-</span><span class="dv">5</span>]),<span class="at">method =</span> <span class="st">&quot;complete&quot;</span>)</span></code></pre></div>
+</details>
+<pre><code>## 
+## Call:
+## hclust(d = dist(irisdata[, -5]), method = &quot;complete&quot;)
+## 
+## Cluster method   : complete 
+## Distance         : euclidean 
+## Number of objects: 140</code></pre>
+<details class=chunk-details><summary class=chunk-summary><span class=chunk-summary-text>Code</span></summary>
+<div class="sourceCode" id="cb147"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb147-1"><a href="聚类.html#cb147-1" tabindex="-1"></a><span class="fu">hclust</span>(<span class="fu">dist</span>(irisdata[,<span class="sc">-</span><span class="dv">5</span>]),<span class="at">method =</span> <span class="st">&quot;average&quot;</span>)</span></code></pre></div>
+</details>
+<pre><code>## 
+## Call:
+## hclust(d = dist(irisdata[, -5]), method = &quot;average&quot;)
+## 
+## Cluster method   : average 
+## Distance         : euclidean 
+## Number of objects: 140</code></pre>
+<details class=chunk-details><summary class=chunk-summary><span class=chunk-summary-text>Code</span></summary>
+<div class="sourceCode" id="cb149"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb149-1"><a href="聚类.html#cb149-1" tabindex="-1"></a><span class="co"># 5</span></span>
+<span id="cb149-2"><a href="聚类.html#cb149-2" tabindex="-1"></a>km.mod<span class="ot">=</span><span class="fu">kmeans</span>(<span class="fu">dist</span>(irisdata[,<span class="sc">-</span><span class="dv">5</span>]),<span class="dv">3</span>)<span class="co">#均值聚类</span></span>
+<span id="cb149-3"><a href="聚类.html#cb149-3" tabindex="-1"></a><span class="fu">table</span>(km.mod<span class="sc">$</span>cluster,irisdata<span class="sc">$</span>Species)</span></code></pre></div>
+</details>
+<pre><code>##    
+##     setosa versicolor virginica
+##   1      0         37         3
+##   2     48          0         0
+##   3      0          6        46</code></pre>
+<div id="data-importing" class="section level2 hasAnchor" number="7.1">
+<h2><span class="header-section-number">7.1</span> 1 Data Importing<a href="聚类.html#data-importing" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<details class=chunk-details><summary class=chunk-summary><span class=chunk-summary-text>Code</span></summary>
+<div class="sourceCode" id="cb151"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb151-1"><a href="聚类.html#cb151-1" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span>
+<span id="cb151-2"><a href="聚类.html#cb151-2" tabindex="-1"></a><span class="fu">library</span>(cluster)</span>
+<span id="cb151-3"><a href="聚类.html#cb151-3" tabindex="-1"></a>heart<span class="ot">=</span><span class="fu">read.csv</span>(<span class="st">&quot;data/heart_failure_clinical_records_dataset.csv&quot;</span>)</span>
+<span id="cb151-4"><a href="聚类.html#cb151-4" tabindex="-1"></a><span class="fu">head</span>(heart)</span></code></pre></div>
+</details>
+<pre><code>##   age anaemia creatinine_phosphokinase diabetes
+## 1  75       0                      582        0
+## 2  55       0                     7861        0
+## 3  65       0                      146        0
+## 4  50       1                      111        0
+## 5  65       1                      160        1
+## 6  90       1                       47        0
+##   ejection_fraction high_blood_pressure platelets
+## 1                20                   1    265000
+## 2                38                   0    263358
+## 3                20                   0    162000
+## 4                20                   0    210000
+## 5                20                   0    327000
+## 6                40                   1    204000
+##   serum_creatinine serum_sodium sex smoking time
+## 1              1.9          130   1       0    4
+## 2              1.1          136   1       0    6
+## 3              1.3          129   1       1    7
+## 4              1.9          137   1       0    7
+## 5              2.7          116   0       0    8
+## 6              2.1          132   1       1    8
+##   DEATH_EVENT
+## 1           1
+## 2           1
+## 3           1
+## 4           1
+## 5           1
+## 6           1</code></pre>
+<details class=chunk-details><summary class=chunk-summary><span class=chunk-summary-text>Code</span></summary>
+<div class="sourceCode" id="cb153"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb153-1"><a href="聚类.html#cb153-1" tabindex="-1"></a><span class="fu">dim</span>(heart)</span></code></pre></div>
+</details>
+<pre><code>## [1] 299  13</code></pre>
+<details class=chunk-details><summary class=chunk-summary><span class=chunk-summary-text>Code</span></summary>
+<div class="sourceCode" id="cb155"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb155-1"><a href="聚类.html#cb155-1" tabindex="-1"></a><span class="fu">table</span>(heart<span class="sc">$</span>DEATH_EVENT)</span></code></pre></div>
+</details>
+<pre><code>## 
+##   0   1 
+## 203  96</code></pre>
+</div>
+<div id="clustering" class="section level2 hasAnchor" number="7.2">
+<h2><span class="header-section-number">7.2</span> 2 Clustering<a href="聚类.html#clustering" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<div id="pre-processing" class="section level3 hasAnchor" number="7.2.1">
+<h3><span class="header-section-number">7.2.1</span> 2.0 pre-processing<a href="聚类.html#pre-processing" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<details class=chunk-details><summary class=chunk-summary><span class=chunk-summary-text>Code</span></summary>
+<div class="sourceCode" id="cb157"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb157-1"><a href="聚类.html#cb157-1" tabindex="-1"></a>d<span class="ot">=</span><span class="fu">dist</span>(heart)<span class="co">#Distance matrix</span></span>
+<span id="cb157-2"><a href="聚类.html#cb157-2" tabindex="-1"></a>name1<span class="ot">=</span><span class="fu">c</span>(<span class="st">&quot;anaemia&quot;</span>,<span class="st">&quot;diabetes&quot;</span>,<span class="st">&quot;high_blood_pressure&quot;</span>,<span class="st">&quot;sex&quot;</span>,<span class="st">&quot;smoking&quot;</span>)<span class="co">#Binary classification data</span></span>
+<span id="cb157-3"><a href="聚类.html#cb157-3" tabindex="-1"></a><span class="fu">names</span>(heart)</span></code></pre></div>
+</details>
+<pre><code>##  [1] &quot;age&quot;                     
+##  [2] &quot;anaemia&quot;                 
+##  [3] &quot;creatinine_phosphokinase&quot;
+##  [4] &quot;diabetes&quot;                
+##  [5] &quot;ejection_fraction&quot;       
+##  [6] &quot;high_blood_pressure&quot;     
+##  [7] &quot;platelets&quot;               
+##  [8] &quot;serum_creatinine&quot;        
+##  [9] &quot;serum_sodium&quot;            
+## [10] &quot;sex&quot;                     
+## [11] &quot;smoking&quot;                 
+## [12] &quot;time&quot;                    
+## [13] &quot;DEATH_EVENT&quot;</code></pre>
+<details class=chunk-details><summary class=chunk-summary><span class=chunk-summary-text>Code</span></summary>
+<div class="sourceCode" id="cb159"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb159-1"><a href="聚类.html#cb159-1" tabindex="-1"></a>heart2<span class="ot">=</span>heart</span>
+<span id="cb159-2"><a href="聚类.html#cb159-2" tabindex="-1"></a>heart2[,<span class="fu">c</span>(<span class="dv">2</span>,<span class="dv">4</span>,<span class="dv">6</span>,<span class="dv">10</span>,<span class="dv">11</span>)]<span class="ot">=</span><span class="fu">lapply</span>(heart[,<span class="fu">c</span>(<span class="dv">2</span>,<span class="dv">4</span>,<span class="dv">6</span>,<span class="dv">10</span>,<span class="dv">11</span>)], as.factor)<span class="co">#factor data</span></span></code></pre></div>
+</details>
+</div>
+<div id="k-means" class="section level3 hasAnchor" number="7.2.2">
+<h3><span class="header-section-number">7.2.2</span> 2.1 K-means<a href="聚类.html#k-means" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>Find groups of similar cases in your data set using k-means clustering.
+We analyzed the case k equal to 2 − 15 directly on the original data.</p>
+<details class=chunk-details><summary class=chunk-summary><span class=chunk-summary-text>Code</span></summary>
+<div class="sourceCode" id="cb160"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb160-1"><a href="聚类.html#cb160-1" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">444</span>)</span>
+<span id="cb160-2"><a href="聚类.html#cb160-2" tabindex="-1"></a>avgSil <span class="ot">&lt;-</span> <span class="fu">c</span>()</span>
+<span id="cb160-3"><a href="聚类.html#cb160-3" tabindex="-1"></a>km <span class="ot">&lt;-</span> <span class="fu">list</span>()</span>
+<span id="cb160-4"><a href="聚类.html#cb160-4" tabindex="-1"></a><span class="co">#code from lab</span></span>
+<span id="cb160-5"><a href="聚类.html#cb160-5" tabindex="-1"></a><span class="cf">for</span>(k <span class="cf">in</span> <span class="dv">2</span><span class="sc">:</span><span class="dv">10</span>) {</span>
+<span id="cb160-6"><a href="聚类.html#cb160-6" tabindex="-1"></a>  cl <span class="ot">&lt;-</span> <span class="fu">kmeans</span>(heart[,<span class="sc">-</span><span class="dv">13</span>],<span class="at">centers=</span>k,<span class="at">iter.max=</span><span class="dv">200</span>) </span>
+<span id="cb160-7"><a href="聚类.html#cb160-7" tabindex="-1"></a>  s <span class="ot">&lt;-</span> <span class="fu">silhouette</span>(cl<span class="sc">$</span>cluster,d)</span>
+<span id="cb160-8"><a href="聚类.html#cb160-8" tabindex="-1"></a>  avgSil <span class="ot">&lt;-</span> <span class="fu">c</span>(avgSil, <span class="fu">mean</span>(s[,<span class="dv">3</span>]))</span>
+<span id="cb160-9"><a href="聚类.html#cb160-9" tabindex="-1"></a>  km[[<span class="fu">paste0</span>(<span class="st">&quot;k=&quot;</span>,k)]] <span class="ot">&lt;-</span> cl</span>
+<span id="cb160-10"><a href="聚类.html#cb160-10" tabindex="-1"></a>}</span>
+<span id="cb160-11"><a href="聚类.html#cb160-11" tabindex="-1"></a>df <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(<span class="at">nk=</span><span class="dv">2</span><span class="sc">:</span><span class="dv">10</span>, <span class="at">Silh=</span>avgSil)</span></code></pre></div>
+</details>
+<p>1.Using the Silhouette coefficient,We want to find the point with the largest silhouette coefficient, which shows the relationship between the within-group distance and the between-group distance.</p>
+<details class=chunk-details><summary class=chunk-summary><span class=chunk-summary-text>Code</span></summary>
+<div class="sourceCode" id="cb161"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb161-1"><a href="聚类.html#cb161-1" tabindex="-1"></a><span class="fu">ggplot</span>(df, <span class="fu">aes</span>(<span class="at">x=</span>nk,<span class="at">y=</span>avgSil)) <span class="sc">+</span></span>
+<span id="cb161-2"><a href="聚类.html#cb161-2" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="at">size=</span><span class="dv">3</span>,<span class="at">color=</span><span class="st">&quot;red&quot;</span>) <span class="sc">+</span> </span>
+<span id="cb161-3"><a href="聚类.html#cb161-3" tabindex="-1"></a>  <span class="fu">geom_line</span>() <span class="sc">+</span></span>
+<span id="cb161-4"><a href="聚类.html#cb161-4" tabindex="-1"></a>  <span class="fu">xlab</span>(<span class="st">&quot;K&quot;</span>) <span class="sc">+</span> </span>
+<span id="cb161-5"><a href="聚类.html#cb161-5" tabindex="-1"></a>  <span class="fu">ylab</span>(<span class="st">&quot;Silh.Coef.&quot;</span>)<span class="sc">+</span></span>
+<span id="cb161-6"><a href="聚类.html#cb161-6" tabindex="-1"></a>  <span class="fu">theme_bw</span>()</span></code></pre></div>
+</details>
+<p><img src="bookdown_files/figure-html/unnamed-chunk-75-1.png" width="480" />
+Select K=4 which is the highest average silhouette coefficient.</p>
+<p>2.Using the Elbow method,We need to find the obvious turning point.</p>
+<details class=chunk-details><summary class=chunk-summary><span class=chunk-summary-text>Code</span></summary>
+<div class="sourceCode" id="cb162"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb162-1"><a href="聚类.html#cb162-1" tabindex="-1"></a>withinss <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(<span class="at">k =</span> <span class="dv">2</span><span class="sc">:</span><span class="dv">10</span>,</span>
+<span id="cb162-2"><a href="聚类.html#cb162-2" tabindex="-1"></a>                       <span class="at">withinss =</span> <span class="fu">sapply</span>(km,<span class="cf">function</span>(x) x<span class="sc">$</span>tot.withinss))</span>
+<span id="cb162-3"><a href="聚类.html#cb162-3" tabindex="-1"></a></span>
+<span id="cb162-4"><a href="聚类.html#cb162-4" tabindex="-1"></a><span class="fu">ggplot</span>(withinss, <span class="fu">aes</span>(<span class="at">x =</span> k, <span class="at">y =</span> withinss)) <span class="sc">+</span> </span>
+<span id="cb162-5"><a href="聚类.html#cb162-5" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="at">col=</span><span class="st">&quot;red&quot;</span>)<span class="sc">+</span></span>
+<span id="cb162-6"><a href="聚类.html#cb162-6" tabindex="-1"></a>  <span class="fu">geom_line</span>()  <span class="sc">+</span></span>
+<span id="cb162-7"><a href="聚类.html#cb162-7" tabindex="-1"></a>  <span class="fu">xlab</span>(<span class="st">&quot;k&quot;</span>) <span class="sc">+</span> </span>
+<span id="cb162-8"><a href="聚类.html#cb162-8" tabindex="-1"></a>  <span class="fu">ylab</span>(<span class="st">&quot;Total Within-Cluster Sum of Squares&quot;</span>)<span class="sc">+</span></span>
+<span id="cb162-9"><a href="聚类.html#cb162-9" tabindex="-1"></a>  <span class="fu">theme_bw</span>()</span></code></pre></div>
+</details>
+<p><img src="bookdown_files/figure-html/unnamed-chunk-76-1.png" width="480" />
+Select K at the inflection point (K=4).</p>
+<p>The most appropriate number of clusters is four in 2-6.It is the category with the largest silhouette coefficient and is clearly turning Using the Elbow method</p>
+</div>
+<div id="hierarchical-clusteringmanhattan-distance" class="section level3 hasAnchor" number="7.2.3">
+<h3><span class="header-section-number">7.2.3</span> 2.2 Hierarchical clustering(Manhattan distance)<a href="聚类.html#hierarchical-clusteringmanhattan-distance" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<details class=chunk-details><summary class=chunk-summary><span class=chunk-summary-text>Code</span></summary>
+<div class="sourceCode" id="cb163"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb163-1"><a href="聚类.html#cb163-1" tabindex="-1"></a><span class="do">### Hierarchical clustering and the Manhattan distance</span></span>
+<span id="cb163-2"><a href="聚类.html#cb163-2" tabindex="-1"></a></span>
+<span id="cb163-3"><a href="聚类.html#cb163-3" tabindex="-1"></a>h <span class="ot">&lt;-</span> <span class="fu">hclust</span>(<span class="fu">dist</span>(heart[,<span class="sc">-</span><span class="dv">13</span>],<span class="at">method =</span> <span class="st">&quot;manhattan&quot;</span>))<span class="co">#Distance matrix</span></span>
+<span id="cb163-4"><a href="聚类.html#cb163-4" tabindex="-1"></a><span class="fu">plot</span>(h)</span>
+<span id="cb163-5"><a href="聚类.html#cb163-5" tabindex="-1"></a><span class="fu">rect.hclust</span>(h,<span class="at">k=</span><span class="dv">3</span>,<span class="at">border=</span><span class="st">&quot;red&quot;</span>)</span></code></pre></div>
+</details>
+<p><img src="bookdown_files/figure-html/unnamed-chunk-77-1.png" width="864" /></p>
+<details class=chunk-details><summary class=chunk-summary><span class=chunk-summary-text>Code</span></summary>
+<div class="sourceCode" id="cb164"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb164-1"><a href="聚类.html#cb164-1" tabindex="-1"></a>cls <span class="ot">&lt;-</span> <span class="fu">cutree</span>(h,<span class="dv">3</span>)</span>
+<span id="cb164-2"><a href="聚类.html#cb164-2" tabindex="-1"></a><span class="fu">table</span>(cls)</span></code></pre></div>
+</details>
+<pre><code>## cls
+##   1   2   3 
+## 162 135   2</code></pre>
+</div>
+<div id="pam-gower" class="section level3 hasAnchor" number="7.2.4">
+<h3><span class="header-section-number">7.2.4</span> 2.3 PAM (Gower)<a href="聚类.html#pam-gower" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>PAM is a medoid-based clustering algorithm that attempts to partition a dataset into a predetermined number of clusters, where the center of each cluster is the actual observation (medoid) in the dataset. Unlike k-means clustering, PAM uses medoids instead of means as cluster center points, which makes PAM more robust to handling outliers.
+The PAM function is used to perform PAM clustering in a given R code. The daisy() function is used to compute the Gower similarity matrix of the dataset, which contains a measure of similarity between samples. The Gower similarity measure is suitable for mixed data types (a combination of numeric and categorical variables) because it takes into account distance measures for different types of variables.</p>
+<details class=chunk-details><summary class=chunk-summary><span class=chunk-summary-text>Code</span></summary>
+<div class="sourceCode" id="cb166"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb166-1"><a href="聚类.html#cb166-1" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">444</span>)</span>
+<span id="cb166-2"><a href="聚类.html#cb166-2" tabindex="-1"></a>pam_gower <span class="ot">&lt;-</span> <span class="fu">pam</span>(<span class="fu">daisy</span>(heart2[,<span class="sc">-</span><span class="dv">13</span>], <span class="at">metric =</span> <span class="st">&quot;gower&quot;</span>), <span class="at">k =</span> <span class="dv">3</span>)<span class="co">#gower need factor var</span></span>
+<span id="cb166-3"><a href="聚类.html#cb166-3" tabindex="-1"></a><span class="fu">table</span>(pam_gower<span class="sc">$</span>clustering)</span></code></pre></div>
+</details>
+<pre><code>## 
+##   1   2   3 
+## 110  92  97</code></pre>
+</div>
+</div>
+<div id="describe-the-clusters-you-found-with-pam" class="section level2 hasAnchor" number="7.3">
+<h2><span class="header-section-number">7.3</span> 3 Describe the clusters you found with PAM<a href="聚类.html#describe-the-clusters-you-found-with-pam" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>The clusplot function is often used for visualizing clusters,
+There is an intersection of the three categories</p>
+<details class=chunk-details><summary class=chunk-summary><span class=chunk-summary-text>Code</span></summary>
+<div class="sourceCode" id="cb168"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb168-1"><a href="聚类.html#cb168-1" tabindex="-1"></a><span class="fu">clusplot</span>(pam_gower, <span class="at">main =</span> <span class="st">&quot;Cluster Analysis using PAM&quot;</span>)</span></code></pre></div>
+</details>
+<p><img src="bookdown_files/figure-html/unnamed-chunk-79-1.png" width="480" /></p>
+<ul>
+<li>the 3 cluster means (center).
+We can focus on variables that are significantly different.like 3 is high anaemia.</li>
+</ul>
+<details class=chunk-details><summary class=chunk-summary><span class=chunk-summary-text>Code</span></summary>
+<div class="sourceCode" id="cb169"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb169-1"><a href="聚类.html#cb169-1" tabindex="-1"></a>(<span class="at">summ=</span><span class="fu">aggregate</span>(heart,<span class="fu">list</span>(pam_gower<span class="sc">$</span>clustering),mean))</span></code></pre></div>
+</details>
+<pre><code>##   Group.1   age anaemia creatinine_phosphokinase
+## 1       1 61.63  0.2545                    681.2
+## 2       2 60.77  0.3261                    599.6
+## 3       3 59.99  0.7320                    452.3
+##   diabetes ejection_fraction high_blood_pressure
+## 1   0.2273             37.64              0.3727
+## 2   0.2935             37.05              0.3043
+## 3   0.7526             39.57              0.3711
+##   platelets serum_creatinine serum_sodium    sex
+## 1    249258            1.420        136.6 0.7727
+## 2    264655            1.350        136.7 0.9783
+## 3    278118            1.406        136.6 0.1959
+##   smoking  time DEATH_EVENT
+## 1 0.00000 129.8      0.3545
+## 2 1.00000 129.0      0.3043
+## 3 0.04124 131.9      0.2990</code></pre>
+<p>Further analysis of sample distribution for each class using box plots reveals that the age of sample 3 is relatively low. Sample 3 is mostly female, and sample 2 is mostly associated with smoking.</p>
+<details class=chunk-details><summary class=chunk-summary><span class=chunk-summary-text>Code</span></summary>
+<div class="sourceCode" id="cb171"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb171-1"><a href="聚类.html#cb171-1" tabindex="-1"></a>heart <span class="sc">%&gt;%</span> <span class="fu">mutate</span>(<span class="at">group=</span><span class="fu">factor</span>(pam_gower<span class="sc">$</span>clustering))<span class="sc">%&gt;%</span> <span class="fu">pivot_longer</span>(<span class="at">cols =</span><span class="sc">-</span>group) <span class="sc">%&gt;%</span> </span>
+<span id="cb171-2"><a href="聚类.html#cb171-2" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x=</span>group,<span class="at">y=</span>value,<span class="at">fill=</span>group,<span class="at">group=</span>group))<span class="sc">+</span></span>
+<span id="cb171-3"><a href="聚类.html#cb171-3" tabindex="-1"></a>  <span class="co"># geom_histogram(show.legend = F)+</span></span>
+<span id="cb171-4"><a href="聚类.html#cb171-4" tabindex="-1"></a>  <span class="fu">geom_boxplot</span>()<span class="sc">+</span></span>
+<span id="cb171-5"><a href="聚类.html#cb171-5" tabindex="-1"></a>  <span class="fu">facet_wrap</span>(<span class="sc">~</span>name,<span class="at">scales=</span><span class="st">&quot;free&quot;</span>)</span></code></pre></div>
+</details>
+<p><img src="bookdown_files/figure-html/unnamed-chunk-81-1.png" width="480" /></p>
+<p>Classical multidimensional scaling (MDS) of a data matrix. Also known as principal coordinates analysis,We’re going to convert this to two dimensional coordinates and look at the distribution</p>
+<details class=chunk-details><summary class=chunk-summary><span class=chunk-summary-text>Code</span></summary>
+<div class="sourceCode" id="cb172"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb172-1"><a href="聚类.html#cb172-1" tabindex="-1"></a><span class="fu">ggplot</span>(<span class="fu">data.frame</span>(<span class="fu">cmdscale</span>(<span class="fu">daisy</span>(heart2[,<span class="sc">-</span><span class="dv">13</span>], <span class="at">metric =</span> <span class="st">&quot;gower&quot;</span>),<span class="at">k=</span><span class="dv">2</span>),<span class="at">lab=</span><span class="dv">1</span><span class="sc">:</span><span class="dv">299</span>),<span class="fu">aes</span>(<span class="at">x=</span>X1,<span class="at">y=</span>X2,<span class="at">label=</span>lab))<span class="sc">+</span><span class="fu">geom_point</span>(<span class="at">alpha=</span><span class="fl">0.5</span>,<span class="at">size=</span><span class="fl">0.5</span>)<span class="sc">+</span><span class="fu">geom_text</span>(<span class="at">size=</span><span class="dv">3</span>,<span class="at">col=</span>pam_gower<span class="sc">$</span>clustering)</span></code></pre></div>
+</details>
+<p><img src="bookdown_files/figure-html/unnamed-chunk-82-1.png" width="480" /></p>
+</div>
+<div id="clustering-evaluation-and-comparison" class="section level2 hasAnchor" number="7.4">
+<h2><span class="header-section-number">7.4</span> 4 Clustering evaluation and comparison<a href="聚类.html#clustering-evaluation-and-comparison" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<details class=chunk-details><summary class=chunk-summary><span class=chunk-summary-text>Code</span></summary>
+<div class="sourceCode" id="cb173"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb173-1"><a href="聚类.html#cb173-1" tabindex="-1"></a>km3 <span class="ot">&lt;-</span> <span class="fu">kmeans</span>(heart[,<span class="sc">-</span><span class="dv">13</span>],<span class="at">centers=</span><span class="dv">3</span>,<span class="at">iter.max=</span><span class="dv">200</span>)<span class="co">#3-kmeans</span></span>
+<span id="cb173-2"><a href="聚类.html#cb173-2" tabindex="-1"></a></span>
+<span id="cb173-3"><a href="聚类.html#cb173-3" tabindex="-1"></a><span class="fu">ggplot</span>(<span class="fu">data.frame</span>(<span class="fu">cmdscale</span>(<span class="fu">dist</span>(heart[,<span class="sc">-</span><span class="dv">13</span>]),<span class="at">k=</span><span class="dv">2</span>),<span class="at">lab=</span><span class="dv">1</span><span class="sc">:</span><span class="dv">299</span>,km3<span class="sc">$</span>cluster),</span>
+<span id="cb173-4"><a href="聚类.html#cb173-4" tabindex="-1"></a>       <span class="fu">aes</span>(<span class="at">x=</span>X1,<span class="at">y=</span>X2,<span class="at">label=</span>lab))<span class="sc">+</span></span>
+<span id="cb173-5"><a href="聚类.html#cb173-5" tabindex="-1"></a>         <span class="fu">geom_point</span>(<span class="at">alpha=</span><span class="fl">0.5</span>,<span class="at">size=</span><span class="fl">0.5</span>)<span class="sc">+</span></span>
+<span id="cb173-6"><a href="聚类.html#cb173-6" tabindex="-1"></a>  <span class="fu">geom_text</span>(<span class="at">size=</span><span class="dv">3</span>,<span class="at">col=</span>km3<span class="sc">$</span>cluster)</span></code></pre></div>
+</details>
+<p><img src="bookdown_files/figure-html/unnamed-chunk-83-1.png" width="480" /></p>
+<details class=chunk-details><summary class=chunk-summary><span class=chunk-summary-text>Code</span></summary>
+<div class="sourceCode" id="cb174"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb174-1"><a href="聚类.html#cb174-1" tabindex="-1"></a>s1 <span class="ot">&lt;-</span> <span class="fu">silhouette</span>(km3<span class="sc">$</span>cluster,<span class="fu">dist</span>(heart[,<span class="sc">-</span><span class="dv">13</span>]))</span>
+<span id="cb174-2"><a href="聚类.html#cb174-2" tabindex="-1"></a><span class="fu">plot</span>(s1, <span class="at">main =</span> <span class="st">&quot;silhouette coefficient of Kmeans&quot;</span>, <span class="at">border =</span> <span class="cn">NA</span>)</span></code></pre></div>
+</details>
+<p><img src="bookdown_files/figure-html/unnamed-chunk-83-2.png" width="480" /></p>
+<details class=chunk-details><summary class=chunk-summary><span class=chunk-summary-text>Code</span></summary>
+<div class="sourceCode" id="cb175"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb175-1"><a href="聚类.html#cb175-1" tabindex="-1"></a>s3 <span class="ot">&lt;-</span> <span class="fu">silhouette</span>(pam_gower<span class="sc">$</span>clustering,<span class="fu">daisy</span>(heart2[,<span class="sc">-</span><span class="dv">13</span>], <span class="at">metric =</span> <span class="st">&quot;gower&quot;</span>))</span>
+<span id="cb175-2"><a href="聚类.html#cb175-2" tabindex="-1"></a><span class="fu">plot</span>(s3, <span class="at">main =</span> <span class="st">&quot;silhouette coefficient of PAM&quot;</span>, <span class="at">border =</span> <span class="cn">NA</span>)</span></code></pre></div>
+</details>
+<p><img src="bookdown_files/figure-html/unnamed-chunk-83-3.png" width="480" /></p>
+<details class=chunk-details><summary class=chunk-summary><span class=chunk-summary-text>Code</span></summary>
+<div class="sourceCode" id="cb176"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb176-1"><a href="聚类.html#cb176-1" tabindex="-1"></a><span class="fu">ggplot</span>(<span class="fu">data.frame</span>(<span class="fu">cmdscale</span>(<span class="fu">daisy</span>(heart2[,<span class="sc">-</span><span class="dv">13</span>], <span class="at">metric =</span> <span class="st">&quot;gower&quot;</span>),<span class="at">k=</span><span class="dv">2</span>),<span class="at">lab=</span><span class="dv">1</span><span class="sc">:</span><span class="dv">299</span>), <span class="fu">aes</span>(<span class="at">x=</span>X1,<span class="at">y=</span>X2,<span class="at">label=</span>lab))<span class="sc">+</span></span>
+<span id="cb176-2"><a href="聚类.html#cb176-2" tabindex="-1"></a>   <span class="fu">geom_point</span>(<span class="at">alpha=</span><span class="fl">0.5</span>,<span class="at">size=</span><span class="fl">0.5</span>)<span class="sc">+</span></span>
+<span id="cb176-3"><a href="聚类.html#cb176-3" tabindex="-1"></a>  <span class="fu">geom_text</span>(<span class="at">size=</span><span class="dv">3</span>,<span class="at">col=</span>pam_gower<span class="sc">$</span>clustering)<span class="sc">+</span><span class="fu">theme_bw</span>()</span></code></pre></div>
+</details>
+<p><img src="bookdown_files/figure-html/unnamed-chunk-83-4.png" width="480" />
+- The comparison reveals that 4 K-means has the best silhouette coefficient,
+Hierarchical clustering has three classes but the sample size of one class is too small to be considered outlier. PAM three classes are fairly uniform, but we saw earlier that it overlaps.</p>
+<ul>
+<li>We convert the distance to coordinates, but since the distance matrix calculation is different, we need to think about which cluster is better</li>
+</ul>
+</div>
+<div id="anomaly-detection" class="section level2 hasAnchor" number="7.5">
+<h2><span class="header-section-number">7.5</span> 5 Anomaly detection<a href="聚类.html#anomaly-detection" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>Our analysis is based on the simple Euclidean distance, measured on the raw data</p>
+<div id="lof" class="section level3 hasAnchor" number="7.5.1">
+<h3><span class="header-section-number">7.5.1</span> LOF<a href="聚类.html#lof" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>k=3,LOF&gt;4，This method counted 17 samples as abnormal.We show the details of these samples, and the mean comparison of the population can show its characteristics</p>
+<details class=chunk-details><summary class=chunk-summary><span class=chunk-summary-text>Code</span></summary>
+<div class="sourceCode" id="cb177"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb177-1"><a href="聚类.html#cb177-1" tabindex="-1"></a><span class="fu">library</span>(DMwR2)</span>
+<span id="cb177-2"><a href="聚类.html#cb177-2" tabindex="-1"></a>dist<span class="ot">=</span><span class="fu">dist</span>(heart)</span>
+<span id="cb177-3"><a href="聚类.html#cb177-3" tabindex="-1"></a>lof <span class="ot">&lt;-</span> <span class="fu">lofactor</span>(dist,<span class="dv">3</span>)</span>
+<span id="cb177-4"><a href="聚类.html#cb177-4" tabindex="-1"></a>(<span class="at">ind=</span><span class="fu">sum</span>(lof[<span class="fu">order</span>(lof,<span class="at">decreasing =</span> T)]<span class="sc">&gt;</span><span class="dv">4</span>))<span class="co">#LOF&gt;4</span></span></code></pre></div>
+</details>
+<pre><code>## [1] 17</code></pre>
+<details class=chunk-details><summary class=chunk-summary><span class=chunk-summary-text>Code</span></summary>
+<div class="sourceCode" id="cb179"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb179-1"><a href="聚类.html#cb179-1" tabindex="-1"></a>(<span class="at">anomalies1=</span><span class="fu">order</span>(lof,<span class="at">decreasing =</span> T)[<span class="dv">1</span><span class="sc">:</span>ind])</span></code></pre></div>
+</details>
+<pre><code>##  [1] 239 254  60  63  97   2 245 107 259 167 203 244
+## [13]  17 158  53 169 296</code></pre>
+<details class=chunk-details><summary class=chunk-summary><span class=chunk-summary-text>Code</span></summary>
+<div class="sourceCode" id="cb181"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb181-1"><a href="聚类.html#cb181-1" tabindex="-1"></a>heart[anomalies1,]</span></code></pre></div>
+</details>
+<pre><code>##     age anaemia creatinine_phosphokinase diabetes
+## 239  65       1                      720        1
+## 254  70       0                       88        1
+## 60   72       0                      364        1
+## 63   55       0                      109        0
+## 97   63       1                      514        1
+## 2    55       0                     7861        0
+## 245  54       0                      582        1
+## 107  55       0                      748        0
+## 259  45       1                       66        1
+## 167  53       0                      196        0
+## 203  70       0                       97        0
+## 244  73       1                     1185        0
+## 17   87       1                      149        0
+## 158  50       0                      250        0
+## 53   60       0                     3964        1
+## 169  65       0                      582        1
+## 296  55       0                     1820        0
+##     ejection_fraction high_blood_pressure platelets
+## 239                40                   0    257000
+## 254                35                   1    236000
+## 60                 20                   1    254000
+## 63                 35                   0    254000
+## 97                 25                   1    254000
+## 2                  38                   0    263358
+## 245                38                   0    264000
+## 107                45                   0    263000
+## 259                25                   0    233000
+## 167                60                   0    220000
+## 203                60                   1    220000
+## 244                40                   1    220000
+## 17                 38                   0    262000
+## 158                25                   0    262000
+## 53                 62                   0    263358
+## 169                40                   0    270000
+## 296                38                   0    270000
+##     serum_creatinine serum_sodium sex smoking time
+## 239              1.0          136   0       0  210
+## 254              1.2          132   0       0  215
+## 60               1.3          136   1       1   59
+## 63               1.1          139   1       1   60
+## 97               1.3          134   1       0   83
+## 2                1.1          136   1       0    6
+## 245              1.8          134   1       0  213
+## 107              1.3          137   1       0   88
+## 259              0.8          135   1       0  230
+## 167              0.7          133   1       1  134
+## 203              0.9          138   1       0  186
+## 244              0.9          141   0       0  213
+## 17               0.9          140   1       0   14
+## 158              1.0          136   1       1  120
+## 53               6.8          146   0       0   43
+## 169              1.0          138   0       0  140
+## 296              1.2          139   0       0  271
+##     DEATH_EVENT
+## 239           0
+## 254           0
+## 60            1
+## 63            0
+## 97            0
+## 2             1
+## 245           0
+## 107           0
+## 259           0
+## 167           0
+## 203           0
+## 244           0
+## 17            1
+## 158           0
+## 53            1
+## 169           0
+## 296           0</code></pre>
+<details class=chunk-details><summary class=chunk-summary><span class=chunk-summary-text>Code</span></summary>
+<div class="sourceCode" id="cb183"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb183-1"><a href="聚类.html#cb183-1" tabindex="-1"></a><span class="fu">data.frame</span>(<span class="fu">cmdscale</span>(dist,<span class="at">k=</span><span class="dv">2</span>),<span class="at">lab=</span><span class="dv">1</span><span class="sc">:</span><span class="dv">299</span>) <span class="sc">%&gt;%</span> </span>
+<span id="cb183-2"><a href="聚类.html#cb183-2" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">col=</span><span class="fu">ifelse</span>(lab<span class="sc">%in%</span>anomalies1,<span class="st">&quot;outlier&quot;</span>,<span class="st">&quot;no&quot;</span>)) <span class="sc">%&gt;%</span> </span>
+<span id="cb183-3"><a href="聚类.html#cb183-3" tabindex="-1"></a><span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x=</span>X1,<span class="at">y=</span>X2,<span class="at">label=</span>lab,<span class="at">col=</span>col))<span class="sc">+</span></span>
+<span id="cb183-4"><a href="聚类.html#cb183-4" tabindex="-1"></a>   <span class="fu">geom_point</span>(<span class="at">alpha=</span><span class="fl">0.5</span>,<span class="at">size=</span><span class="fl">0.5</span>)<span class="sc">+</span><span class="fu">geom_text</span>(<span class="at">size=</span><span class="dv">3</span>)<span class="sc">+</span><span class="fu">theme_bw</span>()</span></code></pre></div>
+</details>
+<p><img src="bookdown_files/figure-html/unnamed-chunk-84-1.png" width="480" /></p>
+</div>
+<div id="dbscan" class="section level3 hasAnchor" number="7.5.2">
+<h3><span class="header-section-number">7.5.2</span> DBSCAN<a href="聚类.html#dbscan" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>We measure our detection range as 0.6 times the average distance between point,
+We counted 19 samples as outliers.</p>
+<details class=chunk-details><summary class=chunk-summary><span class=chunk-summary-text>Code</span></summary>
+<div class="sourceCode" id="cb184"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb184-1"><a href="聚类.html#cb184-1" tabindex="-1"></a><span class="fu">library</span>(fpc)</span>
+<span id="cb184-2"><a href="聚类.html#cb184-2" tabindex="-1"></a>(myer <span class="ot">&lt;-</span> <span class="fu">dbscan</span>(dist,<span class="fl">0.6</span><span class="sc">*</span><span class="fu">mean</span>(dist),<span class="dv">3</span>))</span></code></pre></div>
+</details>
+<pre><code>## dbscan Pts=299 MinPts=3 eps=60585
+##         0   1 2  3  4  5 6 7 8  9 10 11 12 13 14 15
+## border 23   0 0  0  1  0 0 0 1  2  0  0  0  0  0  2
+## seed    0 112 6 53 14 30 8 4 6 10 11  3  4  3  5  1
+## total  23 112 6 53 15 30 8 4 7 12 11  3  4  3  5  3</code></pre>
+<details class=chunk-details><summary class=chunk-summary><span class=chunk-summary-text>Code</span></summary>
+<div class="sourceCode" id="cb186"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb186-1"><a href="聚类.html#cb186-1" tabindex="-1"></a>(<span class="at">anomalies2=</span><span class="fu">which</span>(myer<span class="sc">$</span>cluster<span class="sc">==</span><span class="dv">0</span>))</span></code></pre></div>
+</details>
+<pre><code>##  [1]  15  16  20  50  52  56  66  70  72 106 110 118
+## [13] 177 213 225 231 241 276 278 282 288 297 299</code></pre>
+<details class=chunk-details><summary class=chunk-summary><span class=chunk-summary-text>Code</span></summary>
+<div class="sourceCode" id="cb188"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb188-1"><a href="聚类.html#cb188-1" tabindex="-1"></a>heart[anomalies2,]</span></code></pre></div>
+</details>
+<pre><code>##     age anaemia creatinine_phosphokinase diabetes
+## 15   49       1                       80        0
+## 16   82       1                      379        0
+## 20   48       1                      582        1
+## 50   57       1                      129        0
+## 52   53       1                       91        0
+## 56   95       1                      371        0
+## 66   60       0                       68        0
+## 70   65       0                      113        1
+## 72   58       0                      582        1
+## 106  72       1                      328        0
+## 110  45       0                      292        1
+## 118  85       1                      102        0
+## 177  69       0                     1419        0
+## 213  78       0                      224        0
+## 225  58       0                      582        1
+## 231  60       0                      166        0
+## 241  70       0                       81        1
+## 276  45       0                      582        0
+## 278  70       0                      582        1
+## 282  70       0                      582        0
+## 288  45       0                      582        1
+## 297  45       0                     2060        1
+## 299  50       0                      196        0
+##     ejection_fraction high_blood_pressure platelets
+## 15                 30                   1    427000
+## 16                 50                   0     47000
+## 20                 55                   0     87000
+## 50                 30                   0    395000
+## 52                 20                   1    418000
+## 56                 30                   0    461000
+## 66                 20                   0    119000
+## 70                 25                   0    497000
+## 72                 35                   0    122000
+## 106                30                   1    621000
+## 110                35                   0    850000
+## 118                60                   0    507000
+## 177                40                   0    105000
+## 213                50                   0    481000
+## 225                25                   0    504000
+## 231                30                   0     62000
+## 241                35                   1    533000
+## 276                38                   1    422000
+## 278                38                   0     25100
+## 282                40                   0     51000
+## 288                55                   0    543000
+## 297                60                   0    742000
+## 299                45                   0    395000
+##     serum_creatinine serum_sodium sex smoking time
+## 15              1.00          138   0       0   12
+## 16              1.30          136   1       0   13
+## 20              1.90          121   0       0   15
+## 50              1.00          140   0       0   42
+## 52              1.40          139   0       0   43
+## 56              2.00          132   1       0   50
+## 66              2.90          127   1       1   64
+## 70              1.83          135   1       0   67
+## 72              0.90          139   1       1   71
+## 106             1.70          138   0       1   88
+## 110             1.30          142   1       1   88
+## 118             3.20          138   0       0   94
+## 177             1.00          135   1       1  147
+## 213             1.40          138   1       1  192
+## 225             1.00          138   1       0  205
+## 231             1.70          127   0       0  207
+## 241             1.30          139   0       0  212
+## 276             0.80          137   0       0  245
+## 278             1.10          140   1       0  246
+## 282             2.70          136   1       1  250
+## 288             1.00          132   0       0  250
+## 297             0.80          138   0       0  278
+## 299             1.60          136   1       1  285
+##     DEATH_EVENT
+## 15            0
+## 16            1
+## 20            1
+## 50            1
+## 52            1
+## 56            1
+## 66            1
+## 70            1
+## 72            0
+## 106           1
+## 110           0
+## 118           0
+## 177           0
+## 213           0
+## 225           0
+## 231           1
+## 241           0
+## 276           0
+## 278           0
+## 282           0
+## 288           0
+## 297           0
+## 299           0</code></pre>
+<details class=chunk-details><summary class=chunk-summary><span class=chunk-summary-text>Code</span></summary>
+<div class="sourceCode" id="cb190"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb190-1"><a href="聚类.html#cb190-1" tabindex="-1"></a><span class="fu">data.frame</span>(<span class="fu">cmdscale</span>(dist,<span class="at">k=</span><span class="dv">2</span>),<span class="at">lab=</span><span class="dv">1</span><span class="sc">:</span><span class="dv">299</span>) <span class="sc">%&gt;%</span> </span>
+<span id="cb190-2"><a href="聚类.html#cb190-2" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">col=</span><span class="fu">ifelse</span>(lab<span class="sc">%in%</span>anomalies2,<span class="st">&quot;outlier&quot;</span>,<span class="st">&quot;no&quot;</span>)) <span class="sc">%&gt;%</span> </span>
+<span id="cb190-3"><a href="聚类.html#cb190-3" tabindex="-1"></a><span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x=</span>X1,<span class="at">y=</span>X2,<span class="at">label=</span>lab,<span class="at">col=</span>col))<span class="sc">+</span></span>
+<span id="cb190-4"><a href="聚类.html#cb190-4" tabindex="-1"></a>   <span class="fu">geom_point</span>(<span class="at">alpha=</span><span class="fl">0.5</span>,<span class="at">size=</span><span class="fl">0.5</span>)<span class="sc">+</span><span class="fu">geom_text</span>(<span class="at">size=</span><span class="dv">3</span>)<span class="sc">+</span><span class="fu">theme_bw</span>()</span></code></pre></div>
+</details>
+<p><img src="bookdown_files/figure-html/unnamed-chunk-85-1.png" width="480" /></p>
+<p>no both algorithm
+Sample 2 appears in both methods</p>
+<details class=chunk-details><summary class=chunk-summary><span class=chunk-summary-text>Code</span></summary>
+<div class="sourceCode" id="cb191"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb191-1"><a href="聚类.html#cb191-1" tabindex="-1"></a><span class="fu">intersect</span>(anomalies1,anomalies2)</span></code></pre></div>
+</details>
+<pre><code>## integer(0)</code></pre>
+
+</div>
+</div>
+</div>
+            </section>
+
+          </div>
+        </div>
+      </div>
+<a href="pca-and-xgboot.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="回归.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+    </div>
+  </div>
+<script src="libs/gitbook/js/app.min.js"></script>
+<script src="libs/gitbook/js/clipboard.min.js"></script>
+<script src="libs/gitbook/js/plugin-search.js"></script>
+<script src="libs/gitbook/js/plugin-sharing.js"></script>
+<script src="libs/gitbook/js/plugin-fontsettings.js"></script>
+<script src="libs/gitbook/js/plugin-bookdown.js"></script>
+<script src="libs/gitbook/js/jquery.highlight.js"></script>
+<script src="libs/gitbook/js/plugin-clipboard.js"></script>
+<script>
+gitbook.require(["gitbook"], function(gitbook) {
+gitbook.start({
+"sharing": {
+"github": true,
+"facebook": true,
+"twitter": true,
+"linkedin": false,
+"weibo": false,
+"instapaper": false,
+"vk": false,
+"whatsapp": false,
+"all": ["facebook", "twitter", "linkedin", "weibo", "instapaper"]
+},
+"fontsettings": {
+"theme": "white",
+"family": "sans",
+"size": 2
+},
+"edit": {
+"link": "https://github.com/yihui/bookdown-chinese/edit/master/08-聚类.Rmd",
+"text": "编辑"
+},
+"history": {
+"link": null,
+"text": null
+},
+"view": {
+"link": null,
+"text": null
+},
+"download": ["bookdown.pdf", "bookdown.epub"],
+"search": {
+"engine": "fuse",
+"options": null
+},
+"toc": {
+"collapse": "section",
+"scroll_highlight": true
+}
+});
+});
+</script>
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    var src = "true";
+    if (src === "" || src === "true") src = "https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.9/latest.js?config=TeX-MML-AM_CHTML";
+    if (location.protocol !== "file:")
+      if (/^https?:/.test(src))
+        src = src.replace(/^https?:/, '');
+    script.src = src;
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+</body>
+
+</html>

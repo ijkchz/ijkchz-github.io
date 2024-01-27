@@ -1,0 +1,1327 @@
+<!DOCTYPE html>
+<html lang="" xml:lang="">
+<head>
+
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <title>第 8 章 回归 | 记录R学习</title>
+  <meta name="description" content="日常记录数据" />
+  <meta name="generator" content="bookdown 0.37 and GitBook 2.6.7" />
+
+  <meta property="og:title" content="第 8 章 回归 | 记录R学习" />
+  <meta property="og:type" content="book" />
+  <meta property="og:image" content="/www/lh_2.png" />
+  <meta property="og:description" content="日常记录数据" />
+  <meta name="github-repo" content="ijkchz/book.git" />
+
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:title" content="第 8 章 回归 | 记录R学习" />
+  
+  <meta name="twitter:description" content="日常记录数据" />
+  <meta name="twitter:image" content="/www/lh_2.png" />
+
+<meta name="author" content="chz" />
+
+
+<meta name="date" content="2024-01-27" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+  
+  <link rel="shortcut icon" href="www/lh_2.png" type="image/x-icon" />
+<link rel="prev" href="聚类.html"/>
+<link rel="next" href="sound.html"/>
+<script src="libs/jquery/jquery-3.6.0.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/fuse.js@6.4.6/dist/fuse.min.js"></script>
+<link href="libs/gitbook/css/style.css" rel="stylesheet" />
+<link href="libs/gitbook/css/plugin-table.css" rel="stylesheet" />
+<link href="libs/gitbook/css/plugin-bookdown.css" rel="stylesheet" />
+<link href="libs/gitbook/css/plugin-highlight.css" rel="stylesheet" />
+<link href="libs/gitbook/css/plugin-search.css" rel="stylesheet" />
+<link href="libs/gitbook/css/plugin-fontsettings.css" rel="stylesheet" />
+<link href="libs/gitbook/css/plugin-clipboard.css" rel="stylesheet" />
+
+
+
+
+
+
+
+
+<link href="libs/codefolding-lua/codefolding-lua.css" rel="stylesheet" />
+<link href="libs/anchor-sections/anchor-sections.css" rel="stylesheet" />
+<link href="libs/anchor-sections/anchor-sections-hash.css" rel="stylesheet" />
+<script src="libs/anchor-sections/anchor-sections.js"></script>
+<script src="libs/htmlwidgets/htmlwidgets.js"></script>
+<script src="libs/d3-bundle/d3-bundle.min.js"></script>
+<script src="libs/d3-lasso/d3-lasso.min.js"></script>
+<script src="libs/save-svg-as-png/save-svg-as-png.min.js"></script>
+<script src="libs/flatbush/flatbush.min.js"></script>
+<link href="libs/ggiraphjs/ggiraphjs.min.css" rel="stylesheet" />
+<script src="libs/ggiraphjs/ggiraphjs.min.js"></script>
+<script src="libs/girafe-binding/girafe.js"></script>
+<script src="libs/plotly-binding/plotly.js"></script>
+<script src="libs/typedarray/typedarray.min.js"></script>
+<link href="libs/crosstalk/css/crosstalk.min.css" rel="stylesheet" />
+<script src="libs/crosstalk/js/crosstalk.min.js"></script>
+<link href="libs/plotly-htmlwidgets-css/plotly-htmlwidgets.css" rel="stylesheet" />
+<script src="libs/plotly-main/plotly-latest.min.js"></script>
+<script src="libs/viz/viz.js"></script>
+<link href="libs/DiagrammeR-styles/styles.css" rel="stylesheet" />
+<script src="libs/grViz-binding/grViz.js"></script>
+<link href="libs/leaflet/leaflet.css" rel="stylesheet" />
+<script src="libs/leaflet/leaflet.js"></script>
+<link href="libs/leafletfix/leafletfix.css" rel="stylesheet" />
+<script src="libs/proj4/proj4.min.js"></script>
+<script src="libs/Proj4Leaflet/proj4leaflet.js"></script>
+<link href="libs/rstudio_leaflet/rstudio_leaflet.css" rel="stylesheet" />
+<script src="libs/leaflet-binding/leaflet.js"></script>
+<link href="libs/leaflet-markercluster/MarkerCluster.css" rel="stylesheet" />
+<link href="libs/leaflet-markercluster/MarkerCluster.Default.css" rel="stylesheet" />
+<script src="libs/leaflet-markercluster/leaflet.markercluster.js"></script>
+<script src="libs/leaflet-markercluster/leaflet.markercluster.freezable.js"></script>
+<script src="libs/leaflet-markercluster/leaflet.markercluster.layersupport.js"></script>
+<link href="libs/tabwid/tabwid.css" rel="stylesheet" />
+<script src="libs/tabwid/tabwid.js"></script>
+<link href="libs/datatables-css/datatables-crosstalk.css" rel="stylesheet" />
+<script src="libs/datatables-binding/datatables.js"></script>
+<link href="libs/dt-core/css/jquery.dataTables.min.css" rel="stylesheet" />
+<link href="libs/dt-core/css/jquery.dataTables.extra.css" rel="stylesheet" />
+<script src="libs/dt-core/js/jquery.dataTables.min.js"></script>
+
+
+<style type="text/css">
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #7d9029; } /* Attribute */
+code span.bn { color: #40a070; } /* BaseN */
+code span.bu { color: #008000; } /* BuiltIn */
+code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4070a0; } /* Char */
+code span.cn { color: #880000; } /* Constant */
+code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code span.dt { color: #902000; } /* DataType */
+code span.dv { color: #40a070; } /* DecVal */
+code span.er { color: #ff0000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #40a070; } /* Float */
+code span.fu { color: #06287e; } /* Function */
+code span.im { color: #008000; font-weight: bold; } /* Import */
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code span.op { color: #666666; } /* Operator */
+code span.ot { color: #007020; } /* Other */
+code span.pp { color: #bc7a00; } /* Preprocessor */
+code span.sc { color: #4070a0; } /* SpecialChar */
+code span.ss { color: #bb6688; } /* SpecialString */
+code span.st { color: #4070a0; } /* String */
+code span.va { color: #19177c; } /* Variable */
+code span.vs { color: #4070a0; } /* VerbatimString */
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+</style>
+
+<style type="text/css">
+  
+  div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+</style>
+<style type="text/css">
+/* Used with Pandoc 2.11+ new --citeproc when CSL is used */
+div.csl-bib-body { }
+div.csl-entry {
+  clear: both;
+}
+.hanging div.csl-entry {
+  margin-left:2em;
+  text-indent:-2em;
+}
+div.csl-left-margin {
+  min-width:2em;
+  float:left;
+}
+div.csl-right-inline {
+  margin-left:2em;
+  padding-left:1em;
+}
+div.csl-indent {
+  margin-left: 2em;
+}
+</style>
+
+<link rel="stylesheet" href="css/style.css" type="text/css" />
+</head>
+
+<body>
+
+
+
+  <div class="book without-animation with-summary font-size-2 font-family-1" data-basepath=".">
+
+    <div class="book-summary">
+      <nav role="navigation">
+
+<ul class="summary">
+<li><a href="./">杂乱的干货</a></li>
+
+<li class="divider"></li>
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i>前言</a>
+<ul>
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html#致谢"><i class="fa fa-check"></i>致谢</a></li>
+</ul></li>
+<li class="chapter" data-level="" data-path="author.html"><a href="author.html"><i class="fa fa-check"></i>作者简介</a></li>
+<li class="chapter" data-level="1" data-path="plot.html"><a href="plot.html"><i class="fa fa-check"></i><b>1</b> Plots</a>
+<ul>
+<li class="chapter" data-level="1.1" data-path="plot.html"><a href="plot.html#箱线图小提琴图"><i class="fa fa-check"></i><b>1.1</b> 箱线图/小提琴图</a></li>
+<li class="chapter" data-level="1.2" data-path="plot.html"><a href="plot.html#柱状图"><i class="fa fa-check"></i><b>1.2</b> 柱状图</a></li>
+<li class="chapter" data-level="1.3" data-path="plot.html"><a href="plot.html#点线图"><i class="fa fa-check"></i><b>1.3</b> 点线图</a></li>
+<li class="chapter" data-level="1.4" data-path="plot.html"><a href="plot.html#树图"><i class="fa fa-check"></i><b>1.4</b> 树图</a></li>
+<li class="chapter" data-level="1.5" data-path="plot.html"><a href="plot.html#交互图"><i class="fa fa-check"></i><b>1.5</b> 交互图</a></li>
+<li class="chapter" data-level="1.6" data-path="plot.html"><a href="plot.html#自定义"><i class="fa fa-check"></i><b>1.6</b> 自定义</a></li>
+<li class="chapter" data-level="1.7" data-path="plot.html"><a href="plot.html#时间动态图"><i class="fa fa-check"></i><b>1.7</b> 时间动态图</a></li>
+<li class="chapter" data-level="1.8" data-path="plot.html"><a href="plot.html#d玫瑰"><i class="fa fa-check"></i><b>1.8</b> 3D玫瑰</a></li>
+<li class="chapter" data-level="1.9" data-path="plot.html"><a href="plot.html#流程图"><i class="fa fa-check"></i><b>1.9</b> 流程图</a></li>
+<li class="chapter" data-level="1.10" data-path="plot.html"><a href="plot.html#地图"><i class="fa fa-check"></i><b>1.10</b> 地图</a>
+<ul>
+<li class="chapter" data-level="1.10.1" data-path="plot.html"><a href="plot.html#天心区"><i class="fa fa-check"></i><b>1.10.1</b> 天心区</a></li>
+<li class="chapter" data-level="1.10.2" data-path="plot.html"><a href="plot.html#北京"><i class="fa fa-check"></i><b>1.10.2</b> 北京</a></li>
+<li class="chapter" data-level="1.10.3" data-path="plot.html"><a href="plot.html#省区地图"><i class="fa fa-check"></i><b>1.10.3</b> 省区地图</a></li>
+</ul></li>
+<li class="chapter" data-level="1.11" data-path="plot.html"><a href="plot.html#ggtree"><i class="fa fa-check"></i><b>1.11</b> ggtree</a>
+<ul>
+<li class="chapter" data-level="1.11.1" data-path="plot.html"><a href="plot.html#more-forms-of-phylogenetic-tree"><i class="fa fa-check"></i><b>1.11.1</b> More forms of phylogenetic tree</a></li>
+<li class="chapter" data-level="1.11.2" data-path="plot.html"><a href="plot.html#run-with-another-dataset"><i class="fa fa-check"></i><b>1.11.2</b> run with another dataset</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="2" data-path="tab.html"><a href="tab.html"><i class="fa fa-check"></i><b>2</b> table</a>
+<ul>
+<li class="chapter" data-level="2.1" data-path="tab.html"><a href="tab.html#gt表"><i class="fa fa-check"></i><b>2.1</b> gt表</a>
+<ul>
+<li class="chapter" data-level="2.1.1" data-path="tab.html"><a href="tab.html#表格1"><i class="fa fa-check"></i><b>2.1.1</b> 表格1</a></li>
+<li class="chapter" data-level="2.1.2" data-path="tab.html"><a href="tab.html#表格2"><i class="fa fa-check"></i><b>2.1.2</b> 表格2</a></li>
+<li class="chapter" data-level="2.1.3" data-path="tab.html"><a href="tab.html#颜色表格"><i class="fa fa-check"></i><b>2.1.3</b> 颜色表格</a></li>
+<li class="chapter" data-level="2.1.4" data-path="tab.html"><a href="tab.html#增加图像"><i class="fa fa-check"></i><b>2.1.4</b> 增加图像</a></li>
+<li class="chapter" data-level="2.1.5" data-path="tab.html"><a href="tab.html#自定义图片"><i class="fa fa-check"></i><b>2.1.5</b> 自定义图片</a></li>
+<li class="chapter" data-level="2.1.6" data-path="tab.html"><a href="tab.html#美元"><i class="fa fa-check"></i><b>2.1.6</b> 美元</a></li>
+</ul></li>
+<li class="chapter" data-level="2.2" data-path="tab.html"><a href="tab.html#flextable"><i class="fa fa-check"></i><b>2.2</b> flextable</a></li>
+<li class="chapter" data-level="2.3" data-path="tab.html"><a href="tab.html#stargazer"><i class="fa fa-check"></i><b>2.3</b> stargazer</a></li>
+<li class="chapter" data-level="2.4" data-path="tab.html"><a href="tab.html#可查询表格"><i class="fa fa-check"></i><b>2.4</b> 可查询表格</a></li>
+</ul></li>
+<li class="chapter" data-level="3" data-path="数学.html"><a href="数学.html"><i class="fa fa-check"></i><b>3</b> 数学</a>
+<ul>
+<li class="chapter" data-level="3.1" data-path="数学.html"><a href="数学.html#距离最短"><i class="fa fa-check"></i><b>3.1</b> 距离最短</a></li>
+<li class="chapter" data-level="3.2" data-path="数学.html"><a href="数学.html#牛顿迭代"><i class="fa fa-check"></i><b>3.2</b> 牛顿迭代</a></li>
+<li class="chapter" data-level="3.3" data-path="数学.html"><a href="数学.html#微分"><i class="fa fa-check"></i><b>3.3</b> 微分</a>
+<ul>
+<li class="chapter" data-level="3.3.1" data-path="数学.html"><a href="数学.html#高次微分"><i class="fa fa-check"></i><b>3.3.1</b> 高次微分</a></li>
+<li class="chapter" data-level="3.3.2" data-path="数学.html"><a href="数学.html#微分方程组"><i class="fa fa-check"></i><b>3.3.2</b> 微分方程组</a></li>
+</ul></li>
+<li class="chapter" data-level="3.4" data-path="数学.html"><a href="数学.html#option"><i class="fa fa-check"></i><b>3.4</b> option</a>
+<ul>
+<li class="chapter" data-level="3.4.1" data-path="数学.html"><a href="数学.html#section"><i class="fa fa-check"></i><b>3.4.1</b> 1</a></li>
+<li class="chapter" data-level="3.4.2" data-path="数学.html"><a href="数学.html#极值黑塞矩阵"><i class="fa fa-check"></i><b>3.4.2</b> 极值黑塞矩阵</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="4" data-path="app.html"><a href="app.html"><i class="fa fa-check"></i><b>4</b> app</a></li>
+<li class="chapter" data-level="5" data-path="ab-test.html"><a href="ab-test.html"><i class="fa fa-check"></i><b>5</b> AB-test</a></li>
+<li class="chapter" data-level="6" data-path="pca-and-xgboot.html"><a href="pca-and-xgboot.html"><i class="fa fa-check"></i><b>6</b> pca and xgboot、</a>
+<ul>
+<li class="chapter" data-level="6.1" data-path="pca-and-xgboot.html"><a href="pca-and-xgboot.html#数据"><i class="fa fa-check"></i><b>6.1</b> 数据</a></li>
+<li class="chapter" data-level="6.2" data-path="pca-and-xgboot.html"><a href="pca-and-xgboot.html#主成分分析"><i class="fa fa-check"></i><b>6.2</b> 主成分分析</a></li>
+<li class="chapter" data-level="6.3" data-path="pca-and-xgboot.html"><a href="pca-and-xgboot.html#计算反差贡献"><i class="fa fa-check"></i><b>6.3</b> 计算反差贡献</a>
+<ul>
+<li class="chapter" data-level="6.3.1" data-path="pca-and-xgboot.html"><a href="pca-and-xgboot.html#总结"><i class="fa fa-check"></i><b>6.3.1</b> 总结</a></li>
+</ul></li>
+<li class="chapter" data-level="6.4" data-path="pca-and-xgboot.html"><a href="pca-and-xgboot.html#xgboot"><i class="fa fa-check"></i><b>6.4</b> XGboot</a></li>
+</ul></li>
+<li class="chapter" data-level="7" data-path="聚类.html"><a href="聚类.html"><i class="fa fa-check"></i><b>7</b> 聚类</a>
+<ul>
+<li class="chapter" data-level="7.1" data-path="聚类.html"><a href="聚类.html#data-importing"><i class="fa fa-check"></i><b>7.1</b> 1 Data Importing</a></li>
+<li class="chapter" data-level="7.2" data-path="聚类.html"><a href="聚类.html#clustering"><i class="fa fa-check"></i><b>7.2</b> 2 Clustering</a>
+<ul>
+<li class="chapter" data-level="7.2.1" data-path="聚类.html"><a href="聚类.html#pre-processing"><i class="fa fa-check"></i><b>7.2.1</b> 2.0 pre-processing</a></li>
+<li class="chapter" data-level="7.2.2" data-path="聚类.html"><a href="聚类.html#k-means"><i class="fa fa-check"></i><b>7.2.2</b> 2.1 K-means</a></li>
+<li class="chapter" data-level="7.2.3" data-path="聚类.html"><a href="聚类.html#hierarchical-clusteringmanhattan-distance"><i class="fa fa-check"></i><b>7.2.3</b> 2.2 Hierarchical clustering(Manhattan distance)</a></li>
+<li class="chapter" data-level="7.2.4" data-path="聚类.html"><a href="聚类.html#pam-gower"><i class="fa fa-check"></i><b>7.2.4</b> 2.3 PAM (Gower)</a></li>
+</ul></li>
+<li class="chapter" data-level="7.3" data-path="聚类.html"><a href="聚类.html#describe-the-clusters-you-found-with-pam"><i class="fa fa-check"></i><b>7.3</b> 3 Describe the clusters you found with PAM</a></li>
+<li class="chapter" data-level="7.4" data-path="聚类.html"><a href="聚类.html#clustering-evaluation-and-comparison"><i class="fa fa-check"></i><b>7.4</b> 4 Clustering evaluation and comparison</a></li>
+<li class="chapter" data-level="7.5" data-path="聚类.html"><a href="聚类.html#anomaly-detection"><i class="fa fa-check"></i><b>7.5</b> 5 Anomaly detection</a>
+<ul>
+<li class="chapter" data-level="7.5.1" data-path="聚类.html"><a href="聚类.html#lof"><i class="fa fa-check"></i><b>7.5.1</b> LOF</a></li>
+<li class="chapter" data-level="7.5.2" data-path="聚类.html"><a href="聚类.html#dbscan"><i class="fa fa-check"></i><b>7.5.2</b> DBSCAN</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="8" data-path="回归.html"><a href="回归.html"><i class="fa fa-check"></i><b>8</b> 回归</a>
+<ul>
+<li class="chapter" data-level="8.1" data-path="回归.html"><a href="回归.html#有序glm"><i class="fa fa-check"></i><b>8.1</b> 有序glm</a></li>
+<li class="chapter" data-level="8.2" data-path="回归.html"><a href="回归.html#药物浓度拟合参数方程"><i class="fa fa-check"></i><b>8.2</b> 药物浓度拟合参数方程</a></li>
+<li class="chapter" data-level="8.3" data-path="回归.html"><a href="回归.html#多余变量"><i class="fa fa-check"></i><b>8.3</b> 多余变量</a>
+<ul>
+<li class="chapter" data-level="8.3.1" data-path="回归.html"><a href="回归.html#后退法"><i class="fa fa-check"></i><b>8.3.1</b> 后退法</a></li>
+<li class="chapter" data-level="8.3.2" data-path="回归.html"><a href="回归.html#lasso"><i class="fa fa-check"></i><b>8.3.2</b> lasso</a></li>
+<li class="chapter" data-level="8.3.3" data-path="回归.html"><a href="回归.html#偏最小二乘"><i class="fa fa-check"></i><b>8.3.3</b> 偏最小二乘</a></li>
+</ul></li>
+</ul></li>
+<li class="appendix"><span><b>附录</b></span></li>
+<li class="chapter" data-level="A" data-path="sound.html"><a href="sound.html"><i class="fa fa-check"></i><b>A</b> 结尾</a>
+<ul>
+<li class="chapter" data-level="A.1" data-path="sound.html"><a href="sound.html#写过的部分课程"><i class="fa fa-check"></i><b>A.1</b> 写过的部分课程</a></li>
+<li class="chapter" data-level="A.2" data-path="sound.html"><a href="sound.html#赞助可怜"><i class="fa fa-check"></i><b>A.2</b> 赞助(可怜)</a></li>
+</ul></li>
+<li class="chapter" data-level="" data-path="references.html"><a href="references.html"><i class="fa fa-check"></i>参考文献</a></li>
+<li class="divider"></li>
+<li><a href="https://bookdown.org" target="blank">菜鸟著书by bookdown</a></li>
+
+</ul>
+
+      </nav>
+    </div>
+
+    <div class="book-body">
+      <div class="body-inner">
+        <div class="book-header" role="navigation">
+          <h1>
+            <i class="fa fa-circle-o-notch fa-spin"></i><a href="./">记录R学习</a>
+          </h1>
+        </div>
+
+        <div class="page-wrapper" tabindex="-1" role="main">
+          <div class="page-inner">
+
+            <section class="normal" id="section-">
+<div id="回归" class="section level1 hasAnchor" number="8">
+<h1><span class="header-section-number">第 8 章</span> 回归<a href="回归.html#回归" class="anchor-section" aria-label="Anchor link to header"></a></h1>
+<div id="有序glm" class="section level2 hasAnchor" number="8.1">
+<h2><span class="header-section-number">8.1</span> 有序glm<a href="回归.html#有序glm" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<details class=chunk-details><summary class=chunk-summary><span class=chunk-summary-text>Code</span></summary>
+<div class="sourceCode" id="cb193"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb193-1"><a href="回归.html#cb193-1" tabindex="-1"></a><span class="fu">library</span>(haven)</span>
+<span id="cb193-2"><a href="回归.html#cb193-2" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span>
+<span id="cb193-3"><a href="回归.html#cb193-3" tabindex="-1"></a><span class="fu">library</span>(<span class="st">&quot;MASS&quot;</span>)</span>
+<span id="cb193-4"><a href="回归.html#cb193-4" tabindex="-1"></a>df<span class="ot">&lt;-</span><span class="fu">read_dta</span>(<span class="st">&quot;data/CGSS2010.dta&quot;</span>)</span>
+<span id="cb193-5"><a href="回归.html#cb193-5" tabindex="-1"></a>ndf<span class="ot">=</span>df <span class="sc">%&gt;%</span> dplyr<span class="sc">::</span><span class="fu">select</span>(a36,a285,a3a,a2,a15,a18,a8a,a5,a7a,a10,a69,a681,a682,a65,a611,a612)</span>
+<span id="cb193-6"><a href="回归.html#cb193-6" tabindex="-1"></a>aa<span class="ot">=</span>ndf <span class="sc">%&gt;%</span> <span class="fu">reframe</span>(<span class="at">happiness=</span><span class="fu">ordered</span>(<span class="fu">ifelse</span>(a36<span class="sc">&gt;</span><span class="dv">0</span>,a36,<span class="cn">NA</span>)),</span>
+<span id="cb193-7"><a href="回归.html#cb193-7" tabindex="-1"></a>               <span class="at">internet=</span><span class="fu">ifelse</span>(a285<span class="sc">&gt;</span><span class="dv">0</span>,a285,<span class="cn">NA</span>),</span>
+<span id="cb193-8"><a href="回归.html#cb193-8" tabindex="-1"></a>               <span class="at">age=</span><span class="fu">ifelse</span>(a3a<span class="sc">&lt;</span><span class="dv">0</span>,<span class="cn">NA</span>,<span class="dv">2010</span><span class="sc">-</span>a3a),</span>
+<span id="cb193-9"><a href="回归.html#cb193-9" tabindex="-1"></a>               <span class="at">gender=</span><span class="fu">ifelse</span>(a2<span class="sc">==</span><span class="dv">1</span>,<span class="dv">1</span>,<span class="fu">ifelse</span>(a2<span class="sc">==</span><span class="dv">2</span>,<span class="dv">0</span>,<span class="cn">NA</span>)),</span>
+<span id="cb193-10"><a href="回归.html#cb193-10" tabindex="-1"></a>               <span class="at">health=</span><span class="fu">ifelse</span>(a15<span class="sc">&gt;</span><span class="dv">0</span>,a15,<span class="cn">NA</span>),</span>
+<span id="cb193-11"><a href="回归.html#cb193-11" tabindex="-1"></a>               <span class="at">hukou=</span><span class="fu">ifelse</span>(a18<span class="sc">==</span><span class="dv">1</span>,<span class="dv">0</span>,<span class="fu">ifelse</span>(a18<span class="sc">==</span><span class="dv">2</span>,<span class="dv">1</span>,<span class="cn">NA</span>)),</span>
+<span id="cb193-12"><a href="回归.html#cb193-12" tabindex="-1"></a>               <span class="at">ininc=</span><span class="fu">ifelse</span>(a8a<span class="sc">&gt;</span><span class="dv">9999995</span><span class="sc">|</span>a8a<span class="sc">==</span><span class="dv">0</span>,<span class="cn">NA</span>,<span class="fu">log</span>(a8a)),</span>
+<span id="cb193-13"><a href="回归.html#cb193-13" tabindex="-1"></a>               <span class="at">rel=</span><span class="fu">ifelse</span>(a5<span class="sc">==</span><span class="dv">1</span>,<span class="dv">0</span>,<span class="fu">ifelse</span>(a5<span class="sc">&gt;</span><span class="dv">1</span>,<span class="dv">1</span>,<span class="cn">NA</span>)),</span>
+<span id="cb193-14"><a href="回归.html#cb193-14" tabindex="-1"></a>               <span class="at">edu=</span><span class="fu">ifelse</span>(a7a<span class="sc">&lt;</span><span class="dv">0</span>,<span class="cn">NA</span>,a7a),</span>
+<span id="cb193-15"><a href="回归.html#cb193-15" tabindex="-1"></a>               <span class="at">pol=</span><span class="fu">ifelse</span>(a10<span class="sc">&lt;</span><span class="dv">0</span>,<span class="cn">NA</span>,<span class="fu">ifelse</span>(a10<span class="sc">==</span><span class="dv">1</span>,<span class="dv">1</span>,<span class="dv">0</span>)),</span>
+<span id="cb193-16"><a href="回归.html#cb193-16" tabindex="-1"></a>               <span class="at">mar=</span><span class="fu">ifelse</span>(a69<span class="sc">&lt;</span><span class="dv">0</span>,<span class="cn">NA</span>,<span class="fu">ifelse</span>(a69<span class="sc">%in%</span><span class="fu">c</span>(<span class="dv">1</span>,<span class="dv">2</span>,<span class="dv">5</span>,<span class="dv">6</span>),<span class="dv">0</span>,<span class="dv">1</span>)),</span>
+<span id="cb193-17"><a href="回归.html#cb193-17" tabindex="-1"></a>               <span class="at">kid=</span><span class="fu">ifelse</span>((a681<span class="sc">+</span>a682)<span class="sc">&lt;</span><span class="dv">0</span>,<span class="cn">NA</span>,<span class="fu">ifelse</span>((a681<span class="sc">+</span>a682)<span class="sc">==</span><span class="dv">0</span>,<span class="dv">0</span>,<span class="dv">1</span>)),</span>
+<span id="cb193-18"><a href="回归.html#cb193-18" tabindex="-1"></a>               <span class="at">hou=</span><span class="fu">ifelse</span>(a65<span class="sc">&lt;</span><span class="dv">0</span>,<span class="cn">NA</span>,a65),</span>
+<span id="cb193-19"><a href="回归.html#cb193-19" tabindex="-1"></a>               <span class="at">med=</span><span class="fu">ifelse</span>(a611<span class="sc">==</span><span class="dv">1</span>,<span class="dv">1</span>,<span class="fu">ifelse</span>(a611<span class="sc">==</span><span class="dv">2</span>,<span class="dv">0</span>,<span class="cn">NA</span>)),</span>
+<span id="cb193-20"><a href="回归.html#cb193-20" tabindex="-1"></a>               <span class="at">end=</span><span class="fu">ifelse</span>(a612<span class="sc">==</span><span class="dv">1</span>,<span class="dv">1</span>,<span class="fu">ifelse</span>(a612<span class="sc">==</span><span class="dv">2</span>,<span class="dv">0</span>,<span class="cn">NA</span>)))</span>
+<span id="cb193-21"><a href="回归.html#cb193-21" tabindex="-1"></a>fo<span class="ot">=</span><span class="fu">paste0</span>(<span class="fu">names</span>(aa)[<span class="dv">1</span>],<span class="st">&quot;~&quot;</span>,<span class="fu">paste0</span>(<span class="fu">names</span>(aa)[<span class="sc">-</span><span class="dv">1</span>],<span class="at">collapse =</span> <span class="st">&quot;+&quot;</span>))</span>
+<span id="cb193-22"><a href="回归.html#cb193-22" tabindex="-1"></a>aa<span class="ot">=</span><span class="fu">na.omit</span>(aa)</span>
+<span id="cb193-23"><a href="回归.html#cb193-23" tabindex="-1"></a>mod_oglm1<span class="ot">=</span><span class="fu">polr</span>(happiness <span class="sc">~</span>internet, <span class="at">Hess=</span><span class="cn">TRUE</span>,<span class="at">method =</span> <span class="fu">c</span>(<span class="st">&quot;logistic&quot;</span>),<span class="at">data =</span> aa)</span>
+<span id="cb193-24"><a href="回归.html#cb193-24" tabindex="-1"></a>mod_oglm2<span class="ot">=</span><span class="fu">polr</span>(fo, <span class="at">Hess=</span><span class="cn">TRUE</span>,<span class="at">method =</span> <span class="fu">c</span>(<span class="st">&quot;logistic&quot;</span>),<span class="at">data =</span> aa)</span>
+<span id="cb193-25"><a href="回归.html#cb193-25" tabindex="-1"></a></span>
+<span id="cb193-26"><a href="回归.html#cb193-26" tabindex="-1"></a>mod_oprob1<span class="ot">=</span><span class="fu">polr</span>(happiness <span class="sc">~</span>internet,</span>
+<span id="cb193-27"><a href="回归.html#cb193-27" tabindex="-1"></a>               <span class="at">Hess=</span><span class="cn">TRUE</span>,<span class="at">method =</span> <span class="fu">c</span>(<span class="st">&quot;probit&quot;</span>),</span>
+<span id="cb193-28"><a href="回归.html#cb193-28" tabindex="-1"></a>               <span class="at">data =</span> aa)</span>
+<span id="cb193-29"><a href="回归.html#cb193-29" tabindex="-1"></a>mod_oprob2<span class="ot">=</span><span class="fu">polr</span>(fo,<span class="at">Hess=</span><span class="cn">TRUE</span>,<span class="at">method =</span> <span class="fu">c</span>(<span class="st">&quot;probit&quot;</span>),<span class="at">data =</span> aa)</span>
+<span id="cb193-30"><a href="回归.html#cb193-30" tabindex="-1"></a><span class="fu">summary</span>(mod_oglm1)</span></code></pre></div>
+</details>
+<pre><code>## Call:
+## polr(formula = happiness ~ internet, data = aa, Hess = TRUE, 
+##     method = c(&quot;logistic&quot;))
+## 
+## Coefficients:
+##          Value Std. Error t value
+## internet 0.108     0.0155    6.98
+## 
+## Intercepts:
+##     Value   Std. Error t value
+## 1|2  -3.675   0.082    -44.606
+## 2|3  -2.072   0.047    -44.477
+## 3|4  -0.821   0.038    -21.847
+## 4|5   1.861   0.043     43.190
+## 
+## Residual Deviance: 19357.50 
+## AIC: 19367.50</code></pre>
+<details class=chunk-details><summary class=chunk-summary><span class=chunk-summary-text>Code</span></summary>
+<div class="sourceCode" id="cb195"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb195-1"><a href="回归.html#cb195-1" tabindex="-1"></a><span class="fu">summary</span>(mod_oglm2)</span></code></pre></div>
+</details>
+<pre><code>## Call:
+## polr(formula = fo, data = aa, Hess = TRUE, method = c(&quot;logistic&quot;))
+## 
+## Coefficients:
+##            Value Std. Error t value
+## internet  0.0564    0.02248  2.5104
+## age       0.0243    0.00203 11.9454
+## gender   -0.3101    0.04567 -6.7899
+## health    0.4633    0.02235 20.7282
+## hukou    -0.1823    0.05987 -3.0444
+## ininc     0.2114    0.02483  8.5170
+## rel       0.2569    0.06791  3.7832
+## edu       0.0008    0.01162  0.0688
+## pol       0.3066    0.06958  4.4068
+## mar       0.5846    0.07023  8.3243
+## kid      -0.3430    0.09898 -3.4655
+## hou       0.2020    0.04114  4.9094
+## med       0.3909    0.07149  5.4683
+## end       0.0975    0.05121  1.9040
+## 
+## Intercepts:
+##     Value  Std. Error t value
+## 1|2  1.434  0.265      5.409 
+## 2|3  3.090  0.258     11.965 
+## 3|4  4.424  0.260     17.045 
+## 4|5  7.328  0.269     27.257 
+## 
+## Residual Deviance: 18482.22 
+## AIC: 18518.22</code></pre>
+<details class=chunk-details><summary class=chunk-summary><span class=chunk-summary-text>Code</span></summary>
+<div class="sourceCode" id="cb197"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb197-1"><a href="回归.html#cb197-1" tabindex="-1"></a><span class="fu">summary</span>(mod_oprob1)</span></code></pre></div>
+</details>
+<pre><code>## Call:
+## polr(formula = happiness ~ internet, data = aa, Hess = TRUE, 
+##     method = c(&quot;probit&quot;))
+## 
+## Coefficients:
+##          Value Std. Error t value
+## internet 0.064    0.00885    7.23
+## 
+## Intercepts:
+##     Value   Std. Error t value
+## 1|2  -1.936   0.035    -55.365
+## 2|3  -1.205   0.025    -48.905
+## 3|4  -0.511   0.022    -23.391
+## 4|5   1.112   0.024     46.887
+## 
+## Residual Deviance: 19354.02 
+## AIC: 19364.02</code></pre>
+<details class=chunk-details><summary class=chunk-summary><span class=chunk-summary-text>Code</span></summary>
+<div class="sourceCode" id="cb199"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb199-1"><a href="回归.html#cb199-1" tabindex="-1"></a><span class="fu">summary</span>(mod_oprob2)</span></code></pre></div>
+</details>
+<pre><code>## Call:
+## polr(formula = fo, data = aa, Hess = TRUE, method = c(&quot;probit&quot;))
+## 
+## Coefficients:
+##             Value Std. Error t value
+## internet  0.03531    0.01273   2.774
+## age       0.01353    0.00114  11.904
+## gender   -0.17445    0.02580  -6.761
+## health    0.25629    0.01229  20.851
+## hukou    -0.10082    0.03353  -3.007
+## ininc     0.11831    0.01393   8.493
+## rel       0.15147    0.03751   4.038
+## edu       0.00097    0.00662   0.146
+## pol       0.18216    0.03987   4.568
+## mar       0.31141    0.03903   7.979
+## kid      -0.16593    0.05518  -3.007
+## hou       0.11223    0.02325   4.828
+## med       0.21133    0.04017   5.262
+## end       0.05116    0.02878   1.777
+## 
+## Intercepts:
+##     Value  Std. Error t value
+## 1|2  0.881  0.145      6.074 
+## 2|3  1.674  0.144     11.610 
+## 3|4  2.421  0.145     16.694 
+## 4|5  4.145  0.148     27.953 
+## 
+## Residual Deviance: 18478.40 
+## AIC: 18514.40</code></pre>
+<details class=chunk-details><summary class=chunk-summary><span class=chunk-summary-text>Code</span></summary>
+<div class="sourceCode" id="cb201"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb201-1"><a href="回归.html#cb201-1" tabindex="-1"></a>stargazer<span class="sc">::</span><span class="fu">stargazer</span>(<span class="at">type=</span><span class="st">&quot;text&quot;</span>,mod_oglm1,mod_oglm2,mod_oprob1)</span></code></pre></div>
+</details>
+<pre><code>## 
+## ==========================================
+##                   Dependent variable:     
+##              -----------------------------
+##                        happiness          
+##                    ordered        ordered 
+##                   logistic        probit  
+##                 (1)       (2)       (3)   
+## ------------------------------------------
+## internet     0.108***   0.056**  0.064*** 
+##               (0.016)   (0.022)   (0.009) 
+##                                           
+## age                    0.024***           
+##                         (0.002)           
+##                                           
+## gender                 -0.310***          
+##                         (0.046)           
+##                                           
+## health                 0.463***           
+##                         (0.022)           
+##                                           
+## hukou                  -0.182***          
+##                         (0.060)           
+##                                           
+## ininc                  0.211***           
+##                         (0.025)           
+##                                           
+## rel                    0.257***           
+##                         (0.068)           
+##                                           
+## edu                      0.001            
+##                         (0.012)           
+##                                           
+## pol                    0.307***           
+##                         (0.070)           
+##                                           
+## mar                    0.585***           
+##                         (0.070)           
+##                                           
+## kid                    -0.343***          
+##                         (0.099)           
+##                                           
+## hou                    0.202***           
+##                         (0.041)           
+##                                           
+## med                    0.391***           
+##                         (0.071)           
+##                                           
+## end                     0.098*            
+##                         (0.051)           
+##                                           
+## ------------------------------------------
+## Observations   8,178     8,178     8,178  
+## ==========================================
+## Note:          *p&lt;0.1; **p&lt;0.05; ***p&lt;0.01</code></pre>
+<details class=chunk-details><summary class=chunk-summary><span class=chunk-summary-text>Code</span></summary>
+<div class="sourceCode" id="cb203"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb203-1"><a href="回归.html#cb203-1" tabindex="-1"></a>stargazer<span class="sc">::</span><span class="fu">stargazer</span>(<span class="at">type=</span><span class="st">&quot;text&quot;</span>,mod_oglm1,mod_oglm2,mod_oprob1,mod_oprob2)</span></code></pre></div>
+</details>
+<pre><code>## 
+## ==================================================
+##                       Dependent variable:         
+##              -------------------------------------
+##                            happiness              
+##                   ordered            ordered      
+##                   logistic            probit      
+##                (1)       (2)      (3)       (4)   
+## --------------------------------------------------
+## internet     0.108***  0.056**  0.064*** 0.035*** 
+##              (0.016)   (0.022)  (0.009)   (0.013) 
+##                                                   
+## age                   0.024***           0.014*** 
+##                        (0.002)            (0.001) 
+##                                                   
+## gender                -0.310***          -0.174***
+##                        (0.046)            (0.026) 
+##                                                   
+## health                0.463***           0.256*** 
+##                        (0.022)            (0.012) 
+##                                                   
+## hukou                 -0.182***          -0.101***
+##                        (0.060)            (0.034) 
+##                                                   
+## ininc                 0.211***           0.118*** 
+##                        (0.025)            (0.014) 
+##                                                   
+## rel                   0.257***           0.151*** 
+##                        (0.068)            (0.038) 
+##                                                   
+## edu                     0.001              0.001  
+##                        (0.012)            (0.007) 
+##                                                   
+## pol                   0.307***           0.182*** 
+##                        (0.070)            (0.040) 
+##                                                   
+## mar                   0.585***           0.311*** 
+##                        (0.070)            (0.039) 
+##                                                   
+## kid                   -0.343***          -0.166***
+##                        (0.099)            (0.055) 
+##                                                   
+## hou                   0.202***           0.112*** 
+##                        (0.041)            (0.023) 
+##                                                   
+## med                   0.391***           0.211*** 
+##                        (0.071)            (0.040) 
+##                                                   
+## end                    0.098*             0.051*  
+##                        (0.051)            (0.029) 
+##                                                   
+## --------------------------------------------------
+## Observations  8,178     8,178    8,178     8,178  
+## ==================================================
+## Note:                  *p&lt;0.1; **p&lt;0.05; ***p&lt;0.01</code></pre>
+<details class=chunk-details><summary class=chunk-summary><span class=chunk-summary-text>Code</span></summary>
+<div class="sourceCode" id="cb205"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb205-1"><a href="回归.html#cb205-1" tabindex="-1"></a>cs<span class="ot">=</span>aa <span class="sc">%&gt;%</span> <span class="fu">filter</span>(hukou<span class="sc">==</span><span class="dv">1</span>) <span class="sc">%&gt;%</span> dplyr<span class="sc">::</span><span class="fu">select</span>(<span class="sc">-</span>hukou)</span>
+<span id="cb205-2"><a href="回归.html#cb205-2" tabindex="-1"></a>nc<span class="ot">=</span>aa <span class="sc">%&gt;%</span> <span class="fu">filter</span>(hukou<span class="sc">==</span><span class="dv">0</span>) <span class="sc">%&gt;%</span> dplyr<span class="sc">::</span><span class="fu">select</span>(<span class="sc">-</span>hukou)</span>
+<span id="cb205-3"><a href="回归.html#cb205-3" tabindex="-1"></a>fo2<span class="ot">=</span><span class="fu">paste0</span>(<span class="fu">names</span>(cs)[<span class="dv">1</span>],<span class="st">&quot;~&quot;</span>,<span class="fu">paste0</span>(<span class="fu">names</span>(cs)[<span class="sc">-</span><span class="dv">1</span>],<span class="at">collapse =</span> <span class="st">&quot;+&quot;</span>))</span>
+<span id="cb205-4"><a href="回归.html#cb205-4" tabindex="-1"></a>mod_oglm1<span class="ot">=</span><span class="fu">polr</span>(fo2, <span class="at">Hess=</span><span class="cn">TRUE</span>,<span class="at">method =</span> <span class="fu">c</span>(<span class="st">&quot;logistic&quot;</span>),<span class="at">data =</span> cs)</span>
+<span id="cb205-5"><a href="回归.html#cb205-5" tabindex="-1"></a>mod_oglm2<span class="ot">=</span><span class="fu">polr</span>(fo2, <span class="at">Hess=</span><span class="cn">TRUE</span>,<span class="at">method =</span> <span class="fu">c</span>(<span class="st">&quot;logistic&quot;</span>),<span class="at">data =</span> nc)</span>
+<span id="cb205-6"><a href="回归.html#cb205-6" tabindex="-1"></a></span>
+<span id="cb205-7"><a href="回归.html#cb205-7" tabindex="-1"></a>mod_oprob1<span class="ot">=</span><span class="fu">polr</span>(fo2,</span>
+<span id="cb205-8"><a href="回归.html#cb205-8" tabindex="-1"></a>                <span class="at">Hess=</span><span class="cn">TRUE</span>,<span class="at">method =</span> <span class="fu">c</span>(<span class="st">&quot;probit&quot;</span>),</span>
+<span id="cb205-9"><a href="回归.html#cb205-9" tabindex="-1"></a>                <span class="at">data =</span> cs)</span>
+<span id="cb205-10"><a href="回归.html#cb205-10" tabindex="-1"></a>mod_oprob2<span class="ot">=</span><span class="fu">polr</span>(fo2,<span class="at">Hess=</span><span class="cn">TRUE</span>,<span class="at">method =</span> <span class="fu">c</span>(<span class="st">&quot;probit&quot;</span>),<span class="at">data =</span> nc)</span>
+<span id="cb205-11"><a href="回归.html#cb205-11" tabindex="-1"></a><span class="fu">summary</span>(mod_oglm1)</span></code></pre></div>
+</details>
+<pre><code>## Call:
+## polr(formula = fo2, data = cs, Hess = TRUE, method = c(&quot;logistic&quot;))
+## 
+## Coefficients:
+##            Value Std. Error t value
+## internet  0.0417    0.02933    1.42
+## age       0.0222    0.00303    7.35
+## gender   -0.2946    0.06769   -4.35
+## health    0.4727    0.03486   13.56
+## ininc     0.3418    0.04356    7.85
+## rel       0.5365    0.10831    4.95
+## edu      -0.0161    0.01459   -1.10
+## pol       0.3545    0.08482    4.18
+## mar       0.6178    0.09555    6.47
+## kid      -0.3646    0.13381   -2.72
+## hou       0.1231    0.05591    2.20
+## med       0.6453    0.10583    6.10
+## end      -0.1286    0.07943   -1.62
+## 
+## Intercepts:
+##     Value  Std. Error t value
+## 1|2  2.473  0.445      5.560 
+## 2|3  4.216  0.432      9.752 
+## 3|4  5.660  0.435     13.012 
+## 4|5  8.692  0.450     19.295 
+## 
+## Residual Deviance: 8146.43 
+## AIC: 8180.43</code></pre>
+<details class=chunk-details><summary class=chunk-summary><span class=chunk-summary-text>Code</span></summary>
+<div class="sourceCode" id="cb207"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb207-1"><a href="回归.html#cb207-1" tabindex="-1"></a><span class="fu">summary</span>(mod_oglm2)</span></code></pre></div>
+</details>
+<pre><code>## Call:
+## polr(formula = fo2, data = nc, Hess = TRUE, method = c(&quot;logistic&quot;))
+## 
+## Coefficients:
+##            Value Std. Error t value
+## internet  0.0691    0.03774   1.831
+## age       0.0254    0.00289   8.806
+## gender   -0.3287    0.06345  -5.181
+## health    0.4606    0.02925  15.743
+## ininc     0.1489    0.03233   4.606
+## rel       0.0775    0.08685   0.892
+## edu       0.0273    0.02143   1.273
+## pol       0.2036    0.13000   1.567
+## mar       0.5993    0.10556   5.677
+## kid      -0.3142    0.14913  -2.107
+## hou       0.2921    0.06200   4.712
+## med       0.2177    0.10004   2.176
+## end       0.2493    0.06811   3.660
+## 
+## Intercepts:
+##     Value  Std. Error t value
+## 1|2  1.152  0.366      3.146 
+## 2|3  2.765  0.359      7.699 
+## 3|4  4.035  0.361     11.191 
+## 4|5  6.855  0.372     18.446 
+## 
+## Residual Deviance: 10274.95 
+## AIC: 10308.95</code></pre>
+<details class=chunk-details><summary class=chunk-summary><span class=chunk-summary-text>Code</span></summary>
+<div class="sourceCode" id="cb209"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb209-1"><a href="回归.html#cb209-1" tabindex="-1"></a><span class="fu">summary</span>(mod_oprob1)</span></code></pre></div>
+</details>
+<pre><code>## Call:
+## polr(formula = fo2, data = cs, Hess = TRUE, method = c(&quot;probit&quot;))
+## 
+## Coefficients:
+##             Value Std. Error t value
+## internet  0.02584    0.01657    1.56
+## age       0.01221    0.00170    7.19
+## gender   -0.16188    0.03806   -4.25
+## health    0.26316    0.01925   13.67
+## ininc     0.18337    0.02403    7.63
+## rel       0.28859    0.05917    4.88
+## edu      -0.00845    0.00826   -1.02
+## pol       0.21078    0.04821    4.37
+## mar       0.32942    0.05292    6.22
+## kid      -0.18386    0.07499   -2.45
+## hou       0.07199    0.03163    2.28
+## med       0.34230    0.05902    5.80
+## end      -0.06990    0.04452   -1.57
+## 
+## Intercepts:
+##     Value  Std. Error t value
+## 1|2  1.430  0.239      5.984 
+## 2|3  2.234  0.237      9.415 
+## 3|4  3.024  0.239     12.664 
+## 4|5  4.820  0.244     19.728 
+## 
+## Residual Deviance: 8153.25 
+## AIC: 8187.25</code></pre>
+<details class=chunk-details><summary class=chunk-summary><span class=chunk-summary-text>Code</span></summary>
+<div class="sourceCode" id="cb211"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb211-1"><a href="回归.html#cb211-1" tabindex="-1"></a><span class="fu">summary</span>(mod_oprob2)</span></code></pre></div>
+</details>
+<pre><code>## Call:
+## polr(formula = fo2, data = nc, Hess = TRUE, method = c(&quot;probit&quot;))
+## 
+## Coefficients:
+##            Value Std. Error t value
+## internet  0.0441    0.02130    2.07
+## age       0.0144    0.00161    8.94
+## gender   -0.1900    0.03605   -5.27
+## health    0.2535    0.01606   15.78
+## ininc     0.0885    0.01834    4.83
+## rel       0.0600    0.04861    1.23
+## edu       0.0166    0.01225    1.35
+## pol       0.1240    0.07476    1.66
+## mar       0.3151    0.05841    5.39
+## kid      -0.1441    0.08228   -1.75
+## hou       0.1566    0.03475    4.51
+## med       0.1259    0.05650    2.23
+## end       0.1313    0.03839    3.42
+## 
+## Intercepts:
+##     Value  Std. Error t value
+## 1|2  0.753  0.203      3.706 
+## 2|3  1.543  0.203      7.615 
+## 3|4  2.263  0.204     11.122 
+## 4|5  3.937  0.207     18.986 
+## 
+## Residual Deviance: 10272.32 
+## AIC: 10306.32</code></pre>
+<details class=chunk-details><summary class=chunk-summary><span class=chunk-summary-text>Code</span></summary>
+<div class="sourceCode" id="cb213"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb213-1"><a href="回归.html#cb213-1" tabindex="-1"></a>stargazer<span class="sc">::</span><span class="fu">stargazer</span>(<span class="at">type=</span><span class="st">&quot;text&quot;</span>,mod_oglm1,mod_oglm2,mod_oprob1,mod_oprob2,</span>
+<span id="cb213-2"><a href="回归.html#cb213-2" tabindex="-1"></a>                     <span class="at">column.labels =</span> <span class="fu">c</span>(<span class="st">&quot;城镇&quot;</span>,<span class="st">&quot;农村&quot;</span>,<span class="st">&quot;城镇&quot;</span>,<span class="st">&quot;农村&quot;</span>))</span></code></pre></div>
+</details>
+<pre><code>## 
+## ====================================================
+##                        Dependent variable:          
+##              ---------------------------------------
+##                             happiness               
+##                    ordered             ordered      
+##                   logistic             probit       
+##                 城镇        农村        城镇        农村    
+##                 (1)       (2)       (3)       (4)   
+## ----------------------------------------------------
+## internet       0.042    0.069*     0.026    0.044** 
+##               (0.029)   (0.038)   (0.017)   (0.021) 
+##                                                     
+## age          0.022***  0.025***  0.012***  0.014*** 
+##               (0.003)   (0.003)   (0.002)   (0.002) 
+##                                                     
+## gender       -0.295*** -0.329*** -0.162*** -0.190***
+##               (0.068)   (0.063)   (0.038)   (0.036) 
+##                                                     
+## health       0.473***  0.461***  0.263***  0.253*** 
+##               (0.035)   (0.029)   (0.019)   (0.016) 
+##                                                     
+## ininc        0.342***  0.149***  0.183***  0.089*** 
+##               (0.044)   (0.032)   (0.024)   (0.018) 
+##                                                     
+## rel          0.536***    0.077   0.289***    0.060  
+##               (0.108)   (0.087)   (0.059)   (0.049) 
+##                                                     
+## edu           -0.016     0.027    -0.008     0.017  
+##               (0.015)   (0.021)   (0.008)   (0.012) 
+##                                                     
+## pol          0.355***    0.204   0.211***   0.124*  
+##               (0.085)   (0.130)   (0.048)   (0.075) 
+##                                                     
+## mar          0.618***  0.599***  0.329***  0.315*** 
+##               (0.096)   (0.106)   (0.053)   (0.058) 
+##                                                     
+## kid          -0.365*** -0.314**  -0.184**   -0.144* 
+##               (0.134)   (0.149)   (0.075)   (0.082) 
+##                                                     
+## hou           0.123**  0.292***   0.072**  0.157*** 
+##               (0.056)   (0.062)   (0.032)   (0.035) 
+##                                                     
+## med          0.645***   0.218**  0.342***   0.126** 
+##               (0.106)   (0.100)   (0.059)   (0.057) 
+##                                                     
+## end           -0.129   0.249***   -0.070   0.131*** 
+##               (0.079)   (0.068)   (0.045)   (0.038) 
+##                                                     
+## ----------------------------------------------------
+## Observations   3,789     4,389     3,789     4,389  
+## ====================================================
+## Note:                    *p&lt;0.1; **p&lt;0.05; ***p&lt;0.01</code></pre>
+</div>
+<div id="药物浓度拟合参数方程" class="section level2 hasAnchor" number="8.2">
+<h2><span class="header-section-number">8.2</span> 药物浓度拟合参数方程<a href="回归.html#药物浓度拟合参数方程" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<details class=chunk-details><summary class=chunk-summary><span class=chunk-summary-text>Code</span></summary>
+<div class="sourceCode" id="cb215"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb215-1"><a href="回归.html#cb215-1" tabindex="-1"></a>data<span class="ot">=</span><span class="fu">read.table</span>(<span class="st">&#39;data/nd.txt&#39;</span>,<span class="at">header =</span> T)</span>
+<span id="cb215-2"><a href="回归.html#cb215-2" tabindex="-1"></a><span class="co"># 1</span></span>
+<span id="cb215-3"><a href="回归.html#cb215-3" tabindex="-1"></a><span class="fu">plot</span>(data<span class="sc">$</span>Time,data<span class="sc">$</span>Concentration,<span class="at">type=</span><span class="st">&#39;l&#39;</span>,<span class="at">main=</span><span class="st">&#39;concentration again time&#39;</span>,</span>
+<span id="cb215-4"><a href="回归.html#cb215-4" tabindex="-1"></a>     <span class="at">xlab=</span><span class="st">&#39;time&#39;</span>,<span class="at">ylab=</span><span class="st">&#39;concentration&#39;</span>)</span>
+<span id="cb215-5"><a href="回归.html#cb215-5" tabindex="-1"></a><span class="fu">points</span>(data<span class="sc">$</span>Time,data<span class="sc">$</span>Concentration,<span class="at">pch=</span><span class="dv">20</span>,<span class="at">cex=</span><span class="fl">0.5</span>,<span class="at">col=</span><span class="st">&quot;blue4&quot;</span>)</span></code></pre></div>
+</details>
+<p><img src="bookdown_files/figure-html/unnamed-chunk-88-1.png" width="480" /></p>
+<p><span class="math display">\[y=log(c)+(b-1)*log(\frac{x}{a})-(x/a)^b\]</span></p>
+<details class=chunk-details><summary class=chunk-summary><span class=chunk-summary-text>Code</span></summary>
+<div class="sourceCode" id="cb216"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb216-1"><a href="回归.html#cb216-1" tabindex="-1"></a><span class="co"># 2</span></span>
+<span id="cb216-2"><a href="回归.html#cb216-2" tabindex="-1"></a>x <span class="ot">&lt;-</span> data<span class="sc">$</span>Time</span>
+<span id="cb216-3"><a href="回归.html#cb216-3" tabindex="-1"></a>y <span class="ot">&lt;-</span> data<span class="sc">$</span>Concentration</span>
+<span id="cb216-4"><a href="回归.html#cb216-4" tabindex="-1"></a><span class="co"># Fit the model using nls</span></span>
+<span id="cb216-5"><a href="回归.html#cb216-5" tabindex="-1"></a>fit <span class="ot">&lt;-</span> <span class="fu">nls</span>(y <span class="sc">~</span> <span class="fu">log</span>(c) <span class="sc">+</span> (b<span class="dv">-1</span>)<span class="sc">*</span><span class="fu">log</span>(x<span class="sc">/</span>a) <span class="sc">-</span> (x<span class="sc">/</span>a)<span class="sc">^</span>b, </span>
+<span id="cb216-6"><a href="回归.html#cb216-6" tabindex="-1"></a>           <span class="at">start =</span> <span class="fu">list</span>(<span class="at">c =</span> <span class="dv">10</span>, <span class="at">a =</span> <span class="dv">2</span>, <span class="at">b =</span> <span class="dv">2</span>))</span>
+<span id="cb216-7"><a href="回归.html#cb216-7" tabindex="-1"></a><span class="co"># Print the estimated parameters</span></span>
+<span id="cb216-8"><a href="回归.html#cb216-8" tabindex="-1"></a><span class="fu">summary</span>(fit)</span></code></pre></div>
+</details>
+<pre><code>## 
+## Formula: y ~ log(c) + (b - 1) * log(x/a) - (x/a)^b
+## 
+## Parameters:
+##   Estimate Std. Error t value Pr(&gt;|t|)    
+## c  15.4162     1.0988    14.0   &lt;2e-16 ***
+## a   9.7896     0.2607    37.6   &lt;2e-16 ***
+## b   1.7001     0.0397    42.8   &lt;2e-16 ***
+## ---
+## Signif. codes:  
+## 0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1
+## 
+## Residual standard error: 0.297 on 47 degrees of freedom
+## 
+## Number of iterations to convergence: 9 
+## Achieved convergence tolerance: 1.19e-06</code></pre>
+<details class=chunk-details><summary class=chunk-summary><span class=chunk-summary-text>Code</span></summary>
+<div class="sourceCode" id="cb218"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb218-1"><a href="回归.html#cb218-1" tabindex="-1"></a><span class="co"># predict</span></span>
+<span id="cb218-2"><a href="回归.html#cb218-2" tabindex="-1"></a>ynew<span class="ot">=</span><span class="fu">log</span>(<span class="fl">15.41621</span>) <span class="sc">+</span> (<span class="fl">1.70005</span><span class="dv">-1</span>)<span class="sc">*</span><span class="fu">log</span>(x<span class="sc">/</span><span class="fl">9.78956</span>) <span class="sc">-</span> (x<span class="sc">/</span><span class="fl">9.78956</span>)<span class="sc">^</span><span class="fl">1.70005</span></span>
+<span id="cb218-3"><a href="回归.html#cb218-3" tabindex="-1"></a><span class="co"># plot fit </span></span>
+<span id="cb218-4"><a href="回归.html#cb218-4" tabindex="-1"></a><span class="fu">plot</span>(x,y,<span class="at">cex=</span><span class="fl">0.6</span>)</span>
+<span id="cb218-5"><a href="回归.html#cb218-5" tabindex="-1"></a><span class="fu">lines</span>(x,ynew,<span class="at">col=</span><span class="st">&#39;red&#39;</span>,<span class="at">lwd=</span><span class="fl">1.5</span>)</span></code></pre></div>
+</details>
+<p><img src="bookdown_files/figure-html/unnamed-chunk-89-1.png" width="480" /></p>
+</div>
+<div id="多余变量" class="section level2 hasAnchor" number="8.3">
+<h2><span class="header-section-number">8.3</span> 多余变量<a href="回归.html#多余变量" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<details class=chunk-details><summary class=chunk-summary><span class=chunk-summary-text>Code</span></summary>
+<div class="sourceCode" id="cb219"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb219-1"><a href="回归.html#cb219-1" tabindex="-1"></a><span class="fu">library</span>(haven)</span>
+<span id="cb219-2"><a href="回归.html#cb219-2" tabindex="-1"></a><span class="fu">library</span>(foreign)</span>
+<span id="cb219-3"><a href="回归.html#cb219-3" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span>
+<span id="cb219-4"><a href="回归.html#cb219-4" tabindex="-1"></a><span class="fu">library</span>(reshape2)</span>
+<span id="cb219-5"><a href="回归.html#cb219-5" tabindex="-1"></a><span class="fu">library</span>(boot)</span>
+<span id="cb219-6"><a href="回归.html#cb219-6" tabindex="-1"></a><span class="fu">library</span>(glmnet)</span>
+<span id="cb219-7"><a href="回归.html#cb219-7" tabindex="-1"></a>FF_wave6_2020v2 <span class="ot">&lt;-</span> <span class="fu">read_dta</span>(<span class="st">&quot;data/FF_wave6_2020v2.dta&quot;</span>)</span></code></pre></div>
+</details>
+<details class=chunk-details><summary class=chunk-summary><span class=chunk-summary-text>Code</span></summary>
+<div class="sourceCode" id="cb220"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb220-1"><a href="回归.html#cb220-1" tabindex="-1"></a>ind<span class="ot">=</span><span class="fu">c</span>(<span class="st">&#39;p6b5&#39;</span>,<span class="st">&#39;p6b10&#39;</span>, <span class="st">&#39;p6b35&#39;</span>, <span class="st">&#39;p6b55&#39;</span>, <span class="st">&#39;p6b60&#39;</span>, <span class="st">&#39;p6c21&#39;</span>, <span class="st">&#39;p6f32&#39;</span>, <span class="st">&#39;p6f35&#39;</span>, <span class="st">&#39;p6h74&#39;</span>, <span class="st">&#39;p6h102&#39;</span>, <span class="st">&#39;p6i7&#39;</span>, <span class="st">&#39;p6i8&#39;</span>, <span class="st">&#39;p6i11&#39;</span>, <span class="st">&#39;p6j37&#39;</span>, <span class="st">&#39;k6b21a&#39;</span>, <span class="st">&#39;k6b22a&#39;</span>, <span class="st">&#39;k6c1&#39;</span>, <span class="st">&#39;k6c4e&#39;</span>, <span class="st">&#39;k6c28&#39;</span>, <span class="st">&#39;k6d37&#39;</span>, <span class="st">&#39;k6f63&#39;</span>, <span class="st">&#39;ck6cbmi&#39;</span>, <span class="st">&#39;k6d10&#39;</span>)</span>
+<span id="cb220-2"><a href="回归.html#cb220-2" tabindex="-1"></a>mydata<span class="ot">=</span>FF_wave6_2020v2[,ind]</span>
+<span id="cb220-3"><a href="回归.html#cb220-3" tabindex="-1"></a><span class="co"># mydata=lapply(mydata,as.numeric)</span></span>
+<span id="cb220-4"><a href="回归.html#cb220-4" tabindex="-1"></a><span class="co"># mydata=as.data.frame(mydata)</span></span>
+<span id="cb220-5"><a href="回归.html#cb220-5" tabindex="-1"></a>mydata[mydata<span class="sc">&lt;</span><span class="dv">0</span>]<span class="ot">=</span><span class="cn">NA</span></span>
+<span id="cb220-6"><a href="回归.html#cb220-6" tabindex="-1"></a>new<span class="ot">=</span><span class="fu">na.omit</span>(mydata)</span>
+<span id="cb220-7"><a href="回归.html#cb220-7" tabindex="-1"></a><span class="fu">dim</span>(new)</span></code></pre></div>
+</details>
+<pre><code>## [1] 488  23</code></pre>
+<details class=chunk-details><summary class=chunk-summary><span class=chunk-summary-text>Code</span></summary>
+<div class="sourceCode" id="cb222"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb222-1"><a href="回归.html#cb222-1" tabindex="-1"></a><span class="fu">names</span>(new)[<span class="dv">1</span>]<span class="ot">=</span><span class="st">&#39;Depression&#39;</span></span>
+<span id="cb222-2"><a href="回归.html#cb222-2" tabindex="-1"></a>new<span class="ot">=</span>new <span class="sc">%&gt;%</span> <span class="fu">mutate</span>(<span class="at">Depression=</span><span class="fu">ifelse</span>(Depression<span class="sc">==</span><span class="dv">2</span>,<span class="dv">0</span>,<span class="dv">1</span>))</span></code></pre></div>
+</details>
+<div id="后退法" class="section level3 hasAnchor" number="8.3.1">
+<h3><span class="header-section-number">8.3.1</span> 后退法<a href="回归.html#后退法" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<details class=chunk-details><summary class=chunk-summary><span class=chunk-summary-text>Code</span></summary>
+<div class="sourceCode" id="cb223"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb223-1"><a href="回归.html#cb223-1" tabindex="-1"></a>mod_glm1<span class="ot">=</span><span class="fu">glm</span>(Depression <span class="sc">~</span> <span class="dv">1</span>,new,<span class="at">family=</span><span class="st">&#39;binomial&#39;</span>)</span>
+<span id="cb223-2"><a href="回归.html#cb223-2" tabindex="-1"></a>model_selected<span class="ot">=</span><span class="fu">step</span>(mod_glm1,<span class="at">scope =</span><span class="fu">list</span>(<span class="at">upper=</span><span class="fu">paste0</span>(<span class="st">&#39;~&#39;</span>,<span class="fu">paste0</span>(ind[<span class="sc">-</span><span class="dv">1</span>],<span class="at">collapse =</span><span class="st">&quot;+&quot;</span>)),<span class="at">lower=</span><span class="sc">~</span><span class="dv">1</span>) ,<span class="at">trace =</span> F,<span class="at">direction =</span><span class="st">&quot;forward&quot;</span>)</span>
+<span id="cb223-3"><a href="回归.html#cb223-3" tabindex="-1"></a>model_selected<span class="sc">$</span>coefficients</span></code></pre></div>
+</details>
+<pre><code>## (Intercept)       p6b55       p6b10      k6b21a 
+##    -4.04029     1.49803    -1.78293     0.74077 
+##       p6f32       p6c21       p6j37       k6c4e 
+##    -0.59864     0.86352    -0.76027     0.53427 
+##     ck6cbmi 
+##     0.04254</code></pre>
+<details class=chunk-details><summary class=chunk-summary><span class=chunk-summary-text>Code</span></summary>
+<div class="sourceCode" id="cb225"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb225-1"><a href="回归.html#cb225-1" tabindex="-1"></a><span class="fu">summary</span>(model_selected)</span></code></pre></div>
+</details>
+<pre><code>## 
+## Call:
+## glm(formula = Depression ~ p6b55 + p6b10 + k6b21a + p6f32 + p6c21 + 
+##     p6j37 + k6c4e + ck6cbmi, family = &quot;binomial&quot;, data = new)
+## 
+## Deviance Residuals: 
+##    Min      1Q  Median      3Q     Max  
+## -2.120  -0.408  -0.290  -0.207   3.008  
+## 
+## Coefficients:
+##             Estimate Std. Error z value Pr(&gt;|z|)    
+## (Intercept)  -4.0403     1.9312   -2.09   0.0364 *  
+## p6b55         1.4980     0.2533    5.91  3.3e-09 ***
+## p6b10        -1.7829     0.4517   -3.95  7.9e-05 ***
+## k6b21a        0.7408     0.2337    3.17   0.0015 ** 
+## p6f32        -0.5986     0.3881   -1.54   0.1229    
+## p6c21         0.8635     0.4293    2.01   0.0443 *  
+## p6j37        -0.7603     0.4258   -1.79   0.0742 .  
+## k6c4e         0.5343     0.3017    1.77   0.0765 .  
+## ck6cbmi       0.0425     0.0245    1.74   0.0819 .  
+## ---
+## Signif. codes:  
+## 0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1
+## 
+## (Dispersion parameter for binomial family taken to be 1)
+## 
+##     Null deviance: 347.79  on 487  degrees of freedom
+## Residual deviance: 253.42  on 479  degrees of freedom
+## AIC: 271.4
+## 
+## Number of Fisher Scoring iterations: 6</code></pre>
+<details class=chunk-details><summary class=chunk-summary><span class=chunk-summary-text>Code</span></summary>
+<div class="sourceCode" id="cb227"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb227-1"><a href="回归.html#cb227-1" tabindex="-1"></a>CI<span class="ot">=</span><span class="fu">confint</span>(model_selected)</span>
+<span id="cb227-2"><a href="回归.html#cb227-2" tabindex="-1"></a>d<span class="ot">=</span>CI[CI[,<span class="dv">1</span>]<span class="sc">&gt;</span><span class="dv">0</span>,]</span>
+<span id="cb227-3"><a href="回归.html#cb227-3" tabindex="-1"></a><span class="fu">data.frame</span>(<span class="at">name=</span><span class="fu">rownames</span>(d),<span class="at">low=</span>d[,<span class="dv">1</span>],<span class="at">upr=</span>d[,<span class="dv">2</span>],<span class="at">estimate=</span><span class="fu">rowMeans</span>(d)) <span class="sc">%&gt;%</span> </span>
+<span id="cb227-4"><a href="回归.html#cb227-4" tabindex="-1"></a>  <span class="fu">group_by</span>(name)<span class="sc">%&gt;%</span> </span>
+<span id="cb227-5"><a href="回归.html#cb227-5" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="at">mapping=</span><span class="fu">aes</span>(<span class="at">y=</span>estimate, <span class="at">x=</span>name)) <span class="sc">+</span></span>
+<span id="cb227-6"><a href="回归.html#cb227-6" tabindex="-1"></a>  <span class="fu">geom_point</span>() <span class="sc">+</span></span>
+<span id="cb227-7"><a href="回归.html#cb227-7" tabindex="-1"></a>  <span class="fu">geom_errorbar</span>(<span class="fu">aes</span>(<span class="at">ymin =</span> low, <span class="at">ymax =</span> upr), <span class="at">width=</span>.<span class="dv">4</span>,<span class="at">col=</span><span class="st">&#39;red&#39;</span>)<span class="sc">+</span></span>
+<span id="cb227-8"><a href="回归.html#cb227-8" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">title=</span><span class="st">&quot;A coefficient greater than zero and its confidence interval&quot;</span>,</span>
+<span id="cb227-9"><a href="回归.html#cb227-9" tabindex="-1"></a>       <span class="at">y=</span><span class="st">&quot;estimate&quot;</span>, </span>
+<span id="cb227-10"><a href="回归.html#cb227-10" tabindex="-1"></a>       <span class="at">x=</span><span class="st">&quot;Figure 1: Estimate&quot;</span>)</span></code></pre></div>
+</details>
+<p><img src="bookdown_files/figure-html/unnamed-chunk-92-1.png" width="480" /></p>
+</div>
+<div id="lasso" class="section level3 hasAnchor" number="8.3.2">
+<h3><span class="header-section-number">8.3.2</span> lasso<a href="回归.html#lasso" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<details class=chunk-details><summary class=chunk-summary><span class=chunk-summary-text>Code</span></summary>
+<div class="sourceCode" id="cb228"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb228-1"><a href="回归.html#cb228-1" tabindex="-1"></a>y<span class="ot">=</span><span class="fu">as.integer</span>(new[,<span class="dv">1</span>]<span class="sc">$</span>Depression)</span>
+<span id="cb228-2"><a href="回归.html#cb228-2" tabindex="-1"></a>x<span class="ot">=</span><span class="fu">as.matrix</span>(new[,<span class="sc">-</span><span class="dv">1</span>])</span>
+<span id="cb228-3"><a href="回归.html#cb228-3" tabindex="-1"></a>f1<span class="ot">=</span><span class="fu">glmnet</span>(x,y,<span class="at">family =</span> <span class="st">&#39;binomial&#39;</span>,<span class="at">nlambda =</span> <span class="dv">100</span>,<span class="at">alpha =</span> <span class="dv">1</span>)</span>
+<span id="cb228-4"><a href="回归.html#cb228-4" tabindex="-1"></a>la<span class="ot">=</span>f1<span class="sc">$</span>lambda</span>
+<span id="cb228-5"><a href="回归.html#cb228-5" tabindex="-1"></a>co<span class="ot">=</span>f1<span class="sc">$</span>beta</span>
+<span id="cb228-6"><a href="回归.html#cb228-6" tabindex="-1"></a>ll1<span class="ot">=</span><span class="fu">as.matrix</span>(co)</span>
+<span id="cb228-7"><a href="回归.html#cb228-7" tabindex="-1"></a><span class="fu">dim</span>(ll1)</span></code></pre></div>
+</details>
+<pre><code>## [1] 22 68</code></pre>
+<details class=chunk-details><summary class=chunk-summary><span class=chunk-summary-text>Code</span></summary>
+<div class="sourceCode" id="cb230"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb230-1"><a href="回归.html#cb230-1" tabindex="-1"></a><span class="fu">colnames</span>(ll1)<span class="ot">=</span><span class="fu">log</span>(la)</span>
+<span id="cb230-2"><a href="回归.html#cb230-2" tabindex="-1"></a>ladat<span class="ot">=</span><span class="fu">melt</span>(ll1)</span>
+<span id="cb230-3"><a href="回归.html#cb230-3" tabindex="-1"></a><span class="fu">ggplot</span>(ladat,<span class="fu">aes</span>(<span class="at">x=</span>Var2,<span class="at">y=</span>value,<span class="at">col=</span>Var1))<span class="sc">+</span><span class="fu">geom_line</span>()<span class="sc">+</span></span>
+<span id="cb230-4"><a href="回归.html#cb230-4" tabindex="-1"></a>    <span class="fu">labs</span>(<span class="at">title=</span><span class="st">&quot;lasso&quot;</span>,</span>
+<span id="cb230-5"><a href="回归.html#cb230-5" tabindex="-1"></a>       <span class="at">y=</span><span class="st">&quot;estimate beta&quot;</span>, </span>
+<span id="cb230-6"><a href="回归.html#cb230-6" tabindex="-1"></a>       <span class="at">x=</span><span class="st">&quot;log lambda&quot;</span>)</span></code></pre></div>
+</details>
+<p><img src="bookdown_files/figure-html/unnamed-chunk-93-1.png" width="480" /></p>
+<details class=chunk-details><summary class=chunk-summary><span class=chunk-summary-text>Code</span></summary>
+<div class="sourceCode" id="cb231"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb231-1"><a href="回归.html#cb231-1" tabindex="-1"></a>cvfit<span class="ot">=</span><span class="fu">cv.glmnet</span>(x,y)</span>
+<span id="cb231-2"><a href="回归.html#cb231-2" tabindex="-1"></a>lasso_coef <span class="ot">=</span> <span class="fu">predict</span>(f1, <span class="at">type =</span> <span class="st">&quot;coefficients&quot;</span>, <span class="at">s =</span> cvfit<span class="sc">$</span>lambda.min)</span>
+<span id="cb231-3"><a href="回归.html#cb231-3" tabindex="-1"></a>lasso_coef</span></code></pre></div>
+</details>
+<pre><code>## 23 x 1 sparse Matrix of class &quot;dgCMatrix&quot;
+##                   s1
+## (Intercept) -1.94241
+## p6b10       -1.05411
+## p6b35        .      
+## p6b55        1.13370
+## p6b60        .      
+## p6c21        .      
+## p6f32       -0.12648
+## p6f35        .      
+## p6h74       -0.04463
+## p6h102       .      
+## p6i7         .      
+## p6i8         .      
+## p6i11        .      
+## p6j37       -0.18554
+## k6b21a       0.40028
+## k6b22a       .      
+## k6c1         .      
+## k6c4e        .      
+## k6c28        .      
+## k6d37        .      
+## k6f63        .      
+## ck6cbmi      .      
+## k6d10        .</code></pre>
+<ul>
+<li>The coefficients obtained with the Lasso procedure are similar to the coefficients obtained with the forward procedure, but there are some differences. The Lasso tends to shrink coefficients towards zero, which can result in some coefficients being set to zero even if they were significant in the forward procedure.</li>
+</ul>
+</div>
+<div id="偏最小二乘" class="section level3 hasAnchor" number="8.3.3">
+<h3><span class="header-section-number">8.3.3</span> 偏最小二乘<a href="回归.html#偏最小二乘" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<details class=chunk-details><summary class=chunk-summary><span class=chunk-summary-text>Code</span></summary>
+<div class="sourceCode" id="cb233"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb233-1"><a href="回归.html#cb233-1" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span>
+<span id="cb233-2"><a href="回归.html#cb233-2" tabindex="-1"></a><span class="fu">library</span>(reshape2)</span>
+<span id="cb233-3"><a href="回归.html#cb233-3" tabindex="-1"></a>datn<span class="ot">=</span>readxl<span class="sc">::</span><span class="fu">read_xlsx</span>(<span class="st">&#39;data/pzx.xlsx&#39;</span>)</span>
+<span id="cb233-4"><a href="回归.html#cb233-4" tabindex="-1"></a>datn<span class="sc">$</span>NH<span class="ot">=</span><span class="fu">gsub</span>(<span class="st">&quot;,&quot;</span>,<span class="st">&quot;.&quot;</span>,datn<span class="sc">$</span>NH)</span>
+<span id="cb233-5"><a href="回归.html#cb233-5" tabindex="-1"></a>datn<span class="sc">$</span>NH<span class="ot">=</span><span class="fu">as.numeric</span>(datn<span class="sc">$</span>NH)</span>
+<span id="cb233-6"><a href="回归.html#cb233-6" tabindex="-1"></a>dat<span class="ot">=</span><span class="fu">scale</span>(datn)</span>
+<span id="cb233-7"><a href="回归.html#cb233-7" tabindex="-1"></a>X <span class="ot">&lt;-</span> dat[,<span class="sc">-</span><span class="dv">1</span>] <span class="co">#对原始数据进行标准化处理</span></span>
+<span id="cb233-8"><a href="回归.html#cb233-8" tabindex="-1"></a>pr.out <span class="ot">&lt;-</span> <span class="fu">prcomp</span>(X)</span>
+<span id="cb233-9"><a href="回归.html#cb233-9" tabindex="-1"></a><span class="fu">summary</span>(pr.out)</span></code></pre></div>
+</details>
+<pre><code>## Importance of components:
+##                          PC1   PC2   PC3    PC4    PC5
+## Standard deviation     1.644 1.415 0.945 0.8167 0.5646
+## Proportion of Variance 0.386 0.286 0.128 0.0953 0.0455
+## Cumulative Proportion  0.386 0.672 0.800 0.8950 0.9406
+##                           PC6    PC7
+## Standard deviation     0.4796 0.4314
+## Proportion of Variance 0.0328 0.0266
+## Cumulative Proportion  0.9734 1.0000</code></pre>
+<details class=chunk-details><summary class=chunk-summary><span class=chunk-summary-text>Code</span></summary>
+<div class="sourceCode" id="cb235"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb235-1"><a href="回归.html#cb235-1" tabindex="-1"></a>pr.var <span class="ot">&lt;-</span> pr.out<span class="sc">$</span>sdev<span class="sc">^</span><span class="dv">2</span> </span>
+<span id="cb235-2"><a href="回归.html#cb235-2" tabindex="-1"></a>pve <span class="ot">&lt;-</span> pr.var<span class="sc">/</span><span class="fu">sum</span>(pr.var) </span>
+<span id="cb235-3"><a href="回归.html#cb235-3" tabindex="-1"></a><span class="fu">cumsum</span>(pve)</span></code></pre></div>
+</details>
+<pre><code>## [1] 0.3861 0.6722 0.7998 0.8950 0.9406 0.9734 1.0000</code></pre>
+<details class=chunk-details><summary class=chunk-summary><span class=chunk-summary-text>Code</span></summary>
+<div class="sourceCode" id="cb237"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb237-1"><a href="回归.html#cb237-1" tabindex="-1"></a><span class="fu">par</span>(<span class="at">mfrow =</span> <span class="fu">c</span>(<span class="dv">1</span>, <span class="dv">2</span>))</span>
+<span id="cb237-2"><a href="回归.html#cb237-2" tabindex="-1"></a><span class="fu">plot</span>(pve, <span class="at">xlab =</span> <span class="st">&quot;Principal Component&quot;</span>, <span class="at">ylab =</span> <span class="st">&quot;Proportion of</span></span>
+<span id="cb237-3"><a href="回归.html#cb237-3" tabindex="-1"></a><span class="st">  Variance Explained&quot;</span>, <span class="at">ylim =</span> <span class="fu">c</span>(<span class="dv">0</span>, <span class="dv">1</span>), <span class="at">type =</span> <span class="st">&quot;b&quot;</span>)</span>
+<span id="cb237-4"><a href="回归.html#cb237-4" tabindex="-1"></a><span class="fu">plot</span>(<span class="fu">cumsum</span>(pve), <span class="at">xlab =</span> <span class="st">&quot;Principal Component&quot;</span>, <span class="at">ylab =</span> <span class="st">&quot;Cumulative Proportion of Variance Explained&quot;</span>, <span class="at">ylim =</span> <span class="fu">c</span>(<span class="dv">0</span>, <span class="dv">1</span>), <span class="at">type =</span> <span class="st">&quot;b&quot;</span>)</span></code></pre></div>
+</details>
+<p><img src="bookdown_files/figure-html/unnamed-chunk-95-1.png" width="480" /></p>
+<details class=chunk-details><summary class=chunk-summary><span class=chunk-summary-text>Code</span></summary>
+<div class="sourceCode" id="cb238"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb238-1"><a href="回归.html#cb238-1" tabindex="-1"></a>pca<span class="ot">=</span>pr.out<span class="sc">$</span>rotation <span class="sc">%*%</span> <span class="fu">diag</span>(pr.out<span class="sc">$</span>sdev)<span class="co">#factor loadings</span></span>
+<span id="cb238-2"><a href="回归.html#cb238-2" tabindex="-1"></a>Score<span class="ot">=</span>pr.out<span class="sc">$</span>x</span></code></pre></div>
+</details>
+<details class=chunk-details><summary class=chunk-summary><span class=chunk-summary-text>Code</span></summary>
+<div class="sourceCode" id="cb239"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb239-1"><a href="回归.html#cb239-1" tabindex="-1"></a><span class="do">##载荷可视化</span></span>
+<span id="cb239-2"><a href="回归.html#cb239-2" tabindex="-1"></a><span class="fu">melt</span>(pca)<span class="sc">%&gt;%</span> </span>
+<span id="cb239-3"><a href="回归.html#cb239-3" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="at">mapping =</span> <span class="fu">aes</span>(<span class="at">x =</span>Var2 , <span class="at">y =</span> Var1, <span class="at">fill =</span> value)) <span class="sc">+</span> </span>
+<span id="cb239-4"><a href="回归.html#cb239-4" tabindex="-1"></a>  <span class="fu">geom_tile</span>() <span class="sc">+</span> <span class="fu">scale_fill_gradient2</span>(<span class="at">mid=</span><span class="st">&quot;white&quot;</span>,<span class="at">low =</span> <span class="st">&#39;blue&#39;</span>, <span class="at">high =</span> <span class="st">&#39;red&#39;</span>) <span class="sc">+</span> </span>
+<span id="cb239-5"><a href="回归.html#cb239-5" tabindex="-1"></a>  <span class="fu">xlab</span>(<span class="st">&#39;components&#39;</span>)<span class="sc">+</span><span class="fu">ylab</span>(<span class="st">&#39;Var&#39;</span>)</span></code></pre></div>
+</details>
+<p><img src="bookdown_files/figure-html/unnamed-chunk-96-1.png" width="480" /></p>
+<details class=chunk-details><summary class=chunk-summary><span class=chunk-summary-text>Code</span></summary>
+<div class="sourceCode" id="cb240"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb240-1"><a href="回归.html#cb240-1" tabindex="-1"></a>pcd_dat<span class="ot">=</span><span class="fu">cbind</span>(<span class="at">y=</span>dat[,<span class="dv">1</span>],Score[,<span class="dv">1</span><span class="sc">:</span><span class="dv">3</span>])</span>
+<span id="cb240-2"><a href="回归.html#cb240-2" tabindex="-1"></a>pcd_dat<span class="ot">=</span><span class="fu">as.data.frame</span>(pcd_dat)</span>
+<span id="cb240-3"><a href="回归.html#cb240-3" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">123</span>)</span>
+<span id="cb240-4"><a href="回归.html#cb240-4" tabindex="-1"></a>ind<span class="ot">=</span><span class="fu">sample</span>(<span class="dv">1</span><span class="sc">:</span><span class="fu">nrow</span>(dat),<span class="fl">0.7</span><span class="sc">*</span><span class="fu">nrow</span>(dat))</span>
+<span id="cb240-5"><a href="回归.html#cb240-5" tabindex="-1"></a>train<span class="ot">=</span>pcd_dat[ind,]</span>
+<span id="cb240-6"><a href="回归.html#cb240-6" tabindex="-1"></a>test<span class="ot">=</span>pcd_dat[<span class="sc">-</span>ind,]</span>
+<span id="cb240-7"><a href="回归.html#cb240-7" tabindex="-1"></a>modpca<span class="ot">=</span><span class="fu">lm</span>(y<span class="sc">~</span>.,train)</span>
+<span id="cb240-8"><a href="回归.html#cb240-8" tabindex="-1"></a><span class="do">## 对训练数据的拟合程度R2</span></span>
+<span id="cb240-9"><a href="回归.html#cb240-9" tabindex="-1"></a><span class="fu">summary</span>(modpca)</span></code></pre></div>
+</details>
+<pre><code>## 
+## Call:
+## lm(formula = y ~ ., data = train)
+## 
+## Residuals:
+##     Min      1Q  Median      3Q     Max 
+## -2.4387 -0.3243  0.0846  0.3825  1.5888 
+## 
+## Coefficients:
+##             Estimate Std. Error t value Pr(&gt;|t|)    
+## (Intercept)  -0.0015     0.0594   -0.03    0.980    
+## PC1          -0.3388     0.0364   -9.31  1.2e-15 ***
+## PC2           0.4209     0.0445    9.46  5.4e-16 ***
+## PC3          -0.1892     0.0623   -3.04    0.003 ** 
+## ---
+## Signif. codes:  
+## 0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1
+## 
+## Residual standard error: 0.64 on 113 degrees of freedom
+## Multiple R-squared:  0.604,  Adjusted R-squared:  0.594 
+## F-statistic: 57.5 on 3 and 113 DF,  p-value: &lt;2e-16</code></pre>
+<details class=chunk-details><summary class=chunk-summary><span class=chunk-summary-text>Code</span></summary>
+<div class="sourceCode" id="cb242"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb242-1"><a href="回归.html#cb242-1" tabindex="-1"></a><span class="co">#用于还原数据</span></span>
+<span id="cb242-2"><a href="回归.html#cb242-2" tabindex="-1"></a>sdd<span class="ot">=</span><span class="fu">as.vector</span>(<span class="fu">sapply</span>(datn,sd))</span>
+<span id="cb242-3"><a href="回归.html#cb242-3" tabindex="-1"></a>mean<span class="ot">=</span><span class="fu">as.vector</span>(<span class="fu">sapply</span>(datn,mean))</span>
+<span id="cb242-4"><a href="回归.html#cb242-4" tabindex="-1"></a><span class="fu">coef</span>(modpca)</span></code></pre></div>
+</details>
+<pre><code>## (Intercept)         PC1         PC2         PC3 
+##   -0.001503   -0.338799    0.420850   -0.189184</code></pre>
+<details class=chunk-details><summary class=chunk-summary><span class=chunk-summary-text>Code</span></summary>
+<div class="sourceCode" id="cb244"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb244-1"><a href="回归.html#cb244-1" tabindex="-1"></a><span class="fu">par</span>(<span class="at">mfrow=</span><span class="fu">c</span>(<span class="dv">2</span>,<span class="dv">2</span>))</span>
+<span id="cb244-2"><a href="回归.html#cb244-2" tabindex="-1"></a><span class="fu">plot</span>(modpca)</span></code></pre></div>
+</details>
+<p><img src="bookdown_files/figure-html/unnamed-chunk-97-1.png" width="480" /></p>
+<details class=chunk-details><summary class=chunk-summary><span class=chunk-summary-text>Code</span></summary>
+<div class="sourceCode" id="cb245"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb245-1"><a href="回归.html#cb245-1" tabindex="-1"></a><span class="fu">par</span>(<span class="at">mfrow=</span><span class="fu">c</span>(<span class="dv">1</span>,<span class="dv">1</span>))</span>
+<span id="cb245-2"><a href="回归.html#cb245-2" tabindex="-1"></a><span class="co">#预测</span></span>
+<span id="cb245-3"><a href="回归.html#cb245-3" tabindex="-1"></a><span class="fu">par</span>(<span class="at">mfrow=</span><span class="fu">c</span>(<span class="dv">1</span>,<span class="dv">2</span>))</span>
+<span id="cb245-4"><a href="回归.html#cb245-4" tabindex="-1"></a>pre1<span class="ot">=</span><span class="fu">predict</span>(modpca,test)</span>
+<span id="cb245-5"><a href="回归.html#cb245-5" tabindex="-1"></a><span class="fu">plot</span>(<span class="dv">1</span><span class="sc">:</span><span class="fu">nrow</span>(test),pre1,<span class="at">type=</span><span class="st">&#39;l&#39;</span>)</span>
+<span id="cb245-6"><a href="回归.html#cb245-6" tabindex="-1"></a><span class="fu">points</span>(<span class="dv">1</span><span class="sc">:</span><span class="fu">nrow</span>(test),pre1)</span>
+<span id="cb245-7"><a href="回归.html#cb245-7" tabindex="-1"></a><span class="fu">lines</span>(<span class="dv">1</span><span class="sc">:</span><span class="fu">nrow</span>(test),test<span class="sc">$</span>y,<span class="at">col=</span><span class="dv">2</span>)</span>
+<span id="cb245-8"><a href="回归.html#cb245-8" tabindex="-1"></a><span class="fu">points</span>(<span class="dv">1</span><span class="sc">:</span><span class="fu">nrow</span>(test),test<span class="sc">$</span>y,<span class="at">pch=</span><span class="dv">3</span>,<span class="at">col=</span><span class="dv">2</span>)</span>
+<span id="cb245-9"><a href="回归.html#cb245-9" tabindex="-1"></a></span>
+<span id="cb245-10"><a href="回归.html#cb245-10" tabindex="-1"></a><span class="fu">plot</span>(test<span class="sc">$</span>y,pre1)</span>
+<span id="cb245-11"><a href="回归.html#cb245-11" tabindex="-1"></a><span class="fu">abline</span>(<span class="dv">0</span>,<span class="dv">1</span>,<span class="at">col=</span><span class="dv">2</span>)</span></code></pre></div>
+</details>
+<p><img src="bookdown_files/figure-html/unnamed-chunk-97-2.png" width="480" /></p>
+<details class=chunk-details><summary class=chunk-summary><span class=chunk-summary-text>Code</span></summary>
+<div class="sourceCode" id="cb246"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb246-1"><a href="回归.html#cb246-1" tabindex="-1"></a><span class="fu">par</span>(<span class="at">mfrow=</span><span class="fu">c</span>(<span class="dv">1</span>,<span class="dv">1</span>))</span>
+<span id="cb246-2"><a href="回归.html#cb246-2" tabindex="-1"></a><span class="co">#预测残差平方和</span></span>
+<span id="cb246-3"><a href="回归.html#cb246-3" tabindex="-1"></a><span class="fu">sum</span>((pre1<span class="sc">-</span>test<span class="sc">$</span>y)<span class="sc">^</span><span class="dv">2</span>)</span></code></pre></div>
+</details>
+<pre><code>## [1] 30.27</code></pre>
+<details class=chunk-details><summary class=chunk-summary><span class=chunk-summary-text>Code</span></summary>
+<div class="sourceCode" id="cb248"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb248-1"><a href="回归.html#cb248-1" tabindex="-1"></a><span class="co"># RMSE</span></span>
+<span id="cb248-2"><a href="回归.html#cb248-2" tabindex="-1"></a><span class="fu">sqrt</span>(<span class="fu">sum</span>((pre1<span class="sc">-</span>test<span class="sc">$</span>y)<span class="sc">^</span><span class="dv">2</span>)<span class="sc">/</span><span class="fu">nrow</span>(test))</span></code></pre></div>
+</details>
+<pre><code>## [1] 0.7703</code></pre>
+<details class=chunk-details><summary class=chunk-summary><span class=chunk-summary-text>Code</span></summary>
+<div class="sourceCode" id="cb250"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb250-1"><a href="回归.html#cb250-1" tabindex="-1"></a>coe1<span class="ot">=</span>pca[,<span class="dv">1</span><span class="sc">:</span><span class="dv">3</span>]<span class="sc">%*%</span><span class="fu">coef</span>(modpca)[<span class="sc">-</span><span class="dv">1</span>]<span class="co">#主成分还原</span></span>
+<span id="cb250-2"><a href="回归.html#cb250-2" tabindex="-1"></a></span>
+<span id="cb250-3"><a href="回归.html#cb250-3" tabindex="-1"></a><span class="co">#标准化还原</span></span>
+<span id="cb250-4"><a href="回归.html#cb250-4" tabindex="-1"></a>pcab<span class="ot">=</span>sdd[<span class="dv">1</span>]<span class="sc">*</span><span class="fu">as.vector</span>(coe1)<span class="sc">/</span>sdd[<span class="sc">-</span><span class="dv">1</span>]</span>
+<span id="cb250-5"><a href="回归.html#cb250-5" tabindex="-1"></a>pacb0<span class="ot">&lt;-</span><span class="fu">sum</span>(<span class="sc">-</span>sdd[<span class="dv">1</span>]<span class="sc">*</span>coe1<span class="sc">*</span>mean[<span class="sc">-</span><span class="dv">1</span>]<span class="sc">/</span>sdd[<span class="sc">-</span><span class="dv">1</span>])<span class="sc">+</span>mean[<span class="dv">1</span>]<span class="sc">+</span><span class="fu">coef</span>(modpca)[<span class="dv">1</span>]<span class="sc">*</span>sdd[<span class="dv">1</span>]</span>
+<span id="cb250-6"><a href="回归.html#cb250-6" tabindex="-1"></a><span class="fu">c</span>(pacb0,pcab)</span></code></pre></div>
+</details>
+<pre><code>## (Intercept)                                     
+##  -324.45790     1.59843    -0.01102     7.75341 
+##                                                 
+##     0.05608    -1.46149    41.60263     0.05822</code></pre>
+<details class=chunk-details><summary class=chunk-summary><span class=chunk-summary-text>Code</span></summary>
+<div class="sourceCode" id="cb252"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb252-1"><a href="回归.html#cb252-1" tabindex="-1"></a><span class="fu">sum</span>(datn[<span class="dv">1</span>,<span class="sc">-</span><span class="dv">1</span>]<span class="sc">*</span><span class="fu">c</span>(pcab))<span class="sc">+</span>pacb0</span></code></pre></div>
+</details>
+<pre><code>## (Intercept) 
+##       221.6</code></pre>
+<details class=chunk-details><summary class=chunk-summary><span class=chunk-summary-text>Code</span></summary>
+<div class="sourceCode" id="cb254"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb254-1"><a href="回归.html#cb254-1" tabindex="-1"></a><span class="co"># install.packages(&quot;pls&quot;)</span></span>
+<span id="cb254-2"><a href="回归.html#cb254-2" tabindex="-1"></a><span class="fu">library</span>(pls)</span>
+<span id="cb254-3"><a href="回归.html#cb254-3" tabindex="-1"></a>dat<span class="ot">=</span><span class="fu">as.data.frame</span>(dat)</span>
+<span id="cb254-4"><a href="回归.html#cb254-4" tabindex="-1"></a>train2<span class="ot">=</span>dat[ind,]</span>
+<span id="cb254-5"><a href="回归.html#cb254-5" tabindex="-1"></a>test2<span class="ot">=</span>dat[<span class="sc">-</span>ind,]</span>
+<span id="cb254-6"><a href="回归.html#cb254-6" tabindex="-1"></a>pls1 <span class="ot">&lt;-</span> <span class="fu">plsr</span>(scod<span class="sc">~</span>.,<span class="at">data=</span>train2,<span class="at">validation=</span><span class="st">&#39;LOO&#39;</span>,<span class="at">jackknife=</span><span class="cn">TRUE</span>,</span>
+<span id="cb254-7"><a href="回归.html#cb254-7" tabindex="-1"></a>             <span class="at">method=</span><span class="st">&#39;widekernelpls&#39;</span>)</span>
+<span id="cb254-8"><a href="回归.html#cb254-8" tabindex="-1"></a><span class="fu">summary</span>(pls1,<span class="at">what=</span><span class="st">&#39;all&#39;</span>) </span></code></pre></div>
+</details>
+<pre><code>## Data:    X dimension: 117 7 
+##  Y dimension: 117 1
+## Fit method: widekernelpls
+## Number of components considered: 7
+## 
+## VALIDATION: RMSEP
+## Cross-validated using 117 leave-one-out segments.
+##        (Intercept)  1 comps  2 comps  3 comps  4 comps
+## CV           1.009   0.6392   0.5881   0.5468   0.5361
+## adjCV        1.009   0.6391   0.5880   0.5467   0.5360
+##        5 comps  6 comps  7 comps
+## CV      0.5343   0.5373   0.5378
+## adjCV   0.5341   0.5372   0.5376
+## 
+## TRAINING: % variance explained
+##       1 comps  2 comps  3 comps  4 comps  5 comps
+## X       34.20    65.64    76.99    86.97    94.35
+## scod    61.72    68.49    73.72    74.91    75.22
+##       6 comps  7 comps
+## X       98.05   100.00
+## scod    75.22    75.22</code></pre>
+<details class=chunk-details><summary class=chunk-summary><span class=chunk-summary-text>Code</span></summary>
+<div class="sourceCode" id="cb256"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb256-1"><a href="回归.html#cb256-1" tabindex="-1"></a>pls3 <span class="ot">&lt;-</span> <span class="fu">plsr</span>(scod<span class="sc">~</span>.,<span class="at">data=</span>dat,<span class="at">ncomp=</span><span class="dv">5</span>,<span class="at">validation=</span><span class="st">&#39;LOO&#39;</span>,<span class="at">jackknife=</span><span class="cn">TRUE</span>)</span>
+<span id="cb256-2"><a href="回归.html#cb256-2" tabindex="-1"></a><span class="fu">coef</span>(pls3)</span></code></pre></div>
+</details>
+<pre><code>## , , 5 comps
+## 
+##          scod
+## NH    0.42900
+## flow  0.10748
+## po4   0.46516
+## ss    0.06142
+## temp -0.41347
+## Ph   -0.20848
+## cond  0.28241</code></pre>
+<details class=chunk-details><summary class=chunk-summary><span class=chunk-summary-text>Code</span></summary>
+<div class="sourceCode" id="cb258"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb258-1"><a href="回归.html#cb258-1" tabindex="-1"></a><span class="fu">par</span>(<span class="at">mfrow =</span> <span class="fu">c</span>(<span class="dv">1</span>, <span class="dv">2</span>))</span>
+<span id="cb258-2"><a href="回归.html#cb258-2" tabindex="-1"></a><span class="fu">validationplot</span>(pls1, <span class="at">val.type =</span> <span class="st">&#39;MSEP&#39;</span>)</span>
+<span id="cb258-3"><a href="回归.html#cb258-3" tabindex="-1"></a><span class="fu">validationplot</span>(pls1, <span class="at">val.type =</span> <span class="st">&#39;R2&#39;</span>)</span></code></pre></div>
+</details>
+<p><img src="bookdown_files/figure-html/unnamed-chunk-98-1.png" width="480" /></p>
+<details class=chunk-details><summary class=chunk-summary><span class=chunk-summary-text>Code</span></summary>
+<div class="sourceCode" id="cb259"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb259-1"><a href="回归.html#cb259-1" tabindex="-1"></a>pre<span class="ot">=</span><span class="fu">predict</span>(pls3,test2)</span>
+<span id="cb259-2"><a href="回归.html#cb259-2" tabindex="-1"></a><span class="fu">summary</span>(pls3)</span></code></pre></div>
+</details>
+<pre><code>## Data:    X dimension: 168 7 
+##  Y dimension: 168 1
+## Fit method: kernelpls
+## Number of components considered: 5
+## 
+## VALIDATION: RMSEP
+## Cross-validated using 168 leave-one-out segments.
+##        (Intercept)  1 comps  2 comps  3 comps  4 comps
+## CV           1.003    0.672   0.6310   0.6027   0.5918
+## adjCV        1.003    0.672   0.6309   0.6027   0.5917
+##        5 comps
+## CV      0.5900
+## adjCV   0.5899
+## 
+## TRAINING: % variance explained
+##       1 comps  2 comps  3 comps  4 comps  5 comps
+## X       34.14    60.21    76.09    82.90    92.77
+## scod    56.95    63.08    66.90    68.76    68.92</code></pre>
+<details class=chunk-details><summary class=chunk-summary><span class=chunk-summary-text>Code</span></summary>
+<div class="sourceCode" id="cb261"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb261-1"><a href="回归.html#cb261-1" tabindex="-1"></a>pre[,,<span class="dv">5</span>]</span></code></pre></div>
+</details>
+<pre><code>##         1         2         3         9        10 
+##  1.789077  1.847178  1.439600  0.783259  0.822152 
+##        15        18        19        20        28 
+##  0.504052  0.287674  0.208961  0.661821  0.120597 
+##        29        33        45        48        49 
+## -0.330300 -0.003067 -0.420008 -0.604028  0.178544 
+##        56        57        58        59        61 
+##  2.221033  1.837313  0.356347  0.503241  0.297697 
+##        66        70        73        77        80 
+##  0.405937  0.286347 -0.220258  0.438075  0.323224 
+##        82        85        88        93        96 
+##  0.140048 -0.287251 -0.652196 -0.473903 -0.951519 
+##        98       100       104       105       110 
+## -0.158494  0.592749  0.499284  0.131835 -0.271080 
+##       112       113       119       120       122 
+##  0.216270  0.189855  0.223635  0.373624 -0.682756 
+##       125       127       128       130       136 
+## -1.701492 -1.265795 -1.431167 -1.898188 -1.584910 
+##       142       147       148       150       155 
+## -1.685985  0.520509  0.784047  0.710252  0.069777 
+##       162 
+##  0.109711</code></pre>
+<details class=chunk-details><summary class=chunk-summary><span class=chunk-summary-text>Code</span></summary>
+<div class="sourceCode" id="cb263"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb263-1"><a href="回归.html#cb263-1" tabindex="-1"></a><span class="fu">par</span>(<span class="at">mfrow=</span><span class="fu">c</span>(<span class="dv">1</span>,<span class="dv">2</span>))</span>
+<span id="cb263-2"><a href="回归.html#cb263-2" tabindex="-1"></a><span class="fu">plot</span>(<span class="dv">1</span><span class="sc">:</span><span class="fu">nrow</span>(test),pre[,,<span class="dv">5</span>],<span class="at">type=</span><span class="st">&#39;l&#39;</span>)</span>
+<span id="cb263-3"><a href="回归.html#cb263-3" tabindex="-1"></a><span class="fu">points</span>(<span class="dv">1</span><span class="sc">:</span><span class="fu">nrow</span>(test),pre[,,<span class="dv">5</span>])</span>
+<span id="cb263-4"><a href="回归.html#cb263-4" tabindex="-1"></a><span class="fu">lines</span>(<span class="dv">1</span><span class="sc">:</span><span class="fu">nrow</span>(test),test<span class="sc">$</span>y,<span class="at">col=</span><span class="dv">2</span>)</span>
+<span id="cb263-5"><a href="回归.html#cb263-5" tabindex="-1"></a><span class="fu">points</span>(<span class="dv">1</span><span class="sc">:</span><span class="fu">nrow</span>(test),test<span class="sc">$</span>y,<span class="at">pch=</span><span class="dv">3</span>,<span class="at">col=</span><span class="dv">2</span>)</span>
+<span id="cb263-6"><a href="回归.html#cb263-6" tabindex="-1"></a><span class="fu">plot</span>(test<span class="sc">$</span>y,pre[,,<span class="dv">5</span>])</span>
+<span id="cb263-7"><a href="回归.html#cb263-7" tabindex="-1"></a><span class="fu">abline</span>(<span class="dv">0</span>,<span class="dv">1</span>,<span class="at">col=</span><span class="dv">2</span>)</span></code></pre></div>
+</details>
+<p><img src="bookdown_files/figure-html/unnamed-chunk-98-2.png" width="480" /></p>
+<details class=chunk-details><summary class=chunk-summary><span class=chunk-summary-text>Code</span></summary>
+<div class="sourceCode" id="cb264"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb264-1"><a href="回归.html#cb264-1" tabindex="-1"></a><span class="fu">par</span>(<span class="at">mfrow=</span><span class="fu">c</span>(<span class="dv">1</span>,<span class="dv">1</span>))</span>
+<span id="cb264-2"><a href="回归.html#cb264-2" tabindex="-1"></a><span class="do">## 对预测数据的预测能力</span></span>
+<span id="cb264-3"><a href="回归.html#cb264-3" tabindex="-1"></a><span class="co"># 残差平方和</span></span>
+<span id="cb264-4"><a href="回归.html#cb264-4" tabindex="-1"></a><span class="fu">sum</span>((pre[,,<span class="dv">5</span>]<span class="sc">-</span>test2<span class="sc">$</span>scod)<span class="sc">^</span><span class="dv">2</span>)</span></code></pre></div>
+</details>
+<pre><code>## [1] 21.97</code></pre>
+<details class=chunk-details><summary class=chunk-summary><span class=chunk-summary-text>Code</span></summary>
+<div class="sourceCode" id="cb266"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb266-1"><a href="回归.html#cb266-1" tabindex="-1"></a><span class="co"># RMSE</span></span>
+<span id="cb266-2"><a href="回归.html#cb266-2" tabindex="-1"></a><span class="fu">sqrt</span>(<span class="fu">sum</span>((pre[,,<span class="dv">5</span>]<span class="sc">-</span>test2<span class="sc">$</span>scod)<span class="sc">^</span><span class="dv">2</span>)<span class="sc">/</span><span class="fu">nrow</span>(test2))</span></code></pre></div>
+</details>
+<pre><code>## [1] 0.6563</code></pre>
+<details class=chunk-details><summary class=chunk-summary><span class=chunk-summary-text>Code</span></summary>
+<div class="sourceCode" id="cb268"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb268-1"><a href="回归.html#cb268-1" tabindex="-1"></a><span class="co"># 系数还原</span></span>
+<span id="cb268-2"><a href="回归.html#cb268-2" tabindex="-1"></a>coe<span class="ot">=</span><span class="fu">coef</span>(pls3)</span>
+<span id="cb268-3"><a href="回归.html#cb268-3" tabindex="-1"></a>coe<span class="ot">=</span><span class="fu">as.vector</span>(coe)</span>
+<span id="cb268-4"><a href="回归.html#cb268-4" tabindex="-1"></a>b<span class="ot">=</span>sdd[<span class="dv">1</span>]<span class="sc">*</span><span class="fu">as.vector</span>(coe)<span class="sc">/</span>sdd[<span class="sc">-</span><span class="dv">1</span>]</span>
+<span id="cb268-5"><a href="回归.html#cb268-5" tabindex="-1"></a>b0<span class="ot">&lt;-</span><span class="fu">sum</span>(<span class="sc">-</span>sdd[<span class="dv">1</span>]<span class="sc">*</span>coe<span class="sc">*</span>mean[<span class="sc">-</span><span class="dv">1</span>]<span class="sc">/</span>sdd[<span class="sc">-</span><span class="dv">1</span>])<span class="sc">+</span>mean[<span class="dv">1</span>]</span>
+<span id="cb268-6"><a href="回归.html#cb268-6" tabindex="-1"></a><span class="fu">c</span>(b0,b)</span></code></pre></div>
+</details>
+<pre><code>## [1] 508.325179   1.409096   0.005195  13.170441
+## [5]   0.011127 -15.633216 -39.297392   0.038004</code></pre>
+<details class=chunk-details><summary class=chunk-summary><span class=chunk-summary-text>Code</span></summary>
+<div class="sourceCode" id="cb270"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb270-1"><a href="回归.html#cb270-1" tabindex="-1"></a><span class="co">#验证</span></span>
+<span id="cb270-2"><a href="回归.html#cb270-2" tabindex="-1"></a><span class="fu">sum</span>(datn[<span class="dv">1</span>,<span class="sc">-</span><span class="dv">1</span>]<span class="sc">*</span><span class="fu">c</span>(b))<span class="sc">+</span>b0</span></code></pre></div>
+</details>
+<pre><code>## [1] 212.7</code></pre>
+<details class=chunk-details><summary class=chunk-summary><span class=chunk-summary-text>Code</span></summary>
+<div class="sourceCode" id="cb272"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb272-1"><a href="回归.html#cb272-1" tabindex="-1"></a>datn[<span class="dv">1</span>,<span class="dv">1</span>]</span></code></pre></div>
+</details>
+<pre><code>## # A tibble: 1 × 1
+##    scod
+##   &lt;dbl&gt;
+## 1   212</code></pre>
+<details class=chunk-details><summary class=chunk-summary><span class=chunk-summary-text>Code</span></summary>
+<div class="sourceCode" id="cb274"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb274-1"><a href="回归.html#cb274-1" tabindex="-1"></a><span class="do">## 对训练数据的拟合程度</span></span>
+<span id="cb274-2"><a href="回归.html#cb274-2" tabindex="-1"></a>SST<span class="ot">=</span><span class="fu">sum</span>((train2<span class="sc">$</span>scod<span class="sc">-</span><span class="fu">mean</span>(train2<span class="sc">$</span>scod))<span class="sc">^</span><span class="dv">2</span>)</span>
+<span id="cb274-3"><a href="回归.html#cb274-3" tabindex="-1"></a>SSE<span class="ot">=</span><span class="fu">sum</span>((pls3<span class="sc">$</span>residuals[,,<span class="dv">5</span>])<span class="sc">^</span><span class="dv">2</span>)</span>
+<span id="cb274-4"><a href="回归.html#cb274-4" tabindex="-1"></a>(SST<span class="sc">-</span>SSE)<span class="sc">/</span>SST</span></code></pre></div>
+</details>
+<pre><code>## [1] 0.5569</code></pre>
+
+</div>
+</div>
+</div>
+
+
+
+            </section>
+
+          </div>
+        </div>
+      </div>
+<a href="聚类.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="sound.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+    </div>
+  </div>
+<script src="libs/gitbook/js/app.min.js"></script>
+<script src="libs/gitbook/js/clipboard.min.js"></script>
+<script src="libs/gitbook/js/plugin-search.js"></script>
+<script src="libs/gitbook/js/plugin-sharing.js"></script>
+<script src="libs/gitbook/js/plugin-fontsettings.js"></script>
+<script src="libs/gitbook/js/plugin-bookdown.js"></script>
+<script src="libs/gitbook/js/jquery.highlight.js"></script>
+<script src="libs/gitbook/js/plugin-clipboard.js"></script>
+<script>
+gitbook.require(["gitbook"], function(gitbook) {
+gitbook.start({
+"sharing": {
+"github": true,
+"facebook": true,
+"twitter": true,
+"linkedin": false,
+"weibo": false,
+"instapaper": false,
+"vk": false,
+"whatsapp": false,
+"all": ["facebook", "twitter", "linkedin", "weibo", "instapaper"]
+},
+"fontsettings": {
+"theme": "white",
+"family": "sans",
+"size": 2
+},
+"edit": {
+"link": "https://github.com/yihui/bookdown-chinese/edit/master/10-回归.Rmd",
+"text": "编辑"
+},
+"history": {
+"link": null,
+"text": null
+},
+"view": {
+"link": null,
+"text": null
+},
+"download": ["bookdown.pdf", "bookdown.epub"],
+"search": {
+"engine": "fuse",
+"options": null
+},
+"toc": {
+"collapse": "section",
+"scroll_highlight": true
+}
+});
+});
+</script>
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    var src = "true";
+    if (src === "" || src === "true") src = "https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.9/latest.js?config=TeX-MML-AM_CHTML";
+    if (location.protocol !== "file:")
+      if (/^https?:/.test(src))
+        src = src.replace(/^https?:/, '');
+    script.src = src;
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+</body>
+
+</html>

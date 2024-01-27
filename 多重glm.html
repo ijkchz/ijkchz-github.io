@@ -1,0 +1,579 @@
+<!DOCTYPE html>
+<html lang="" xml:lang="">
+<head>
+
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <title>第 6 章 多重glm | 记录R学习</title>
+  <meta name="description" content="日常记录数据" />
+  <meta name="generator" content="bookdown 0.37 and GitBook 2.6.7" />
+
+  <meta property="og:title" content="第 6 章 多重glm | 记录R学习" />
+  <meta property="og:type" content="book" />
+  <meta property="og:image" content="/www/lh_2.png" />
+  <meta property="og:description" content="日常记录数据" />
+  <meta name="github-repo" content="ijkchz/book.git" />
+
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:title" content="第 6 章 多重glm | 记录R学习" />
+  
+  <meta name="twitter:description" content="日常记录数据" />
+  <meta name="twitter:image" content="/www/lh_2.png" />
+
+<meta name="author" content="chz" />
+
+
+<meta name="date" content="2024-01-27" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+  
+  <link rel="shortcut icon" href="www/lh_2.png" type="image/x-icon" />
+<link rel="prev" href="ab-test.html"/>
+<link rel="next" href="sound.html"/>
+<script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/fuse.js@6.4.6/dist/fuse.min.js"></script>
+<link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-bookdown.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-highlight.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-search.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-fontsettings.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-clipboard.css" rel="stylesheet" />
+
+
+
+
+
+
+
+
+<link href="libs/codefolding-lua-1.1/codefolding-lua.css" rel="stylesheet" />
+<link href="libs/anchor-sections-1.1.0/anchor-sections.css" rel="stylesheet" />
+<link href="libs/anchor-sections-1.1.0/anchor-sections-hash.css" rel="stylesheet" />
+<script src="libs/anchor-sections-1.1.0/anchor-sections.js"></script>
+
+
+<style type="text/css">
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #7d9029; } /* Attribute */
+code span.bn { color: #40a070; } /* BaseN */
+code span.bu { color: #008000; } /* BuiltIn */
+code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4070a0; } /* Char */
+code span.cn { color: #880000; } /* Constant */
+code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code span.dt { color: #902000; } /* DataType */
+code span.dv { color: #40a070; } /* DecVal */
+code span.er { color: #ff0000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #40a070; } /* Float */
+code span.fu { color: #06287e; } /* Function */
+code span.im { color: #008000; font-weight: bold; } /* Import */
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code span.op { color: #666666; } /* Operator */
+code span.ot { color: #007020; } /* Other */
+code span.pp { color: #bc7a00; } /* Preprocessor */
+code span.sc { color: #4070a0; } /* SpecialChar */
+code span.ss { color: #bb6688; } /* SpecialString */
+code span.st { color: #4070a0; } /* String */
+code span.va { color: #19177c; } /* Variable */
+code span.vs { color: #4070a0; } /* VerbatimString */
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+</style>
+
+<style type="text/css">
+  
+  div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+</style>
+
+<link rel="stylesheet" href="css/style.css" type="text/css" />
+</head>
+
+<body>
+
+
+
+  <div class="book without-animation with-summary font-size-2 font-family-1" data-basepath=".">
+
+    <div class="book-summary">
+      <nav role="navigation">
+
+<ul class="summary">
+<li><a href="./">杂乱的干货</a></li>
+
+<li class="divider"></li>
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i>前言</a>
+<ul>
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html#致谢"><i class="fa fa-check"></i>致谢</a></li>
+</ul></li>
+<li class="chapter" data-level="" data-path="author.html"><a href="author.html"><i class="fa fa-check"></i>作者简介</a></li>
+<li class="chapter" data-level="1" data-path="plot.html"><a href="plot.html"><i class="fa fa-check"></i><b>1</b> Plots</a>
+<ul>
+<li class="chapter" data-level="1.1" data-path="plot.html"><a href="plot.html#箱线图小提琴图"><i class="fa fa-check"></i><b>1.1</b> 箱线图/小提琴图</a></li>
+<li class="chapter" data-level="1.2" data-path="plot.html"><a href="plot.html#柱状图"><i class="fa fa-check"></i><b>1.2</b> 柱状图</a></li>
+<li class="chapter" data-level="1.3" data-path="plot.html"><a href="plot.html#点线图"><i class="fa fa-check"></i><b>1.3</b> 点线图</a></li>
+<li class="chapter" data-level="1.4" data-path="plot.html"><a href="plot.html#树图"><i class="fa fa-check"></i><b>1.4</b> 树图</a></li>
+<li class="chapter" data-level="1.5" data-path="plot.html"><a href="plot.html#交互图"><i class="fa fa-check"></i><b>1.5</b> 交互图</a></li>
+<li class="chapter" data-level="1.6" data-path="plot.html"><a href="plot.html#自定义"><i class="fa fa-check"></i><b>1.6</b> 自定义</a></li>
+<li class="chapter" data-level="1.7" data-path="plot.html"><a href="plot.html#时间动态图"><i class="fa fa-check"></i><b>1.7</b> 时间动态图</a></li>
+<li class="chapter" data-level="1.8" data-path="plot.html"><a href="plot.html#d玫瑰"><i class="fa fa-check"></i><b>1.8</b> 3D玫瑰</a></li>
+<li class="chapter" data-level="1.9" data-path="plot.html"><a href="plot.html#流程图"><i class="fa fa-check"></i><b>1.9</b> 流程图</a></li>
+<li class="chapter" data-level="1.10" data-path="plot.html"><a href="plot.html#地图"><i class="fa fa-check"></i><b>1.10</b> 地图</a>
+<ul>
+<li class="chapter" data-level="1.10.1" data-path="plot.html"><a href="plot.html#天心区"><i class="fa fa-check"></i><b>1.10.1</b> 天心区</a></li>
+<li class="chapter" data-level="1.10.2" data-path="plot.html"><a href="plot.html#北京"><i class="fa fa-check"></i><b>1.10.2</b> 北京</a></li>
+<li class="chapter" data-level="1.10.3" data-path="plot.html"><a href="plot.html#省区地图"><i class="fa fa-check"></i><b>1.10.3</b> 省区地图</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="2" data-path="tab.html"><a href="tab.html"><i class="fa fa-check"></i><b>2</b> table</a>
+<ul>
+<li class="chapter" data-level="2.1" data-path="tab.html"><a href="tab.html#gt表"><i class="fa fa-check"></i><b>2.1</b> gt表</a>
+<ul>
+<li class="chapter" data-level="2.1.1" data-path="tab.html"><a href="tab.html#表格1"><i class="fa fa-check"></i><b>2.1.1</b> 表格1</a></li>
+<li class="chapter" data-level="2.1.2" data-path="tab.html"><a href="tab.html#表格2"><i class="fa fa-check"></i><b>2.1.2</b> 表格2</a></li>
+<li class="chapter" data-level="2.1.3" data-path="tab.html"><a href="tab.html#颜色表格"><i class="fa fa-check"></i><b>2.1.3</b> 颜色表格</a></li>
+<li class="chapter" data-level="2.1.4" data-path="tab.html"><a href="tab.html#增加图像"><i class="fa fa-check"></i><b>2.1.4</b> 增加图像</a></li>
+<li class="chapter" data-level="2.1.5" data-path="tab.html"><a href="tab.html#自定义图片"><i class="fa fa-check"></i><b>2.1.5</b> 自定义图片</a></li>
+<li class="chapter" data-level="2.1.6" data-path="tab.html"><a href="tab.html#美元"><i class="fa fa-check"></i><b>2.1.6</b> 美元</a></li>
+</ul></li>
+<li class="chapter" data-level="2.2" data-path="tab.html"><a href="tab.html#flextable"><i class="fa fa-check"></i><b>2.2</b> flextable</a></li>
+<li class="chapter" data-level="2.3" data-path="tab.html"><a href="tab.html#stargazer"><i class="fa fa-check"></i><b>2.3</b> stargazer</a></li>
+<li class="chapter" data-level="2.4" data-path="tab.html"><a href="tab.html#可查询表格"><i class="fa fa-check"></i><b>2.4</b> 可查询表格</a></li>
+</ul></li>
+<li class="chapter" data-level="3" data-path="数学.html"><a href="数学.html"><i class="fa fa-check"></i><b>3</b> 数学</a>
+<ul>
+<li class="chapter" data-level="3.1" data-path="数学.html"><a href="数学.html#距离最短"><i class="fa fa-check"></i><b>3.1</b> 距离最短</a></li>
+<li class="chapter" data-level="3.2" data-path="数学.html"><a href="数学.html#牛顿迭代"><i class="fa fa-check"></i><b>3.2</b> 牛顿迭代</a></li>
+<li class="chapter" data-level="3.3" data-path="数学.html"><a href="数学.html#微分"><i class="fa fa-check"></i><b>3.3</b> 微分</a>
+<ul>
+<li class="chapter" data-level="3.3.1" data-path="数学.html"><a href="数学.html#高次微分"><i class="fa fa-check"></i><b>3.3.1</b> 高次微分</a></li>
+<li class="chapter" data-level="3.3.2" data-path="数学.html"><a href="数学.html#微分方程组"><i class="fa fa-check"></i><b>3.3.2</b> 微分方程组</a></li>
+</ul></li>
+<li class="chapter" data-level="3.4" data-path="数学.html"><a href="数学.html#option"><i class="fa fa-check"></i><b>3.4</b> option</a>
+<ul>
+<li class="chapter" data-level="3.4.1" data-path="数学.html"><a href="数学.html#section"><i class="fa fa-check"></i><b>3.4.1</b> 1</a></li>
+<li class="chapter" data-level="3.4.2" data-path="数学.html"><a href="数学.html#极值黑塞矩阵"><i class="fa fa-check"></i><b>3.4.2</b> 极值黑塞矩阵</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="4" data-path="app.html"><a href="app.html"><i class="fa fa-check"></i><b>4</b> app</a></li>
+<li class="chapter" data-level="5" data-path="ab-test.html"><a href="ab-test.html"><i class="fa fa-check"></i><b>5</b> AB-test</a></li>
+<li class="chapter" data-level="6" data-path="多重glm.html"><a href="多重glm.html"><i class="fa fa-check"></i><b>6</b> 多重glm</a>
+<ul>
+<li class="chapter" data-level="6.1" data-path="多重glm.html"><a href="多重glm.html#multinomial-logit-model"><i class="fa fa-check"></i><b>6.1</b> 1.Multinomial Logit Model</a></li>
+<li class="chapter" data-level="6.2" data-path="多重glm.html"><a href="多重glm.html#模拟市场利润"><i class="fa fa-check"></i><b>6.2</b> 2.模拟市场利润</a>
+<ul>
+<li class="chapter" data-level="6.2.1" data-path="多重glm.html"><a href="多重glm.html#购买概率"><i class="fa fa-check"></i><b>6.2.1</b> 购买概率</a></li>
+<li class="chapter" data-level="6.2.2" data-path="多重glm.html"><a href="多重glm.html#模拟利润"><i class="fa fa-check"></i><b>6.2.2</b> 模拟利润</a></li>
+<li class="chapter" data-level="6.2.3" data-path="多重glm.html"><a href="多重glm.html#最佳价格定价"><i class="fa fa-check"></i><b>6.2.3</b> 最佳价格（定价）</a></li>
+<li class="chapter" data-level="6.2.4" data-path="多重glm.html"><a href="多重glm.html#模拟增加配件的价格变化"><i class="fa fa-check"></i><b>6.2.4</b> 模拟增加配件的价格变化</a></li>
+</ul></li>
+<li class="chapter" data-level="6.3" data-path="多重glm.html"><a href="多重glm.html#mixed-logit"><i class="fa fa-check"></i><b>6.3</b> 3.Mixed Logit</a>
+<ul>
+<li class="chapter" data-level="6.3.1" data-path="多重glm.html"><a href="多重glm.html#other-choice-models"><i class="fa fa-check"></i><b>6.3.1</b> Other Choice Models</a></li>
+</ul></li>
+</ul></li>
+<li class="appendix"><span><b>附录</b></span></li>
+<li class="chapter" data-level="A" data-path="sound.html"><a href="sound.html"><i class="fa fa-check"></i><b>A</b> 结尾</a>
+<ul>
+<li class="chapter" data-level="A.1" data-path="sound.html"><a href="sound.html#写过的部分课程"><i class="fa fa-check"></i><b>A.1</b> 写过的部分课程</a></li>
+<li class="chapter" data-level="A.2" data-path="sound.html"><a href="sound.html#赞助可怜"><i class="fa fa-check"></i><b>A.2</b> 赞助(可怜)</a></li>
+</ul></li>
+<li class="chapter" data-level="" data-path="references.html"><a href="references.html"><i class="fa fa-check"></i>参考文献</a></li>
+<li class="divider"></li>
+<li><a href="https://bookdown.org" target="blank">菜鸟著书by bookdown</a></li>
+
+</ul>
+
+      </nav>
+    </div>
+
+    <div class="book-body">
+      <div class="body-inner">
+        <div class="book-header" role="navigation">
+          <h1>
+            <i class="fa fa-circle-o-notch fa-spin"></i><a href="./">记录R学习</a>
+          </h1>
+        </div>
+
+        <div class="page-wrapper" tabindex="-1" role="main">
+          <div class="page-inner">
+
+            <section class="normal" id="section-">
+<div id="多重glm" class="section level1 hasAnchor" number="6">
+<h1><span class="header-section-number">第 6 章</span> 多重glm<a href="多重glm.html#多重glm" class="anchor-section" aria-label="Anchor link to header"></a></h1>
+<p>品牌和价格分析</p>
+<div class="float">
+<img src="www/p1.png" width="637" alt="问卷" />
+<div class="figcaption">问卷</div>
+</div>
+<div id="multinomial-logit-model" class="section level2 hasAnchor" number="6.1">
+<h2><span class="header-section-number">6.1</span> 1.Multinomial Logit Model<a href="多重glm.html#multinomial-logit-model" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>mlogit包使用一种称为dfidx的定制数据格式，这是一种增强的数据帧，其中包含主要用于识别选择场景、消费者和替代方案的索引。 使用mlogit包中的difidx()将数据帧转换为dfidx对象。idx参数指定数据的索引。索引有两层:第一级标识选择场景，可能还有消费者，第二级标识备选方案。在这里，我们只需要通知dfidx()函数每个索引的列名和选择变量的列名。</p>
+<details class=chunk-details><summary class=chunk-summary><span class=chunk-summary-text>Code</span></summary>
+<div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb2-1"><a href="多重glm.html#cb2-1" tabindex="-1"></a><span class="fu">library</span>(mlogit)</span>
+<span id="cb2-2"><a href="多重glm.html#cb2-2" tabindex="-1"></a><span class="fu">library</span>(ggplot2)</span>
+<span id="cb2-3"><a href="多重glm.html#cb2-3" tabindex="-1"></a>camera_dt<span class="ot">&lt;-</span><span class="fu">read.csv</span>(<span class="st">&quot;data/camera.csv&quot;</span>)</span>
+<span id="cb2-4"><a href="多重glm.html#cb2-4" tabindex="-1"></a><span class="fu">head</span>(camera_dt,<span class="dv">3</span>)</span></code></pre></div>
+</details>
+<pre><code>##   canon sony nikon panasonic pixels zoom video swivel wifi price choice
+## 1     0    0     1         0      0    1     0      1    0  0.79   TRUE
+## 2     1    0     0         0      1    1     0      1    1  2.29  FALSE
+## 3     0    0     0         1      0    0     0      0    1  1.29  FALSE
+##   consumer alt chid
+## 1        1   1    1
+## 2        1   2    1
+## 3        1   3    1</code></pre>
+<details class=chunk-details><summary class=chunk-summary><span class=chunk-summary-text>Code</span></summary>
+<div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb4-1"><a href="多重glm.html#cb4-1" tabindex="-1"></a>camera_idx <span class="ot">=</span> <span class="fu">dfidx</span>(</span>
+<span id="cb4-2"><a href="多重glm.html#cb4-2" tabindex="-1"></a>  <span class="fu">as.data.frame</span>(camera_dt),</span>
+<span id="cb4-3"><a href="多重glm.html#cb4-3" tabindex="-1"></a>  <span class="at">idx=</span><span class="fu">list</span>(<span class="fu">c</span>(<span class="st">&quot;chid&quot;</span>, <span class="st">&quot;consumer&quot;</span>), <span class="st">&quot;alt&quot;</span>),<span class="co">#识别用户和产品类型</span></span>
+<span id="cb4-4"><a href="多重glm.html#cb4-4" tabindex="-1"></a>  <span class="at">choice=</span><span class="st">&quot;choice&quot;</span>,<span class="co">#是否购买</span></span>
+<span id="cb4-5"><a href="多重glm.html#cb4-5" tabindex="-1"></a>  <span class="at">shape=</span><span class="st">&quot;long&quot;</span></span>
+<span id="cb4-6"><a href="多重glm.html#cb4-6" tabindex="-1"></a>)</span>
+<span id="cb4-7"><a href="多重glm.html#cb4-7" tabindex="-1"></a>attribute_names <span class="ot">=</span> <span class="fu">names</span>(camera_dt[<span class="dv">1</span><span class="sc">:</span><span class="dv">10</span>])</span>
+<span id="cb4-8"><a href="多重glm.html#cb4-8" tabindex="-1"></a>logit_formula <span class="ot">=</span> <span class="fu">as.formula</span>(<span class="fu">paste</span>(</span>
+<span id="cb4-9"><a href="多重glm.html#cb4-9" tabindex="-1"></a>  <span class="st">&quot;choice&quot;</span>,</span>
+<span id="cb4-10"><a href="多重glm.html#cb4-10" tabindex="-1"></a>  <span class="st">&quot;~&quot;</span>,</span>
+<span id="cb4-11"><a href="多重glm.html#cb4-11" tabindex="-1"></a>  <span class="fu">paste</span>(<span class="fu">c</span>(<span class="st">&quot;0&quot;</span>, attribute_names), <span class="at">collapse=</span><span class="st">&quot; + &quot;</span>)</span>
+<span id="cb4-12"><a href="多重glm.html#cb4-12" tabindex="-1"></a>))</span>
+<span id="cb4-13"><a href="多重glm.html#cb4-13" tabindex="-1"></a>logit <span class="ot">=</span> <span class="fu">mlogit</span>(logit_formula, camera_idx)</span>
+<span id="cb4-14"><a href="多重glm.html#cb4-14" tabindex="-1"></a><span class="fu">summary</span>(logit)</span></code></pre></div>
+</details>
+<pre><code>## 
+## Call:
+## mlogit(formula = choice ~ 0 + canon + sony + nikon + panasonic + 
+##     pixels + zoom + video + swivel + wifi + price, data = camera_idx, 
+##     method = &quot;nr&quot;)
+## 
+## Frequencies of alternatives:choice
+##       1       2       3       4       5 
+## 0.20708 0.17620 0.19484 0.16905 0.25282 
+## 
+## nr method
+## 5 iterations, 0h:0m:0s 
+## g&#39;(-H)^-1g = 0.0099 
+## successive function values within tolerance limits 
+## 
+## Coefficients :
+##            Estimate Std. Error  z-value  Pr(&gt;|z|)    
+## canon      0.465026   0.075967   6.1214 9.273e-10 ***
+## sony       0.238372   0.076693   3.1081  0.001883 ** 
+## nikon      0.311653   0.076591   4.0691 4.720e-05 ***
+## panasonic  0.022662   0.077852   0.2911  0.770986    
+## pixels     0.758258   0.042194  17.9706 &lt; 2.2e-16 ***
+## zoom       0.819351   0.041940  19.5363 &lt; 2.2e-16 ***
+## video      0.627884   0.040647  15.4472 &lt; 2.2e-16 ***
+## swivel     0.367104   0.040211   9.1294 &lt; 2.2e-16 ***
+## wifi       0.577804   0.041658  13.8703 &lt; 2.2e-16 ***
+## price     -1.485549   0.032467 -45.7551 &lt; 2.2e-16 ***
+## ---
+## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1
+## 
+## Log-Likelihood: -6503.7</code></pre>
+<details class=chunk-details><summary class=chunk-summary><span class=chunk-summary-text>Code</span></summary>
+<div class="sourceCode" id="cb6"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb6-1"><a href="多重glm.html#cb6-1" tabindex="-1"></a>beta<span class="ot">&lt;-</span><span class="fu">coef</span>(logit)</span>
+<span id="cb6-2"><a href="多重glm.html#cb6-2" tabindex="-1"></a>beta</span></code></pre></div>
+</details>
+<pre><code>##       canon        sony       nikon   panasonic      pixels        zoom 
+##  0.46502619  0.23837189  0.31165295  0.02266153  0.75825790  0.81935109 
+##       video      swivel        wifi       price 
+##  0.62788362  0.36710402  0.57780388 -1.48554945</code></pre>
+<details class=chunk-details><summary class=chunk-summary><span class=chunk-summary-text>Code</span></summary>
+<div class="sourceCode" id="cb8"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb8-1"><a href="多重glm.html#cb8-1" tabindex="-1"></a><span class="fu">with</span>(<span class="fu">as.list</span>(<span class="fu">coef</span>(logit)),<span class="sc">-</span>(nikon<span class="sc">-</span>sony)<span class="sc">/</span>price<span class="sc">*</span><span class="dv">100</span>)</span></code></pre></div>
+</details>
+<pre><code>## [1] 4.932926</code></pre>
+<p>尼康品牌溢价4.932926高于松下</p>
+</div>
+<div id="模拟市场利润" class="section level2 hasAnchor" number="6.2">
+<h2><span class="header-section-number">6.2</span> 2.模拟市场利润<a href="多重glm.html#模拟市场利润" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>4个品牌产品参数</p>
+<details class=chunk-details><summary class=chunk-summary><span class=chunk-summary-text>Code</span></summary>
+<div class="sourceCode" id="cb10"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb10-1"><a href="多重glm.html#cb10-1" tabindex="-1"></a>X<span class="ot">&lt;-</span><span class="fu">data.frame</span>(</span>
+<span id="cb10-2"><a href="多重glm.html#cb10-2" tabindex="-1"></a>  <span class="at">canon =</span><span class="fu">c</span>(<span class="dv">0</span>,<span class="dv">1</span>,<span class="dv">0</span>,<span class="dv">0</span>),</span>
+<span id="cb10-3"><a href="多重glm.html#cb10-3" tabindex="-1"></a>  <span class="at">sony =</span><span class="fu">c</span>(<span class="dv">0</span>,<span class="dv">0</span>,<span class="dv">1</span>,<span class="dv">0</span>),</span>
+<span id="cb10-4"><a href="多重glm.html#cb10-4" tabindex="-1"></a>  <span class="at">nikon =</span><span class="fu">c</span>(<span class="dv">1</span>,<span class="dv">0</span>,<span class="dv">0</span>,<span class="dv">0</span>),</span>
+<span id="cb10-5"><a href="多重glm.html#cb10-5" tabindex="-1"></a>  <span class="at">panasonic =</span><span class="fu">c</span>(<span class="dv">0</span>,<span class="dv">0</span>,<span class="dv">0</span>,<span class="dv">1</span>),</span>
+<span id="cb10-6"><a href="多重glm.html#cb10-6" tabindex="-1"></a>  <span class="at">pixels =</span><span class="fu">c</span>(<span class="dv">0</span>,<span class="dv">0</span>,<span class="dv">0</span>,<span class="dv">0</span>),</span>
+<span id="cb10-7"><a href="多重glm.html#cb10-7" tabindex="-1"></a>  <span class="at">zoom =</span><span class="fu">c</span>(<span class="dv">0</span>,<span class="dv">1</span>,<span class="dv">1</span>,<span class="dv">1</span>),</span>
+<span id="cb10-8"><a href="多重glm.html#cb10-8" tabindex="-1"></a>  <span class="at">video =</span><span class="fu">c</span>(<span class="dv">1</span>,<span class="dv">0</span>,<span class="dv">0</span>,<span class="dv">0</span>),</span>
+<span id="cb10-9"><a href="多重glm.html#cb10-9" tabindex="-1"></a>  <span class="at">swivel =</span><span class="fu">c</span>(<span class="dv">1</span>,<span class="dv">0</span>,<span class="dv">0</span>,<span class="dv">0</span>),</span>
+<span id="cb10-10"><a href="多重glm.html#cb10-10" tabindex="-1"></a>  <span class="at">wifi=</span><span class="fu">c</span>(<span class="dv">0</span>,<span class="dv">0</span>,<span class="dv">0</span>,<span class="dv">0</span>),</span>
+<span id="cb10-11"><a href="多重glm.html#cb10-11" tabindex="-1"></a>  <span class="at">price=</span><span class="fu">c</span>(<span class="dv">2</span>,<span class="fl">2.5</span>,<span class="dv">2</span>,<span class="dv">2</span>)</span>
+<span id="cb10-12"><a href="多重glm.html#cb10-12" tabindex="-1"></a>)</span></code></pre></div>
+</details>
+<div id="购买概率" class="section level3 hasAnchor" number="6.2.1">
+<h3><span class="header-section-number">6.2.1</span> 购买概率<a href="多重glm.html#购买概率" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<details class=chunk-details><summary class=chunk-summary><span class=chunk-summary-text>Code</span></summary>
+<div class="sourceCode" id="cb11"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb11-1"><a href="多重glm.html#cb11-1" tabindex="-1"></a>get_prob<span class="ot">=</span><span class="cf">function</span>(X,beta){</span>
+<span id="cb11-2"><a href="多重glm.html#cb11-2" tabindex="-1"></a>  ml<span class="ot">&lt;-</span><span class="fu">as.matrix</span>(X)<span class="sc">%*%</span><span class="fu">matrix</span>(beta,<span class="at">ncol=</span><span class="dv">1</span>)<span class="co">#Matrix multiplication</span></span>
+<span id="cb11-3"><a href="多重glm.html#cb11-3" tabindex="-1"></a>  p<span class="ot">&lt;-</span><span class="fu">exp</span>(ml)<span class="sc">/</span><span class="fu">sum</span>(<span class="fu">exp</span>(ml))<span class="co"># Equation 1 </span></span>
+<span id="cb11-4"><a href="多重glm.html#cb11-4" tabindex="-1"></a>  p<span class="co">#Export the prob of four products</span></span>
+<span id="cb11-5"><a href="多重glm.html#cb11-5" tabindex="-1"></a>}</span>
+<span id="cb11-6"><a href="多重glm.html#cb11-6" tabindex="-1"></a><span class="fu">get_prob</span>(X,beta)</span></code></pre></div>
+</details>
+<pre><code>##           [,1]
+## [1,] 0.3480283
+## [2,] 0.1619432
+## [3,] 0.2713383
+## [4,] 0.2186902</code></pre>
+</div>
+<div id="模拟利润" class="section level3 hasAnchor" number="6.2.2">
+<h3><span class="header-section-number">6.2.2</span> 模拟利润<a href="多重glm.html#模拟利润" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>mc：成本</p>
+<p>mkt_size：市场规模</p>
+<p>p：购买概率/市场份额</p>
+<details class=chunk-details><summary class=chunk-summary><span class=chunk-summary-text>Code</span></summary>
+<div class="sourceCode" id="cb13"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb13-1"><a href="多重glm.html#cb13-1" tabindex="-1"></a>get_profits<span class="ot">&lt;-</span><span class="cf">function</span>(X, beta, mc, mkt_size){</span>
+<span id="cb13-2"><a href="多重glm.html#cb13-2" tabindex="-1"></a>  p<span class="ot">&lt;-</span><span class="fu">get_prob</span>(X,beta)<span class="co">#Calculated probability</span></span>
+<span id="cb13-3"><a href="多重glm.html#cb13-3" tabindex="-1"></a>  profit<span class="ot">&lt;-</span>mkt_size<span class="sc">*</span>p<span class="sc">*</span>(X<span class="sc">$</span>price<span class="sc">-</span>mc)</span>
+<span id="cb13-4"><a href="多重glm.html#cb13-4" tabindex="-1"></a>  profit<span class="co">#Export the profits of four products</span></span>
+<span id="cb13-5"><a href="多重glm.html#cb13-5" tabindex="-1"></a>}</span>
+<span id="cb13-6"><a href="多重glm.html#cb13-6" tabindex="-1"></a><span class="fu">get_profits</span>(X, beta, <span class="fl">0.5</span>, <span class="dv">1000</span>)</span></code></pre></div>
+</details>
+<pre><code>##          [,1]
+## [1,] 522.0425
+## [2,] 323.8865
+## [3,] 407.0074
+## [4,] 328.0352</code></pre>
+</div>
+<div id="最佳价格定价" class="section level3 hasAnchor" number="6.2.3">
+<h3><span class="header-section-number">6.2.3</span> 最佳价格（定价）<a href="多重glm.html#最佳价格定价" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>计算第一个产品的最佳收益价格</p>
+<details class=chunk-details><summary class=chunk-summary><span class=chunk-summary-text>Code</span></summary>
+<div class="sourceCode" id="cb15"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb15-1"><a href="多重glm.html#cb15-1" tabindex="-1"></a>profit<span class="ot">&lt;-</span><span class="fu">c</span>()<span class="co">#save profit</span></span>
+<span id="cb15-2"><a href="多重glm.html#cb15-2" tabindex="-1"></a><span class="co">#Use cycles to calculate returns</span></span>
+<span id="cb15-3"><a href="多重glm.html#cb15-3" tabindex="-1"></a><span class="cf">for</span>(i <span class="cf">in</span> <span class="fu">seq</span>(<span class="fl">0.5</span>,<span class="dv">5</span>,<span class="fl">0.01</span>)){</span>
+<span id="cb15-4"><a href="多重glm.html#cb15-4" tabindex="-1"></a>  x<span class="ot">=</span>X </span>
+<span id="cb15-5"><a href="多重glm.html#cb15-5" tabindex="-1"></a>  x<span class="sc">$</span>price[<span class="dv">1</span>]<span class="ot">=</span>i<span class="co">#Change the price of selcet</span></span>
+<span id="cb15-6"><a href="多重glm.html#cb15-6" tabindex="-1"></a>  profit<span class="ot">&lt;-</span><span class="fu">append</span>(profit,<span class="fu">get_profits</span>(x,beta, <span class="fl">0.5</span>, <span class="dv">1000</span>)[<span class="dv">1</span>,<span class="dv">1</span>])<span class="co">#save Nikon&#39;s profits</span></span>
+<span id="cb15-7"><a href="多重glm.html#cb15-7" tabindex="-1"></a>}</span>
+<span id="cb15-8"><a href="多重glm.html#cb15-8" tabindex="-1"></a><span class="co"># profit</span></span>
+<span id="cb15-9"><a href="多重glm.html#cb15-9" tabindex="-1"></a>price<span class="ot">=</span><span class="fu">seq</span>(<span class="fl">0.5</span>,<span class="dv">5</span>,<span class="fl">0.01</span>)</span>
+<span id="cb15-10"><a href="多重glm.html#cb15-10" tabindex="-1"></a><span class="fu">ggplot</span>(<span class="fu">data.frame</span>(<span class="at">price=</span><span class="fu">seq</span>(<span class="fl">0.5</span>,<span class="dv">5</span>,<span class="fl">0.01</span>),<span class="at">prof=</span>profit),<span class="fu">aes</span>(<span class="at">x=</span>price,<span class="at">y=</span>prof))<span class="sc">+</span></span>
+<span id="cb15-11"><a href="多重glm.html#cb15-11" tabindex="-1"></a>  <span class="fu">geom_line</span>()<span class="sc">+</span></span>
+<span id="cb15-12"><a href="多重glm.html#cb15-12" tabindex="-1"></a>  <span class="fu">geom_vline</span>(<span class="at">xintercept =</span>price[<span class="fu">which.max</span>(profit)],<span class="at">col=</span><span class="st">&#39;red&#39;</span>)<span class="sc">+</span></span>
+<span id="cb15-13"><a href="多重glm.html#cb15-13" tabindex="-1"></a>  <span class="fu">geom_text</span>(<span class="fu">aes</span>(<span class="at">x=</span>price[<span class="fu">which.max</span>(profit)],<span class="at">y=</span><span class="dv">400</span>),</span>
+<span id="cb15-14"><a href="多重glm.html#cb15-14" tabindex="-1"></a>            <span class="at">label=</span><span class="fu">paste0</span>(<span class="st">&#39;optimal price :&#39;</span>,price[<span class="fu">which.max</span>(profit)],<span class="st">&#39;</span><span class="sc">\n</span><span class="st"> profit is &#39;</span>,</span>
+<span id="cb15-15"><a href="多重glm.html#cb15-15" tabindex="-1"></a>                         <span class="fu">max</span>(<span class="fu">round</span>(profit,<span class="dv">2</span>))),<span class="at">col=</span><span class="st">&#39;blue&#39;</span></span>
+<span id="cb15-16"><a href="多重glm.html#cb15-16" tabindex="-1"></a>              )</span></code></pre></div>
+</details>
+<p><img src="bookdown_files/figure-html/unnamed-chunk-9-1.png" width="672" /></p>
+</div>
+<div id="模拟增加配件的价格变化" class="section level3 hasAnchor" number="6.2.4">
+<h3><span class="header-section-number">6.2.4</span> 模拟增加配件的价格变化<a href="多重glm.html#模拟增加配件的价格变化" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<details class=chunk-details><summary class=chunk-summary><span class=chunk-summary-text>Code</span></summary>
+<div class="sourceCode" id="cb16"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb16-1"><a href="多重glm.html#cb16-1" tabindex="-1"></a><span class="co"># h</span></span>
+<span id="cb16-2"><a href="多重glm.html#cb16-2" tabindex="-1"></a>xwifi<span class="ot">&lt;-</span>X</span>
+<span id="cb16-3"><a href="多重glm.html#cb16-3" tabindex="-1"></a>xwifi<span class="sc">$</span>wifi[<span class="dv">1</span>]<span class="ot">=</span><span class="dv">1</span><span class="co">#add wifi </span></span>
+<span id="cb16-4"><a href="多重glm.html#cb16-4" tabindex="-1"></a><span class="co"># xwifi$price[1]=price[which.max(profit)]</span></span>
+<span id="cb16-5"><a href="多重glm.html#cb16-5" tabindex="-1"></a><span class="fu">get_profits</span>(xwifi,beta, <span class="fl">0.65</span>, <span class="dv">1000</span>)[<span class="dv">1</span>]</span></code></pre></div>
+</details>
+<pre><code>## [1] 658.1577</code></pre>
+<details class=chunk-details><summary class=chunk-summary><span class=chunk-summary-text>Code</span></summary>
+<div class="sourceCode" id="cb18"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb18-1"><a href="多重glm.html#cb18-1" tabindex="-1"></a><span class="fu">get_profits</span>(X,beta, <span class="fl">0.5</span>, <span class="dv">1000</span>)[<span class="dv">1</span>]</span></code></pre></div>
+</details>
+<pre><code>## [1] 522.0425</code></pre>
+<details class=chunk-details><summary class=chunk-summary><span class=chunk-summary-text>Code</span></summary>
+<div class="sourceCode" id="cb20"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb20-1"><a href="多重glm.html#cb20-1" tabindex="-1"></a><span class="fu">max</span>(profit)</span></code></pre></div>
+</details>
+<pre><code>## [1] 545.6525</code></pre>
+<details class=chunk-details><summary class=chunk-summary><span class=chunk-summary-text>Code</span></summary>
+<div class="sourceCode" id="cb22"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb22-1"><a href="多重glm.html#cb22-1" tabindex="-1"></a><span class="co"># add wifi，since get_profits more the Optimal price</span></span></code></pre></div>
+</details>
+</div>
+</div>
+<div id="mixed-logit" class="section level2 hasAnchor" number="6.3">
+<h2><span class="header-section-number">6.3</span> 3.Mixed Logit<a href="多重glm.html#mixed-logit" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>还没理解</p>
+<details class=chunk-details><summary class=chunk-summary><span class=chunk-summary-text>Code</span></summary>
+<div class="sourceCode" id="cb23"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb23-1"><a href="多重glm.html#cb23-1" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">123</span>)</span>
+<span id="cb23-2"><a href="多重glm.html#cb23-2" tabindex="-1"></a>camera_neg_price_idx <span class="ot">=</span> <span class="fu">dfidx</span>(</span>
+<span id="cb23-3"><a href="多重glm.html#cb23-3" tabindex="-1"></a>    <span class="fu">as.data.frame</span>(camera_dt),</span>
+<span id="cb23-4"><a href="多重glm.html#cb23-4" tabindex="-1"></a>    <span class="at">idx=</span><span class="fu">list</span>(<span class="fu">c</span>(<span class="st">&quot;chid&quot;</span>, <span class="st">&quot;consumer&quot;</span>), <span class="st">&quot;alt&quot;</span>),</span>
+<span id="cb23-5"><a href="多重glm.html#cb23-5" tabindex="-1"></a>    <span class="at">choice=</span><span class="st">&quot;choice&quot;</span>, <span class="at">shape=</span><span class="st">&quot;long&quot;</span>, <span class="at">opposite=</span><span class="st">&quot;price&quot;</span>)</span>
+<span id="cb23-6"><a href="多重glm.html#cb23-6" tabindex="-1"></a>param_dist <span class="ot">=</span> <span class="fu">setNames</span>(<span class="fu">rep</span>(<span class="st">&quot;n&quot;</span>, <span class="fu">length</span>(attribute_names)), attribute_names)</span>
+<span id="cb23-7"><a href="多重glm.html#cb23-7" tabindex="-1"></a>param_dist[<span class="st">&quot;price&quot;</span>] <span class="ot">=</span> <span class="st">&quot;ln&quot;</span></span>
+<span id="cb23-8"><a href="多重glm.html#cb23-8" tabindex="-1"></a>mixed_logit <span class="ot">=</span> <span class="fu">mlogit</span>(logit_formula, camera_neg_price_idx, <span class="at">panel=</span><span class="cn">TRUE</span>, <span class="at">rpar=</span>param_dist, <span class="at">R=</span><span class="dv">100</span>)</span>
+<span id="cb23-9"><a href="多重glm.html#cb23-9" tabindex="-1"></a><span class="fu">summary</span>(mixed_logit)</span></code></pre></div>
+</details>
+<pre><code>## 
+## Call:
+## mlogit(formula = choice ~ 0 + canon + sony + nikon + panasonic + 
+##     pixels + zoom + video + swivel + wifi + price, data = camera_neg_price_idx, 
+##     rpar = param_dist, R = 100, panel = TRUE)
+## 
+## Frequencies of alternatives:choice
+##       1       2       3       4       5 
+## 0.20708 0.17620 0.19484 0.16905 0.25282 
+## 
+## bfgs method
+## 23 iterations, 0h:0m:15s 
+## g&#39;(-H)^-1g = 3.94E-07 
+## gradient close to zero 
+## 
+## Coefficients :
+##               Estimate Std. Error z-value  Pr(&gt;|z|)    
+## canon         1.527930   0.095301 16.0327 &lt; 2.2e-16 ***
+## sony          1.141205   0.097019 11.7626 &lt; 2.2e-16 ***
+## nikon         1.340514   0.096989 13.8213 &lt; 2.2e-16 ***
+## panasonic     0.888853   0.097645  9.1029 &lt; 2.2e-16 ***
+## pixels        1.066774   0.053763 19.8421 &lt; 2.2e-16 ***
+## zoom          1.111774   0.053764 20.6786 &lt; 2.2e-16 ***
+## video         0.875162   0.052014 16.8256 &lt; 2.2e-16 ***
+## swivel        0.454605   0.049932  9.1045 &lt; 2.2e-16 ***
+## wifi          0.809111   0.052658 15.3654 &lt; 2.2e-16 ***
+## price         0.672869   0.025572 26.3128 &lt; 2.2e-16 ***
+## sd.canon      0.329621   0.075514  4.3650 1.271e-05 ***
+## sd.sony      -0.656579   0.080468 -8.1595 4.441e-16 ***
+## sd.nikon      0.873637   0.067190 13.0026 &lt; 2.2e-16 ***
+## sd.panasonic  0.450770   0.086979  5.1825 2.189e-07 ***
+## sd.pixels     0.943119   0.059335 15.8949 &lt; 2.2e-16 ***
+## sd.zoom       0.893190   0.063600 14.0439 &lt; 2.2e-16 ***
+## sd.video      0.721498   0.058427 12.3488 &lt; 2.2e-16 ***
+## sd.swivel     0.846511   0.062320 13.5832 &lt; 2.2e-16 ***
+## sd.wifi       0.767783   0.058144 13.2049 &lt; 2.2e-16 ***
+## sd.price      0.635264   0.016947 37.4863 &lt; 2.2e-16 ***
+## ---
+## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1
+## 
+## Log-Likelihood: -5361
+## 
+## random coefficients
+##           Min.    1st Qu.    Median      Mean  3rd Qu. Max.
+## canon     -Inf  1.3056045 1.5279305 1.5279305 1.750256  Inf
+## sony      -Inf  0.6983485 1.1412046 1.1412046 1.584061  Inf
+## nikon     -Inf  0.7512553 1.3405142 1.3405142 1.929773  Inf
+## panasonic -Inf  0.5848131 0.8888532 0.8888532 1.192893  Inf
+## pixels    -Inf  0.4306498 1.0667736 1.0667736 1.702897  Inf
+## zoom      -Inf  0.5093267 1.1117742 1.1117742 1.714222  Inf
+## video     -Inf  0.3885192 0.8751621 0.8751621 1.361805  Inf
+## swivel    -Inf -0.1163584 0.4546046 0.4546046 1.025568  Inf
+## wifi      -Inf  0.2912494 0.8091114 0.8091114 1.326973  Inf
+## price        0  1.2768422 1.9598520 2.3980336 3.008218  Inf</code></pre>
+<details class=chunk-details><summary class=chunk-summary><span class=chunk-summary-text>Code</span></summary>
+<div class="sourceCode" id="cb25"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb25-1"><a href="多重glm.html#cb25-1" tabindex="-1"></a>params <span class="ot">=</span> <span class="fu">as.data.table</span>(<span class="fu">fitted</span>(mixed_logit, <span class="at">type=</span><span class="st">&quot;parameters&quot;</span>))</span>
+<span id="cb25-2"><a href="多重glm.html#cb25-2" tabindex="-1"></a><span class="fu">ggplot</span>(<span class="fu">melt</span>(params, <span class="at">id.vars=</span><span class="st">&quot;id&quot;</span>), <span class="fu">aes</span>(<span class="at">x=</span>variable, <span class="at">y=</span>value)) <span class="sc">+</span></span>
+<span id="cb25-3"><a href="多重glm.html#cb25-3" tabindex="-1"></a><span class="fu">geom_boxplot</span>() <span class="sc">+</span> <span class="fu">xlab</span>(<span class="st">&quot;Feature&quot;</span>) <span class="sc">+</span> <span class="fu">ylab</span>(<span class="st">&quot;Coefficient&quot;</span>) <span class="sc">+</span></span>
+<span id="cb25-4"><a href="多重glm.html#cb25-4" tabindex="-1"></a><span class="fu">labs</span>(<span class="at">caption=</span><span class="st">&quot;Prices are negated&quot;</span>)</span></code></pre></div>
+</details>
+<p><img src="bookdown_files/figure-html/unnamed-chunk-12-1.png" width="672" /></p>
+<details class=chunk-details><summary class=chunk-summary><span class=chunk-summary-text>Code</span></summary>
+<div class="sourceCode" id="cb26"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb26-1"><a href="多重glm.html#cb26-1" tabindex="-1"></a><span class="fu">ggplot</span>(<span class="fu">as.data.frame</span>(<span class="fu">fitted</span>(mixed_logit, <span class="at">type=</span><span class="st">&quot;parameters&quot;</span>)), <span class="fu">aes</span>(<span class="at">x=</span><span class="sc">-</span>price)) <span class="sc">+</span></span>
+<span id="cb26-2"><a href="多重glm.html#cb26-2" tabindex="-1"></a>    <span class="fu">geom_density</span>() <span class="sc">+</span> <span class="fu">xlab</span>(<span class="st">&quot;Price Coefficient&quot;</span>)</span></code></pre></div>
+</details>
+<p><img src="bookdown_files/figure-html/unnamed-chunk-13-1.png" width="672" /></p>
+<div id="other-choice-models" class="section level3 hasAnchor" number="6.3.1">
+<h3><span class="header-section-number">6.3.1</span> Other Choice Models<a href="多重glm.html#other-choice-models" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>The multinomial logit model is the foundation of many other choice models that are widely used in quantitative marketing and industrial organization.</p>
+<p>Random coefficients model, aka BLP (Berry, Levinsohn, and Pakes 1995)</p>
+<p>Nested logit model (McFadden 1981) Bayesian hierarchical models (Rossi and Allenby 2003)</p>
+
+</div>
+</div>
+</div>
+
+
+
+            </section>
+
+          </div>
+        </div>
+      </div>
+<a href="ab-test.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="sound.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+    </div>
+  </div>
+<script src="libs/gitbook-2.6.7/js/app.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/clipboard.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-search.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-sharing.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-fontsettings.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-bookdown.js"></script>
+<script src="libs/gitbook-2.6.7/js/jquery.highlight.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-clipboard.js"></script>
+<script>
+gitbook.require(["gitbook"], function(gitbook) {
+gitbook.start({
+"sharing": {
+"github": true,
+"facebook": true,
+"twitter": true,
+"linkedin": false,
+"weibo": false,
+"instapaper": false,
+"vk": false,
+"whatsapp": false,
+"all": ["facebook", "twitter", "linkedin", "weibo", "instapaper"]
+},
+"fontsettings": {
+"theme": "white",
+"family": "sans",
+"size": 2
+},
+"edit": {
+"link": "https://github.com/yihui/bookdown-chinese/edit/master/07-Mlog.Rmd",
+"text": "编辑"
+},
+"history": {
+"link": null,
+"text": null
+},
+"view": {
+"link": null,
+"text": null
+},
+"download": ["bookdown.pdf", "bookdown.epub"],
+"search": {
+"engine": "fuse",
+"options": null
+},
+"toc": {
+"collapse": "section",
+"scroll_highlight": true
+}
+});
+});
+</script>
+
+</body>
+
+</html>
