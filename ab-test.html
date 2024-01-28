@@ -4,32 +4,32 @@
 
   <meta charset="utf-8" />
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-  <title>第 5 章 AB-test | 记录R学习</title>
-  <meta name="description" content="日常记录数据" />
+  <title>第 5 章 AB-test | R资料学习</title>
+  <meta name="description" content="R学习记录" />
   <meta name="generator" content="bookdown 0.37 and GitBook 2.6.7" />
 
-  <meta property="og:title" content="第 5 章 AB-test | 记录R学习" />
+  <meta property="og:title" content="第 5 章 AB-test | R资料学习" />
   <meta property="og:type" content="book" />
-  <meta property="og:image" content="/www/lh_2.png" />
-  <meta property="og:description" content="日常记录数据" />
-  <meta name="github-repo" content="ijkchz/book.git" />
+  <meta property="og:image" content="/www/lh_2.jpg" />
+  <meta property="og:description" content="R学习记录" />
+  <meta name="github-repo" content="ijkchz/ijkchz.github.io.git" />
 
   <meta name="twitter:card" content="summary" />
-  <meta name="twitter:title" content="第 5 章 AB-test | 记录R学习" />
+  <meta name="twitter:title" content="第 5 章 AB-test | R资料学习" />
   
-  <meta name="twitter:description" content="日常记录数据" />
-  <meta name="twitter:image" content="/www/lh_2.png" />
+  <meta name="twitter:description" content="R学习记录" />
+  <meta name="twitter:image" content="/www/lh_2.jpg" />
 
-<meta name="author" content="chz" />
+<meta name="author" content="caohuazhang" />
 
 
-<meta name="date" content="2024-01-27" />
+<meta name="date" content="2024-01-28" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
   <meta name="apple-mobile-web-app-status-bar-style" content="black" />
-  
-  <link rel="shortcut icon" href="www/lh_2.png" type="image/x-icon" />
+  <link rel="apple-touch-icon-precomposed" sizes="120x120" href="www/lh_2.jpg" />
+  <link rel="shortcut icon" href="www/lh_2.jpg" type="image/x-icon" />
 <link rel="prev" href="app.html"/>
 <link rel="next" href="pca-and-xgboot.html"/>
 <script src="libs/jquery/jquery-3.6.0.min.js"></script>
@@ -82,13 +82,6 @@
 <script src="libs/leaflet-markercluster/leaflet.markercluster.js"></script>
 <script src="libs/leaflet-markercluster/leaflet.markercluster.freezable.js"></script>
 <script src="libs/leaflet-markercluster/leaflet.markercluster.layersupport.js"></script>
-<link href="libs/tabwid/tabwid.css" rel="stylesheet" />
-<script src="libs/tabwid/tabwid.js"></script>
-<link href="libs/datatables-css/datatables-crosstalk.css" rel="stylesheet" />
-<script src="libs/datatables-binding/datatables.js"></script>
-<link href="libs/dt-core/css/jquery.dataTables.min.css" rel="stylesheet" />
-<link href="libs/dt-core/css/jquery.dataTables.extra.css" rel="stylesheet" />
-<script src="libs/dt-core/js/jquery.dataTables.min.js"></script>
 <script src="libs/proj4js/proj4.js"></script>
 <link href="libs/highcharts/css/motion.css" rel="stylesheet" />
 <script src="libs/highcharts/highcharts.js"></script>
@@ -130,6 +123,13 @@
 <script src="libs/highcharts/custom/reset.js"></script>
 <script src="libs/highcharts/modules/boost.js"></script>
 <script src="libs/highchart-binding/highchart.js"></script>
+<link href="libs/tabwid/tabwid.css" rel="stylesheet" />
+<script src="libs/tabwid/tabwid.js"></script>
+<link href="libs/datatables-css/datatables-crosstalk.css" rel="stylesheet" />
+<script src="libs/datatables-binding/datatables.js"></script>
+<link href="libs/dt-core/css/jquery.dataTables.min.css" rel="stylesheet" />
+<link href="libs/dt-core/css/jquery.dataTables.extra.css" rel="stylesheet" />
+<script src="libs/dt-core/js/jquery.dataTables.min.js"></script>
 
 
 <style type="text/css">
@@ -201,28 +201,6 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
   
   div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
 </style>
-<style type="text/css">
-/* Used with Pandoc 2.11+ new --citeproc when CSL is used */
-div.csl-bib-body { }
-div.csl-entry {
-  clear: both;
-}
-.hanging div.csl-entry {
-  margin-left:2em;
-  text-indent:-2em;
-}
-div.csl-left-margin {
-  min-width:2em;
-  float:left;
-}
-div.csl-right-inline {
-  margin-left:2em;
-  padding-left:1em;
-}
-div.csl-indent {
-  margin-left: 2em;
-}
-</style>
 
 <link rel="stylesheet" href="css/style.css" type="text/css" />
 </head>
@@ -240,32 +218,52 @@ div.csl-indent {
 <li><a href="./">杂乱的干货</a></li>
 
 <li class="divider"></li>
-<li class="chapter" data-level="" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i>前言</a>
-<ul>
-<li class="chapter" data-level="" data-path="index.html"><a href="index.html#致谢"><i class="fa fa-check"></i>致谢</a></li>
-</ul></li>
-<li class="chapter" data-level="" data-path="author.html"><a href="author.html"><i class="fa fa-check"></i>作者简介</a></li>
-<li class="chapter" data-level="1" data-path="plot.html"><a href="plot.html"><i class="fa fa-check"></i><b>1</b> Plots</a>
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i>前言</a></li>
+<li class="chapter" data-level="" data-path="author.html"><a href="author.html"><i class="fa fa-check"></i>作者简介:</a></li>
+<li class="chapter" data-level="1" data-path="plot.html"><a href="plot.html"><i class="fa fa-check"></i><b>1</b> 画图plot</a>
 <ul>
 <li class="chapter" data-level="1.1" data-path="plot.html"><a href="plot.html#箱线图小提琴图"><i class="fa fa-check"></i><b>1.1</b> 箱线图/小提琴图</a></li>
-<li class="chapter" data-level="1.2" data-path="plot.html"><a href="plot.html#柱状图"><i class="fa fa-check"></i><b>1.2</b> 柱状图</a></li>
-<li class="chapter" data-level="1.3" data-path="plot.html"><a href="plot.html#点线图"><i class="fa fa-check"></i><b>1.3</b> 点线图</a></li>
-<li class="chapter" data-level="1.4" data-path="plot.html"><a href="plot.html#树图"><i class="fa fa-check"></i><b>1.4</b> 树图</a></li>
-<li class="chapter" data-level="1.5" data-path="plot.html"><a href="plot.html#交互图"><i class="fa fa-check"></i><b>1.5</b> 交互图</a></li>
-<li class="chapter" data-level="1.6" data-path="plot.html"><a href="plot.html#自定义"><i class="fa fa-check"></i><b>1.6</b> 自定义</a></li>
-<li class="chapter" data-level="1.7" data-path="plot.html"><a href="plot.html#时间动态图"><i class="fa fa-check"></i><b>1.7</b> 时间动态图</a></li>
-<li class="chapter" data-level="1.8" data-path="plot.html"><a href="plot.html#d玫瑰"><i class="fa fa-check"></i><b>1.8</b> 3D玫瑰</a></li>
-<li class="chapter" data-level="1.9" data-path="plot.html"><a href="plot.html#流程图"><i class="fa fa-check"></i><b>1.9</b> 流程图</a></li>
-<li class="chapter" data-level="1.10" data-path="plot.html"><a href="plot.html#地图"><i class="fa fa-check"></i><b>1.10</b> 地图</a>
+<li class="chapter" data-level="1.2" data-path="plot.html"><a href="plot.html#柱状图"><i class="fa fa-check"></i><b>1.2</b> 柱状图</a>
 <ul>
-<li class="chapter" data-level="1.10.1" data-path="plot.html"><a href="plot.html#天心区"><i class="fa fa-check"></i><b>1.10.1</b> 天心区</a></li>
-<li class="chapter" data-level="1.10.2" data-path="plot.html"><a href="plot.html#北京"><i class="fa fa-check"></i><b>1.10.2</b> 北京</a></li>
-<li class="chapter" data-level="1.10.3" data-path="plot.html"><a href="plot.html#省区地图"><i class="fa fa-check"></i><b>1.10.3</b> 省区地图</a></li>
+<li class="chapter" data-level="1.2.1" data-path="plot.html"><a href="plot.html#直方图"><i class="fa fa-check"></i><b>1.2.1</b> 直方图</a></li>
+<li class="chapter" data-level="1.2.2" data-path="plot.html"><a href="plot.html#条形图"><i class="fa fa-check"></i><b>1.2.2</b> 条形图</a></li>
+<li class="chapter" data-level="1.2.3" data-path="plot.html"><a href="plot.html#极坐标图"><i class="fa fa-check"></i><b>1.2.3</b> 极坐标图</a></li>
 </ul></li>
+<li class="chapter" data-level="1.3" data-path="plot.html"><a href="plot.html#点线图"><i class="fa fa-check"></i><b>1.3</b> 点线图</a></li>
+<li class="chapter" data-level="1.4" data-path="plot.html"><a href="plot.html#树图"><i class="fa fa-check"></i><b>1.4</b> 树图</a>
+<ul>
+<li class="chapter" data-level="1.4.1" data-path="plot.html"><a href="plot.html#次级分组亚群"><i class="fa fa-check"></i><b>1.4.1</b> 次级分组（亚群）：</a></li>
+</ul></li>
+<li class="chapter" data-level="1.5" data-path="plot.html"><a href="plot.html#交互图"><i class="fa fa-check"></i><b>1.5</b> 交互图</a>
+<ul>
+<li class="chapter" data-level="1.5.1" data-path="plot.html"><a href="plot.html#ggiraph"><i class="fa fa-check"></i><b>1.5.1</b> ggiraph</a></li>
+<li class="chapter" data-level="1.5.2" data-path="plot.html"><a href="plot.html#plotly-3d玫瑰"><i class="fa fa-check"></i><b>1.5.2</b> plotly 3D玫瑰</a></li>
+</ul></li>
+<li class="chapter" data-level="1.6" data-path="plot.html"><a href="plot.html#自定义图片"><i class="fa fa-check"></i><b>1.6</b> 自定义图片</a></li>
+<li class="chapter" data-level="1.7" data-path="plot.html"><a href="plot.html#时间动态图"><i class="fa fa-check"></i><b>1.7</b> 时间动态图</a></li>
+<li class="chapter" data-level="1.8" data-path="plot.html"><a href="plot.html#流程图"><i class="fa fa-check"></i><b>1.8</b> 流程图</a>
+<ul>
+<li class="chapter" data-level="1.8.1" data-path="plot.html"><a href="plot.html#脑图"><i class="fa fa-check"></i><b>1.8.1</b> 脑图</a></li>
+</ul></li>
+<li class="chapter" data-level="1.9" data-path="plot.html"><a href="plot.html#地图"><i class="fa fa-check"></i><b>1.9</b> 地图</a>
+<ul>
+<li class="chapter" data-level="1.9.1" data-path="plot.html"><a href="plot.html#天心区"><i class="fa fa-check"></i><b>1.9.1</b> 天心区</a></li>
+<li class="chapter" data-level="1.9.2" data-path="plot.html"><a href="plot.html#北京"><i class="fa fa-check"></i><b>1.9.2</b> 北京</a></li>
+<li class="chapter" data-level="1.9.3" data-path="plot.html"><a href="plot.html#省区地图"><i class="fa fa-check"></i><b>1.9.3</b> 省区地图</a></li>
+</ul></li>
+<li class="chapter" data-level="1.10" data-path="plot.html"><a href="plot.html#生物解剖wu-liu-bing-bing"><i class="fa fa-check"></i><b>1.10</b> 生物解剖{wu-liu-bing-bing}</a></li>
 <li class="chapter" data-level="1.11" data-path="plot.html"><a href="plot.html#ggtree"><i class="fa fa-check"></i><b>1.11</b> ggtree</a>
 <ul>
 <li class="chapter" data-level="1.11.1" data-path="plot.html"><a href="plot.html#more-forms-of-phylogenetic-tree"><i class="fa fa-check"></i><b>1.11.1</b> More forms of phylogenetic tree</a></li>
 <li class="chapter" data-level="1.11.2" data-path="plot.html"><a href="plot.html#run-with-another-dataset"><i class="fa fa-check"></i><b>1.11.2</b> run with another dataset</a></li>
+</ul></li>
+<li class="chapter" data-level="1.12" data-path="plot.html"><a href="plot.html#颜色ggplot"><i class="fa fa-check"></i><b>1.12</b> 颜色ggplot</a></li>
+<li class="chapter" data-level="1.13" data-path="plot.html"><a href="plot.html#仪表盘图highcharter"><i class="fa fa-check"></i><b>1.13</b> 仪表盘图highcharter</a>
+<ul>
+<li class="chapter" data-level="1.13.1" data-path="plot.html"><a href="plot.html#sales-forecast"><i class="fa fa-check"></i><b>1.13.1</b> Sales Forecast</a></li>
+<li class="chapter" data-level="1.13.2" data-path="plot.html"><a href="plot.html#sales-by-state"><i class="fa fa-check"></i><b>1.13.2</b> Sales by State</a></li>
+<li class="chapter" data-level="1.13.3" data-path="plot.html"><a href="plot.html#sales-by-category"><i class="fa fa-check"></i><b>1.13.3</b> Sales by Category</a></li>
+<li class="chapter" data-level="1.13.4" data-path="plot.html"><a href="plot.html#best-sellers"><i class="fa fa-check"></i><b>1.13.4</b> Best Sellers</a></li>
 </ul></li>
 </ul></li>
 <li class="chapter" data-level="2" data-path="tab.html"><a href="tab.html"><i class="fa fa-check"></i><b>2</b> table</a>
@@ -276,7 +274,7 @@ div.csl-indent {
 <li class="chapter" data-level="2.1.2" data-path="tab.html"><a href="tab.html#表格2"><i class="fa fa-check"></i><b>2.1.2</b> 表格2</a></li>
 <li class="chapter" data-level="2.1.3" data-path="tab.html"><a href="tab.html#颜色表格"><i class="fa fa-check"></i><b>2.1.3</b> 颜色表格</a></li>
 <li class="chapter" data-level="2.1.4" data-path="tab.html"><a href="tab.html#增加图像"><i class="fa fa-check"></i><b>2.1.4</b> 增加图像</a></li>
-<li class="chapter" data-level="2.1.5" data-path="tab.html"><a href="tab.html#自定义图片"><i class="fa fa-check"></i><b>2.1.5</b> 自定义图片</a></li>
+<li class="chapter" data-level="2.1.5" data-path="tab.html"><a href="tab.html#自定义图片-1"><i class="fa fa-check"></i><b>2.1.5</b> 自定义图片</a></li>
 <li class="chapter" data-level="2.1.6" data-path="tab.html"><a href="tab.html#美元"><i class="fa fa-check"></i><b>2.1.6</b> 美元</a></li>
 </ul></li>
 <li class="chapter" data-level="2.2" data-path="tab.html"><a href="tab.html#flextable"><i class="fa fa-check"></i><b>2.2</b> flextable</a></li>
@@ -347,15 +345,6 @@ div.csl-indent {
 <li class="chapter" data-level="8.3.3" data-path="回归.html"><a href="回归.html#偏最小二乘"><i class="fa fa-check"></i><b>8.3.3</b> 偏最小二乘</a></li>
 </ul></li>
 </ul></li>
-<li class="chapter" data-level="9" data-path="地图-1.html"><a href="地图-1.html"><i class="fa fa-check"></i><b>9</b> 地图</a>
-<ul>
-<li class="chapter" data-level="9.1" data-path="地图-1.html"><a href="地图-1.html#sales-forecast"><i class="fa fa-check"></i><b>9.1</b> Sales Forecast</a>
-<ul>
-<li class="chapter" data-level="9.1.1" data-path="地图-1.html"><a href="地图-1.html#sales-by-state"><i class="fa fa-check"></i><b>9.1.1</b> Sales by State</a></li>
-<li class="chapter" data-level="9.1.2" data-path="地图-1.html"><a href="地图-1.html#sales-by-category"><i class="fa fa-check"></i><b>9.1.2</b> Sales by Category</a></li>
-<li class="chapter" data-level="9.1.3" data-path="地图-1.html"><a href="地图-1.html#best-sellers"><i class="fa fa-check"></i><b>9.1.3</b> Best Sellers</a></li>
-</ul></li>
-</ul></li>
 <li class="appendix"><span><b>附录</b></span></li>
 <li class="chapter" data-level="A" data-path="sound.html"><a href="sound.html"><i class="fa fa-check"></i><b>A</b> 结尾</a>
 <ul>
@@ -375,7 +364,7 @@ div.csl-indent {
       <div class="body-inner">
         <div class="book-header" role="navigation">
           <h1>
-            <i class="fa fa-circle-o-notch fa-spin"></i><a href="./">记录R学习</a>
+            <i class="fa fa-circle-o-notch fa-spin"></i><a href="./">R资料学习</a>
           </h1>
         </div>
 
@@ -386,68 +375,68 @@ div.csl-indent {
 <div id="ab-test" class="section level1 hasAnchor" number="5">
 <h1><span class="header-section-number">第 5 章</span> AB-test<a href="ab-test.html#ab-test" class="anchor-section" aria-label="Anchor link to header"></a></h1>
 <details class=chunk-details><summary class=chunk-summary><span class=chunk-summary-text>Code</span></summary>
-<div class="sourceCode" id="cb98"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb98-1"><a href="ab-test.html#cb98-1" tabindex="-1"></a>x<span class="ot">=</span><span class="fu">rnorm</span>(<span class="dv">100</span>,<span class="dv">100</span>,<span class="dv">4</span>)</span>
-<span id="cb98-2"><a href="ab-test.html#cb98-2" tabindex="-1"></a>sigma<span class="ot">=</span><span class="fu">rnorm</span>(<span class="dv">100</span>)</span>
-<span id="cb98-3"><a href="ab-test.html#cb98-3" tabindex="-1"></a>y<span class="ot">=</span><span class="dv">2</span><span class="sc">+</span>x<span class="sc">+</span>sigma</span>
-<span id="cb98-4"><a href="ab-test.html#cb98-4" tabindex="-1"></a><span class="fu">max</span>(x,y)</span></code></pre></div>
+<div class="sourceCode" id="cb119"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb119-1"><a href="ab-test.html#cb119-1" tabindex="-1"></a>x<span class="ot">=</span><span class="fu">rnorm</span>(<span class="dv">100</span>,<span class="dv">100</span>,<span class="dv">4</span>)</span>
+<span id="cb119-2"><a href="ab-test.html#cb119-2" tabindex="-1"></a>sigma<span class="ot">=</span><span class="fu">rnorm</span>(<span class="dv">100</span>)</span>
+<span id="cb119-3"><a href="ab-test.html#cb119-3" tabindex="-1"></a>y<span class="ot">=</span><span class="dv">2</span><span class="sc">+</span>x<span class="sc">+</span>sigma</span>
+<span id="cb119-4"><a href="ab-test.html#cb119-4" tabindex="-1"></a><span class="fu">max</span>(x,y)</span></code></pre></div>
 </details>
-<pre><code>## [1] 112.1</code></pre>
+<pre><code>## [1] 111.4</code></pre>
 <details class=chunk-details><summary class=chunk-summary><span class=chunk-summary-text>Code</span></summary>
-<div class="sourceCode" id="cb100"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb100-1"><a href="ab-test.html#cb100-1" tabindex="-1"></a><span class="fu">min</span>(x,y)</span></code></pre></div>
+<div class="sourceCode" id="cb121"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb121-1"><a href="ab-test.html#cb121-1" tabindex="-1"></a><span class="fu">min</span>(x,y)</span></code></pre></div>
 </details>
-<pre><code>## [1] 89.92</code></pre>
+<pre><code>## [1] 91.05</code></pre>
 <details class=chunk-details><summary class=chunk-summary><span class=chunk-summary-text>Code</span></summary>
-<div class="sourceCode" id="cb102"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb102-1"><a href="ab-test.html#cb102-1" tabindex="-1"></a><span class="fu">plot</span>(x,<span class="at">ylim=</span><span class="fu">c</span>(<span class="fu">min</span>(x,y)<span class="sc">-</span><span class="dv">2</span>,<span class="fu">max</span>(x,y)<span class="sc">+</span><span class="dv">2</span>))</span>
-<span id="cb102-2"><a href="ab-test.html#cb102-2" tabindex="-1"></a><span class="fu">points</span>(y,<span class="at">col=</span><span class="st">&#39;red&#39;</span>)</span>
-<span id="cb102-3"><a href="ab-test.html#cb102-3" tabindex="-1"></a><span class="fu">abline</span>(<span class="at">h=</span><span class="fu">mean</span>(y),<span class="at">col=</span><span class="st">&quot;red&quot;</span>)</span>
-<span id="cb102-4"><a href="ab-test.html#cb102-4" tabindex="-1"></a><span class="fu">abline</span>(<span class="at">h=</span><span class="fu">mean</span>(x))</span></code></pre></div>
+<div class="sourceCode" id="cb123"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb123-1"><a href="ab-test.html#cb123-1" tabindex="-1"></a><span class="fu">plot</span>(x,<span class="at">ylim=</span><span class="fu">c</span>(<span class="fu">min</span>(x,y)<span class="sc">-</span><span class="dv">2</span>,<span class="fu">max</span>(x,y)<span class="sc">+</span><span class="dv">2</span>))</span>
+<span id="cb123-2"><a href="ab-test.html#cb123-2" tabindex="-1"></a><span class="fu">points</span>(y,<span class="at">col=</span><span class="st">&#39;red&#39;</span>)</span>
+<span id="cb123-3"><a href="ab-test.html#cb123-3" tabindex="-1"></a><span class="fu">abline</span>(<span class="at">h=</span><span class="fu">mean</span>(y),<span class="at">col=</span><span class="st">&quot;red&quot;</span>)</span>
+<span id="cb123-4"><a href="ab-test.html#cb123-4" tabindex="-1"></a><span class="fu">abline</span>(<span class="at">h=</span><span class="fu">mean</span>(x))</span></code></pre></div>
 </details>
-<p><img src="bookdown_files/figure-html/unnamed-chunk-49-1.png" width="480" /></p>
+<p><img src="bookdown_files/figure-html/unnamed-chunk-66-1.png" width="576" /></p>
 <details class=chunk-details><summary class=chunk-summary><span class=chunk-summary-text>Code</span></summary>
-<div class="sourceCode" id="cb103"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb103-1"><a href="ab-test.html#cb103-1" tabindex="-1"></a><span class="fu">t.test</span>(x,y)</span></code></pre></div>
+<div class="sourceCode" id="cb124"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb124-1"><a href="ab-test.html#cb124-1" tabindex="-1"></a><span class="fu">t.test</span>(x,y)</span></code></pre></div>
 </details>
 <pre><code>## 
 ##  Welch Two Sample t-test
 ## 
 ## data:  x and y
-## t = -3.4, df = 198, p-value = 7e-04
+## t = -3.5, df = 198, p-value = 6e-04
 ## alternative hypothesis: true difference in means is not equal to 0
 ## 95 percent confidence interval:
-##  -3.0941 -0.8396
+##  -2.9923 -0.8392
 ## sample estimates:
 ## mean of x mean of y 
-##     99.46    101.42</code></pre>
+##      99.8     101.7</code></pre>
 <details class=chunk-details><summary class=chunk-summary><span class=chunk-summary-text>Code</span></summary>
-<div class="sourceCode" id="cb105"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb105-1"><a href="ab-test.html#cb105-1" tabindex="-1"></a><span class="fu">t.test</span>(x,y,<span class="at">paired =</span> T)</span></code></pre></div>
+<div class="sourceCode" id="cb126"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb126-1"><a href="ab-test.html#cb126-1" tabindex="-1"></a><span class="fu">t.test</span>(x,y,<span class="at">paired =</span> T)</span></code></pre></div>
 </details>
 <pre><code>## 
 ##  Paired t-test
 ## 
 ## data:  x and y
-## t = -23, df = 99, p-value &lt;2e-16
+## t = -17, df = 99, p-value &lt;2e-16
 ## alternative hypothesis: true mean difference is not equal to 0
 ## 95 percent confidence interval:
-##  -2.138 -1.796
+##  -2.137 -1.694
 ## sample estimates:
 ## mean difference 
-##          -1.967</code></pre>
+##          -1.916</code></pre>
 <details class=chunk-details><summary class=chunk-summary><span class=chunk-summary-text>Code</span></summary>
-<div class="sourceCode" id="cb107"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb107-1"><a href="ab-test.html#cb107-1" tabindex="-1"></a><span class="fu">library</span>(pwrss)</span>
-<span id="cb107-2"><a href="ab-test.html#cb107-2" tabindex="-1"></a><span class="fu">t.test</span>(y,x)</span></code></pre></div>
+<div class="sourceCode" id="cb128"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb128-1"><a href="ab-test.html#cb128-1" tabindex="-1"></a><span class="fu">library</span>(pwrss)</span>
+<span id="cb128-2"><a href="ab-test.html#cb128-2" tabindex="-1"></a><span class="fu">t.test</span>(y,x)</span></code></pre></div>
 </details>
 <pre><code>## 
 ##  Welch Two Sample t-test
 ## 
 ## data:  y and x
-## t = 3.4, df = 198, p-value = 7e-04
+## t = 3.5, df = 198, p-value = 6e-04
 ## alternative hypothesis: true difference in means is not equal to 0
 ## 95 percent confidence interval:
-##  0.8396 3.0941
+##  0.8392 2.9923
 ## sample estimates:
 ## mean of x mean of y 
-##    101.42     99.46</code></pre>
+##     101.7      99.8</code></pre>
 <details class=chunk-details><summary class=chunk-summary><span class=chunk-summary-text>Code</span></summary>
-<div class="sourceCode" id="cb109"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb109-1"><a href="ab-test.html#cb109-1" tabindex="-1"></a>design_2means<span class="ot">=</span><span class="fu">pwrss.t.2means</span>(<span class="at">mu1=</span><span class="fu">mean</span>(x), <span class="at">mu2=</span><span class="fu">mean</span>(y), <span class="at">sd1=</span><span class="fu">sd</span>(x), <span class="at">sd2=</span><span class="fu">sd</span>(y), <span class="at">alpha=</span><span class="fl">0.05</span>, <span class="at">power=</span><span class="fl">0.8</span>, <span class="at">alternative=</span><span class="st">&quot;less&quot;</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb130"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb130-1"><a href="ab-test.html#cb130-1" tabindex="-1"></a>design_2means<span class="ot">=</span><span class="fu">pwrss.t.2means</span>(<span class="at">mu1=</span><span class="fu">mean</span>(x), <span class="at">mu2=</span><span class="fu">mean</span>(y), <span class="at">sd1=</span><span class="fu">sd</span>(x), <span class="at">sd2=</span><span class="fu">sd</span>(y), <span class="at">alpha=</span><span class="fl">0.05</span>, <span class="at">power=</span><span class="fl">0.8</span>, <span class="at">alternative=</span><span class="st">&quot;less&quot;</span>)</span></code></pre></div>
 </details>
 <pre><code>##  Difference between Two means 
 ##  (Independent Samples t Test) 
@@ -455,18 +444,18 @@ div.csl-indent {
 ##  HA: mu1 &lt; mu2 
 ##  ------------------------------ 
 ##   Statistical power = 0.8 
-##   n1 = 53 
-##   n2 = 53 
+##   n1 = 51 
+##   n2 = 51 
 ##  ------------------------------ 
 ##  Alternative = &quot;less&quot; 
-##  Degrees of freedom = 104 
-##  Non-centrality parameter = -2.505 
+##  Degrees of freedom = 100 
+##  Non-centrality parameter = -2.506 
 ##  Type I error rate = 0.05 
 ##  Type II error rate = 0.2</code></pre>
 <details class=chunk-details><summary class=chunk-summary><span class=chunk-summary-text>Code</span></summary>
-<div class="sourceCode" id="cb111"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb111-1"><a href="ab-test.html#cb111-1" tabindex="-1"></a><span class="fu">plot</span>(design_2means)</span></code></pre></div>
+<div class="sourceCode" id="cb132"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb132-1"><a href="ab-test.html#cb132-1" tabindex="-1"></a><span class="fu">plot</span>(design_2means)</span></code></pre></div>
 </details>
-<p><img src="bookdown_files/figure-html/unnamed-chunk-51-1.png" width="480" /></p>
+<p><img src="bookdown_files/figure-html/unnamed-chunk-68-1.png" width="576" /></p>
 <p>重复测量Repeated-Measure Design
 集群随机化Cluster Randomization<br />
 差中差估计Difference in Differences</p>
@@ -494,14 +483,14 @@ gitbook.require(["gitbook"], function(gitbook) {
 gitbook.start({
 "sharing": {
 "github": true,
-"facebook": true,
+"facebook": false,
 "twitter": true,
 "linkedin": false,
-"weibo": false,
+"weibo": true,
 "instapaper": false,
 "vk": false,
 "whatsapp": false,
-"all": ["facebook", "twitter", "linkedin", "weibo", "instapaper"]
+"all": ["twitter", "github", "weibo"]
 },
 "fontsettings": {
 "theme": "white",
